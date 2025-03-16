@@ -54,11 +54,6 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen() {
-
-    val context = LocalContext.current
-    val productCategoriesArray: Array<String> = context.resources.getStringArray(R.array.product_categories)
-    val productCategoriesList: List<String> = productCategoriesArray.toList()
-
     Column(modifier = Modifier.fillMaxSize()) {
         // Parte superior (cambiante)
         Surface(
@@ -68,7 +63,7 @@ fun MainScreen() {
                 .padding(8.dp),
             color = MaterialTheme.colorScheme.primaryContainer
         ) {
-            ProductCategoryGrid(categories = productCategoriesList)
+            ProductCategoryGrid()
         }
 
         // Parte inferior (fija)

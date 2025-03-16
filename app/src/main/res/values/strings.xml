@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">QuickStock</string>
+
+    <string-array name="product_categories">
+        <item>@string/refrigerator</item>
+        <item>@string/fruits</item>
+        <item>@string/vegetables</item>
+        <item>@string/meat</item>
+        <item>@string/seafood</item>
+        <item>@string/dairy_eggs</item>
+        <item>@string/bakery</item>
+        <item>@string/grains_pasta</item>
+        <item>@string/canned_goods</item>
+        <item>@string/condiments_sauces</item>
+        <item>@string/spices_herbs</item>
+        <item>@string/oils_vinegars</item>
+        <item>@string/snacks</item>
+        <item>@string/beverages</item>
+        <item>@string/baking_supplies</item>
+        <item>@string/frozen_fruits_vegetables</item>
+        <item>@string/frozen_meals</item>
+        <item>@string/frozen_desserts</item>
+        <item>@string/cleaning</item>
+        <item>@string/personal_care</item>
+        <item>@string/paper_products</item>
+        <item>@string/pet_supplies</item>
+        <item>@string/electronics</item>
+        <item>@string/baby</item>
+    </string-array>
+
+    <string name="refrigerator">Refrigerator</string>
+    <string name="fruits">Fruits</string>
+    <string name="vegetables">Vegetables</string>
+    <string name="meat">Meat</string>
+    <string name="seafood">Seafood</string>
+    <string name="dairy_eggs">Dairy &amp; Eggs</string>
+    <string name="bakery">Bakery</string>
+    <string name="grains_pasta">Grains &amp; Pasta</string>
+    <string name="canned_goods">Canned Goods</string>
+    <string name="condiments_sauces">Condiments &amp; Sauces</string>
+    <string name="spices_herbs">Spices &amp; Herbs</string>
+    <string name="oils_vinegars">Oils &amp; Vinegars</string>
+    <string name="snacks">Snacks</string>
+    <string name="beverages">Beverages</string>
+    <string name="baking_supplies">Baking Supplies</string>
+    <string name="frozen_fruits_vegetables">Frozen Fruits &amp; Vegetables</string>
+    <string name="frozen_meals">Frozen Meals</string>
+    <string name="frozen_desserts">Frozen Desserts</string>
+    <string name="cleaning">Cleaning</string>
+    <string name="personal_care">Personal Care</string>
+    <string name="paper_products">Paper Products</string>
+    <string name="pet_supplies">Pet Supplies</string>
+    <string name="electronics">Electronics</string>
+    <string name="baby">Baby</string>
+
+</resources>

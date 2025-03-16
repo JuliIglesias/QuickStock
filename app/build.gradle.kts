@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.quickstore"
+    namespace = "com.example.quickStock"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.quickstore"
+        applicationId = "com.example.quickStock"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

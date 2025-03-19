@@ -29,7 +29,7 @@ data class TabBarItem(
 )
 
 @Composable
-fun MyNavigationBar(
+fun NavBar(
     onNavigate: (String) -> Unit,
 ) {
     val homeTab = TabBarItem(

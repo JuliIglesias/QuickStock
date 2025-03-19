@@ -10,11 +10,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.example.quickStock.Home.ProductCategoryGrid
+import com.example.quickStock.navigation.NavBar
+import com.example.quickStock.navigation.NavHostComposable
 import com.example.quickStock.ui.theme.QuickstoreTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,44 +26,21 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val navController = rememberNavController()
             QuickstoreTheme {
-                Surface(
+                Scaffold(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(8.dp),
-                    color = MaterialTheme.colorScheme.background,
-                    ) {
-                    MainScreen()
+                        .fillMaxSize(),
+                    //color = MaterialTheme.colorScheme.background,
+                    bottomBar = {NavBar(navController::navigate)}
+                    ) {innerPadding ->
+                    NavHostComposable(innerPadding, navController)
                 }
             }
         }
     }
 }
 
-@Composable
-fun MainScreen() {
-    Column(modifier = Modifier.fillMaxSize()) {
-        // Parte superior (cambiante)
-        Surface(
-            modifier = Modifier
-                .weight(1f) // Ocupa todo el espacio restante
-                .fillMaxWidth()
-                .padding(8.dp),
-            color = MaterialTheme.colorScheme.primaryContainer
-        ) {
-            ProductCategoryGrid()
-        }
 
-        // Parte inferior (fija)
-        Surface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.secondaryContainer)
-        ) {
-            // Aquí va el contenido fijo (navbar)
-            MyNavigationBar()
-        }
-    }
-}
 
 

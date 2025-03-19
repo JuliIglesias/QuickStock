@@ -1,6 +1,5 @@
-package com.example.quickstore.ui.theme
+package com.example.quickStock.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

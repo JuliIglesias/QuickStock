@@ -1,4 +1,4 @@
-package com.example.quickstore
+package com.example.quickStock
 
 import org.junit.Test
 

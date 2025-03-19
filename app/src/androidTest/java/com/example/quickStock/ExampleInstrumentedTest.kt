@@ -1,4 +1,4 @@
-package com.example.quickstore
+package com.example.quickStock
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

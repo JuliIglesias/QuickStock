@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "quickstore"
+rootProject.name = "quickStock"
 include(":app")
  

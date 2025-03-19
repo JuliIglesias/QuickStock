@@ -1,4 +1,4 @@
-package com.example.quickstore.ui.theme
+package com.example.quickStock.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

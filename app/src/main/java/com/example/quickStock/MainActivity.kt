@@ -1,4 +1,4 @@
-package com.example.quickstore
+package com.example.quickStock
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -14,8 +14,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.quickstore.Home.ProductCategoryGrid
-import com.example.quickstore.ui.theme.QuickstoreTheme
+import com.example.quickStock.Home.ProductCategoryGrid
+import com.example.quickStock.ui.theme.QuickstoreTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

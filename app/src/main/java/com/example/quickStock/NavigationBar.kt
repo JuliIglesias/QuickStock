@@ -1,4 +1,4 @@
-package com.example.quickstore
+package com.example.quickStock
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List

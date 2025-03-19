@@ -78,12 +78,10 @@ fun ProductCategoryGrid(
 
     LazyVerticalGrid(
         modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
+            .fillMaxSize(),
         columns = GridCells.Fixed(2),
-        verticalArrangement =Arrangement.spacedBy(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(8.dp)
+        verticalArrangement =Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         items(categories.toList()) { categoryString -> // Iterate over the list of strings
             CategoryButton(categoryString = categoryString,
@@ -103,7 +101,7 @@ fun CategoryButton(
     Button(
         onClick = onClick,
         shape = RoundedCornerShape(16.dp),
-        modifier = modifier.size(150.dp)
+        modifier = modifier.size(180.dp)
     ) {
         Column( modifier = Modifier,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -113,13 +111,13 @@ fun CategoryButton(
             Icon(
                 imageVector = icon,
                 contentDescription = categoryString,
-                modifier = Modifier.size(48.dp)
+                modifier = Modifier.size(72.dp)
             )
 
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(text = categoryString,
-                fontSize = 18.sp,
+                fontSize = 22.sp,
                 textAlign = TextAlign.Center)
         }
     }

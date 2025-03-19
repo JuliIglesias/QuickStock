@@ -33,6 +33,7 @@ import androidx.compose.material.icons.filled.LocalGroceryStore
 import androidx.compose.material.icons.filled.LocalOffer
 import androidx.compose.material.icons.filled.Pets
 import androidx.compose.material.icons.filled.Receipt
+import androidx.compose.material.icons.filled.SetMeal
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -52,7 +53,7 @@ fun ProductCategoryGrid(
         "Fruits" to Icons.Default.LocalFlorist,
         "Vegetables" to Icons.Default.LocalFlorist,
         "Meat" to Icons.Default.LocalDining,
-        "Seafood" to Icons.Default.LocalDining,
+        "Seafood" to Icons.Default.SetMeal,
         "Dairy & Eggs" to Icons.Default.Egg,
         "Bakery" to Icons.Default.Cake,
         "Grains & Pasta" to Icons.Default.LocalDining,

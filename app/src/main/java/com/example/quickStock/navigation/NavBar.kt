@@ -20,13 +20,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
+import com.example.quickStock.R
+import com.example.quickStock.icon.IconType
+import com.example.quickStock.icon.MyIcon
 
 
 data class TabBarItem(
     val title: String,
-    val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector,
+    val selectedIcon: IconType,
+    val unselectedIcon: IconType,
     val badgeAmount: Int? = null
 )
 
@@ -36,18 +41,18 @@ fun NavBar(
 ) {
     val homeTab = TabBarItem(
         title = LearningAndroidScreen.Home.name,
-        selectedIcon = Icons.Filled.Home,
-        unselectedIcon = Icons.Outlined.Home
+        selectedIcon = IconType.Vector(Icons.Filled.Home),
+        unselectedIcon = IconType.Vector(Icons.Outlined.Home)
     )
     val recipeTab = TabBarItem(
         title = LearningAndroidScreen.Recipe.name,
-        selectedIcon = Icons.AutoMirrored.Filled.MenuBook,
-        unselectedIcon = Icons.AutoMirrored.Outlined.MenuBook
+        selectedIcon = IconType.Drawable(painterResource(R.drawable.ic_recipe_fill)),
+        unselectedIcon = IconType.Drawable(painterResource(R.drawable.ic_recipe_outline))
     )
     val profileTab = TabBarItem(
         title = LearningAndroidScreen.User.name,
-        selectedIcon = Icons.Filled.Person,
-        unselectedIcon = Icons.Outlined.Person
+        selectedIcon = IconType.Vector(Icons.Filled.Person),
+        unselectedIcon = IconType.Vector(Icons.Outlined.Person)
     )
 
     val tabBarItems = listOf(recipeTab,homeTab, profileTab)
@@ -87,14 +92,14 @@ fun TabView(tabBarItems: List<TabBarItem>, onNavigate: (String) -> Unit) {
 @Composable
 fun TabBarIconView(
     isSelected: Boolean,
-    selectedIcon: ImageVector,
-    unselectedIcon: ImageVector,
+    selectedIcon: IconType,
+    unselectedIcon: IconType,
     title: String,
     badgeAmount: Int? = null
 ) {
     BadgedBox(badge = { TabBarBadgeView(badgeAmount) }) {
-        Icon(
-            imageVector = if (isSelected) {selectedIcon} else {unselectedIcon},
+        MyIcon(
+            icon = if (isSelected) {selectedIcon} else {unselectedIcon},
             contentDescription = title
         )
     }
@@ -108,16 +113,3 @@ fun TabBarBadgeView(count: Int? = null) {
         }
     }
 }
-
-//NavigationBar {
-//        items.forEachIndexed { index, screen ->
-//            NavigationBarItem(
-//                icon = { Icon(screen.icon, contentDescription = screen.title) },
-//                label = { Text(screen.title) },
-//                selected = selectedItem == index,
-//                onClick = {
-//                    selectedItem = index
-//                }
-//            )
-//        }
-//    }

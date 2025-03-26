@@ -46,6 +46,13 @@ fun Main4(onClick: (String) -> Unit) {
 }
 
 @Composable
+fun Main2(onClick: (String) -> Unit) {
+    Text(text = "o fuck aca prendo camara",
+        fontSize = 22.sp,
+        textAlign = TextAlign.Center)
+}
+
+@Composable
 fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostController) {
     NavHost(
         navController = navController,
@@ -61,6 +68,12 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
 
         composable(route = LearningAndroidScreen.Home.name) {
             MainScreen(
+                onClick = { navController.navigate(it) }
+            )
+        }
+
+        composable(route = LearningAndroidScreen.CameraAdd.name) {
+            Main2(
                 onClick = { navController.navigate(it) }
             )
         }

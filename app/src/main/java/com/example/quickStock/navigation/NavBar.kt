@@ -58,7 +58,13 @@ fun NavBar(
         unselectedIcon = IconType.Vector(Icons.Outlined.Person)
     )
 
-    val tabBarItems = listOf(recipeTab,homeTab, profileTab)
+    val cameraAddTab = TabBarItem(
+        title = LearningAndroidScreen.CameraAdd.name,
+        selectedIcon = IconType.Drawable(painterResource(R.drawable.ic_camera_plus_fill)),
+        unselectedIcon = IconType.Drawable(painterResource(R.drawable.ic_camera_plus_outline))
+    )
+
+    val tabBarItems = listOf(recipeTab, homeTab, cameraAddTab, profileTab)
 
     TabView(tabBarItems, onNavigate)
 

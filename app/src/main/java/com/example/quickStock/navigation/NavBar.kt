@@ -41,8 +41,8 @@ fun NavBar(
 ) {
     val homeTab = TabBarItem(
         title = LearningAndroidScreen.Home.name,
-        selectedIcon = IconType.Vector(Icons.Filled.Home),
-        unselectedIcon = IconType.Vector(Icons.Outlined.Home)
+        selectedIcon = IconType.Drawable(painterResource(R.drawable.ic_home_fill)),
+        unselectedIcon = IconType.Drawable(painterResource(R.drawable.ic_home_outline))
     )
     val recipeTab = TabBarItem(
         title = LearningAndroidScreen.Recipe.name,

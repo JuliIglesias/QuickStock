@@ -32,8 +32,15 @@ fun MainScreen(onClick: (String) -> Unit,) {
 }
 
 @Composable
-fun main3(onClick: (String) -> Unit) {
+fun Main3(onClick: (String) -> Unit) {
     Text(text = "puto",
+        fontSize = 22.sp,
+        textAlign = TextAlign.Center)
+}
+
+@Composable
+fun Main4(onClick: (String) -> Unit) {
+    Text(text = "omggggggggggggggggg",
         fontSize = 22.sp,
         textAlign = TextAlign.Center)
 }
@@ -45,13 +52,21 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
         startDestination = LearningAndroidScreen.Home.name,
         modifier = Modifier.fillMaxSize().padding(innerPadding).padding(20.dp)
     ) {
+
+        composable(route = LearningAndroidScreen.Recipe.name) {
+            Main3(
+                onClick = { navController.navigate(it) }
+            )
+        }
+
         composable(route = LearningAndroidScreen.Home.name) {
             MainScreen(
                 onClick = { navController.navigate(it) }
             )
         }
-        composable(route = LearningAndroidScreen.Favorite.name) {
-            main3(
+
+        composable(route = LearningAndroidScreen.User.name) {
+            Main4(
                 onClick = { navController.navigate(it) }
             )
         }

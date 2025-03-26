@@ -1,11 +1,13 @@
 package com.example.quickStock.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.automirrored.filled.MenuBook
+import androidx.compose.material.icons.automirrored.outlined.MenuBook
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.MenuBook
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
@@ -37,10 +39,10 @@ fun NavBar(
         selectedIcon = Icons.Filled.Home,
         unselectedIcon = Icons.Outlined.Home
     )
-    val rankingTab = TabBarItem(
-        title = LearningAndroidScreen.Favorite.name,
-        selectedIcon = Icons.Filled.Favorite,
-        unselectedIcon = Icons.Outlined.Favorite
+    val recipeTab = TabBarItem(
+        title = LearningAndroidScreen.Recipe.name,
+        selectedIcon = Icons.AutoMirrored.Filled.MenuBook,
+        unselectedIcon = Icons.AutoMirrored.Outlined.MenuBook
     )
     val profileTab = TabBarItem(
         title = LearningAndroidScreen.User.name,
@@ -48,7 +50,7 @@ fun NavBar(
         unselectedIcon = Icons.Outlined.Person
     )
 
-    val tabBarItems = listOf(homeTab, rankingTab, profileTab)
+    val tabBarItems = listOf(recipeTab,homeTab, profileTab)
 
     TabView(tabBarItems, onNavigate)
 

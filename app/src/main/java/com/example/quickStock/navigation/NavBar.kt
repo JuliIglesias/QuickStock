@@ -1,5 +1,6 @@
 package com.example.quickStock.navigation
 
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.automirrored.outlined.MenuBook
@@ -20,9 +21,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import com.example.quickStock.R
 import com.example.quickStock.icon.IconType
 import com.example.quickStock.icon.MyIcon
@@ -100,7 +103,8 @@ fun TabBarIconView(
     BadgedBox(badge = { TabBarBadgeView(badgeAmount) }) {
         MyIcon(
             icon = if (isSelected) {selectedIcon} else {unselectedIcon},
-            contentDescription = title
+            contentDescription = title,
+            modifier = Modifier.size(32.dp)
         )
     }
 }

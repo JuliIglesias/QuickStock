@@ -4,7 +4,5 @@ enum class LearningAndroidScreen {
     Home,
     User,
     Recipe,
-    CameraAdd,
-
-
+    AddProduct,
 }

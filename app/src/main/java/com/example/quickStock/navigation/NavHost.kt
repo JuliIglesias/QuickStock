@@ -1,6 +1,5 @@
 package com.example.quickStock.navigation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -72,7 +71,7 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
             )
         }
 
-        composable(route = LearningAndroidScreen.CameraAdd.name) {
+        composable(route = LearningAndroidScreen.AddProduct.name) {
             Main2(
                 onClick = { navController.navigate(it) }
             )

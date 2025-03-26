@@ -2,17 +2,10 @@ package com.example.quickStock.navigation
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.MenuBook
-import androidx.compose.material.icons.automirrored.outlined.MenuBook
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.MenuBook
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
-import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
@@ -22,8 +15,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.quickStock.R
@@ -59,7 +50,7 @@ fun NavBar(
     )
 
     val cameraAddTab = TabBarItem(
-        title = LearningAndroidScreen.CameraAdd.name,
+        title = LearningAndroidScreen.`AddProduct`.name,
         selectedIcon = IconType.Drawable(painterResource(R.drawable.ic_camera_plus_fill)),
         unselectedIcon = IconType.Drawable(painterResource(R.drawable.ic_camera_plus_outline))
     )
@@ -111,6 +102,7 @@ fun TabBarIconView(
             icon = if (isSelected) {selectedIcon} else {unselectedIcon},
             contentDescription = title,
             modifier = Modifier.size(32.dp)
+
         )
     }
 }

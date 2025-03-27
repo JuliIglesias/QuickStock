@@ -29,12 +29,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,8 +44,6 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
     var productExpiryDate by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
     val categories = remember { mutableStateOf(listOf("Refrigerator", "Fruits", "Vegetables", "Meat", "Seafood")) }
-    val keyboardController = LocalSoftwareKeyboardController.current
-    val density = LocalDensity.current
 
     LazyColumn(
         modifier = Modifier
@@ -204,4 +198,3 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
         }
     }
 }
-

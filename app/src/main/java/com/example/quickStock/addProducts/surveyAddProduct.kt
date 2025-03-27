@@ -1,12 +1,13 @@
 package com.example.quickStock.addProducts
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
@@ -28,8 +29,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,138 +48,160 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
     var productExpiryDate by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
     val categories = remember { mutableStateOf(listOf("Refrigerator", "Fruits", "Vegetables", "Meat", "Seafood")) }
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val density = LocalDensity.current
 
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
+            .imePadding(),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(
-            text = "Add Product",
-            style = MaterialTheme.typography.headlineMedium
-        )
-
-        OutlinedTextField(
-            value = productId,
-            onValueChange = { productId = it },
-            label = { Text("Product ID") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = productName,
-            onValueChange = { productName = it },
-            label = { Text("Product Name") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = productPrice,
-            onValueChange = { productPrice = it },
-            label = { Text("Price") },
-            modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-        )
-
-        OutlinedTextField(
-            value = productBrand,
-            onValueChange = { productBrand = it },
-            label = { Text("Brand") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = productExpiryDate,
-            onValueChange = { productExpiryDate = it },
-            label = { Text("Expiry Date") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        ExposedDropdownMenuBox(
-            expanded = expanded,
-            onExpandedChange = { expanded = !expanded }
-        ) {
-            OutlinedTextField(
-                value = productCategory,
-                onValueChange = {
-                    productCategory = it
-                    expanded = true
-                },
-                label = { Text("Category") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .menuAnchor(),
-                trailingIcon = {
-                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
-                }
+        item {
+            Text(
+                text = "Add Product",
+                style = MaterialTheme.typography.headlineMedium
             )
-            ExposedDropdownMenu(
+        }
+
+        item {
+            OutlinedTextField(
+                value = productId,
+                onValueChange = { productId = it },
+                label = { Text("Product ID") },
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
+        item {
+            OutlinedTextField(
+                value = productName,
+                onValueChange = { productName = it },
+                label = { Text("Product Name") },
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
+        item {
+            OutlinedTextField(
+                value = productPrice,
+                onValueChange = { productPrice = it },
+                label = { Text("Price") },
+                modifier = Modifier.fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            )
+        }
+
+        item {
+            OutlinedTextField(
+                value = productBrand,
+                onValueChange = { productBrand = it },
+                label = { Text("Brand") },
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
+        item {
+            OutlinedTextField(
+                value = productExpiryDate,
+                onValueChange = { productExpiryDate = it },
+                label = { Text("Expiry Date") },
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
+        item {
+            ExposedDropdownMenuBox(
                 expanded = expanded,
-                onDismissRequest = { expanded = false }
+                onExpandedChange = { expanded = !expanded }
             ) {
-                categories.value.filter { it.contains(productCategory, ignoreCase = true) }.forEach { category ->
-                    DropdownMenuItem(
-                        text = { Text(category) },
-                        onClick = {
-                            productCategory = category
-                            expanded = false
-                        }
-                    )
-                }
-            }
-        }
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text("Quantity:")
-            IconButton(onClick = { if (productQuantity > 1) productQuantity-- }) {
-                Icon(
-                    Icons.Default.Remove,
-                    contentDescription = "Decrease Quantity"
+                OutlinedTextField(
+                    value = productCategory,
+                    onValueChange = {
+                        productCategory = it
+                        expanded = true
+                    },
+                    label = { Text("Category") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .menuAnchor(),
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                    }
                 )
-            }
-            Text(productQuantity.toString())
-            IconButton(onClick = { productQuantity++ }) {
-                Icon(
-                    Icons.Default.Add,
-                    contentDescription = "Increase Quantity"
-                )
-            }
-        }
-
-        Button(
-            onClick = {
-                val price = productPrice.toDoubleOrNull()
-                if (price != null) {
-                    onProductAdded(
-                        Product(
-                            id = productId,
-                            name = productName,
-                            price = price,
-                            brand = productBrand,
-                            category = productCategory,
-                            quantity = productQuantity,
-                            expiryDate = productExpiryDate
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    categories.value.filter { it.contains(productCategory, ignoreCase = true) }.forEach { category ->
+                        DropdownMenuItem(
+                            text = { Text(category) },
+                            onClick = {
+                                productCategory = category
+                                expanded = false
+                            }
                         )
-                    )
-                    // Reset fields after adding
-                    productId = ""
-                    productName = ""
-                    productPrice = ""
-                    productBrand = ""
-                    productCategory = ""
-                    productQuantity = 1
-                } else {
-                    // Handle invalid price (e.g., show error message)
-                    println("Invalid price format.")
+                    }
                 }
-            },
-            modifier = Modifier.align(Alignment.End)
-        ) {
-            Text("Add Product")
+            }
+        }
+
+        item {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text("Quantity:")
+                IconButton(onClick = { if (productQuantity > 1) productQuantity-- }) {
+                    Icon(
+                        Icons.Default.Remove,
+                        contentDescription = "Decrease Quantity"
+                    )
+                }
+                Text(productQuantity.toString())
+                IconButton(onClick = { productQuantity++ }) {
+                    Icon(
+                        Icons.Default.Add,
+                        contentDescription = "Increase Quantity"
+                    )
+                }
+            }
+        }
+
+        item {
+            Button(
+                onClick = {
+                    val price = productPrice.toDoubleOrNull()
+                    if (price != null) {
+                        onProductAdded(
+                            Product(
+                                id = productId,
+                                name = productName,
+                                price = price,
+                                brand = productBrand,
+                                category = productCategory,
+                                quantity = productQuantity,
+                                expiryDate = productExpiryDate
+                            )
+                        )
+                        // Reset fields after adding
+                        productId = ""
+                        productName = ""
+                        productPrice = ""
+                        productBrand = ""
+                        productCategory = ""
+                        productQuantity = 1
+                        productExpiryDate = ""
+                    } else {
+                        // Handle invalid price (e.g., show error message)
+                        println("Invalid price format.")
+                    }
+                }
+            ) {
+                Text("Add Product")
+            }
         }
     }
 }
+

@@ -1,5 +1,6 @@
 package com.example.quickStock.navigation
 
+import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -12,6 +13,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.quickStock.addProducts.ProductSurvey
 import com.example.quickStock.home.HomeScreen
 import com.example.quickStock.userConfig.UserSettingsPagePreview
 
@@ -26,9 +28,20 @@ fun Main3(onClick: (String) -> Unit) {
 
 @Composable
 fun Main2(onClick: (String) -> Unit) {
-    Text(text = "o fuck aca prendo camara",
-        fontSize = 22.sp,
-        textAlign = TextAlign.Center)
+//    BarcodeScannerScreen { capturedImageUri ->
+//        // Handle the captured image URI here
+//        if (capturedImageUri != null) {
+//            Log.d("BarcodeScanner", "Image captured: $capturedImageUri")
+//            // You can now pass this URI to a barcode scanning library
+//            //or display the image to the user.
+//        } else {
+//            Log.e("BarcodeScanner", "Failed to capture image.")
+//        }
+//    }
+
+    ProductSurvey(onProductAdded = {
+        Log.d("ProductSurvey", "Product added: $it")
+    })
 }
 
 @Composable
@@ -50,8 +63,6 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
                 onClick = { navController.navigate(it) }
             )
         }
-
-
 
         composable(route = NavBarNames.AddProduct.name) {
             Main2(

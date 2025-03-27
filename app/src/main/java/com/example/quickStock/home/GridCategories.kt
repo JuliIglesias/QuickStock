@@ -1,15 +1,10 @@
 package com.example.quickStock.home
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cake
 import androidx.compose.material.icons.filled.ChildCare
@@ -26,23 +21,18 @@ import androidx.compose.material.icons.filled.LocalOffer
 import androidx.compose.material.icons.filled.Pets
 import androidx.compose.material.icons.filled.Receipt
 import androidx.compose.material.icons.filled.SetMeal
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.quickStock.R
+import com.example.quickStock.common.CardButton
+import com.example.quickStock.common.CustomGrid
 
 @Composable
 fun ProductCategoryGrid(
     modifier: Modifier = Modifier,
-    onCategoryClick: (String) -> Unit = {} // Change the callback to use String
+    onCategoryClick: (String) -> Unit = {}
 ) {
     val context = LocalContext.current
     val categories = context.resources.getStringArray(R.array.product_categories)
@@ -74,49 +64,19 @@ fun ProductCategoryGrid(
         "Offers" to Icons.Default.LocalOffer
     )
 
-    LazyVerticalGrid(
-        modifier = modifier
-            .fillMaxSize(),
-        columns = GridCells.Fixed(2),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        items(categories.toList()) { categoryString -> // Iterate over the list of strings
-            CategoryButton(categoryString = categoryString,
-                icon = categoryIcons[categoryString] ?: Icons.Default.Favorite,
-                onClick = { onCategoryClick(categoryString) }) // Pass the string
-        }
+    val buttonDataList = categories.map { categoryString ->
+        CategoryButtonData(
+            title = categoryString,
+            icon = categoryIcons[categoryString] ?: Icons.Default.Favorite,
+            onClick = { onCategoryClick(categoryString) }
+        )
     }
-}
 
-@Composable
-fun CategoryButton(
-    categoryString: String,
-    icon: ImageVector,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Button(
-        onClick = onClick,
-        shape = RoundedCornerShape(16.dp),
-        modifier = modifier.size(180.dp)
-    ) {
-        Column( modifier = Modifier,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-        ){
-            // Get the icon from the mapping, or use a default icon if not found
-            Icon(
-                imageVector = icon,
-                contentDescription = categoryString,
-                modifier = Modifier.size(72.dp)
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Text(text = categoryString,
-                fontSize = 22.sp,
-                textAlign = TextAlign.Center)
-        }
-    }
+    CustomGrid(
+        items = buttonDataList,
+        modifier = modifier,
+        columns = 2,
+        verticalSpacing = 16,
+        horizontalSpacing = 16
+    )
 }

@@ -13,6 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.quickStock.home.HomeScreen
+import com.example.quickStock.userConfig.UserSettingsPagePreview
 
 
 @Composable
@@ -22,12 +23,6 @@ fun Main3(onClick: (String) -> Unit) {
         textAlign = TextAlign.Center)
 }
 
-@Composable
-fun Main4(onClick: (String) -> Unit) {
-    Text(text = "omggggggggggggggggg",
-        fontSize = 22.sp,
-        textAlign = TextAlign.Center)
-}
 
 @Composable
 fun Main2(onClick: (String) -> Unit) {
@@ -65,7 +60,7 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
         }
 
         composable(route = NavBarNames.User.name) {
-            Main4(
+            UserSettingsPagePreview(
                 onClick = { navController.navigate(it) }
             )
         }

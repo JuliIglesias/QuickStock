@@ -11,6 +11,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -27,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductSurvey(onProductAdded: (Product) -> Unit) {
     var productId by remember { mutableStateOf("") }
@@ -35,6 +40,9 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
     var productBrand by remember { mutableStateOf("") }
     var productCategory by remember { mutableStateOf("") }
     var productQuantity by remember { mutableIntStateOf(1) }
+    var productExpiryDate by remember { mutableStateOf("") }
+    var expanded by remember { mutableStateOf(false) }
+    val categories = remember { mutableStateOf(listOf("Refrigerator", "Fruits", "Vegetables", "Meat", "Seafood")) }
 
     Column(
         modifier = Modifier
@@ -77,11 +85,45 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
         )
 
         OutlinedTextField(
-            value = productCategory,
-            onValueChange = { productCategory = it },
-            label = { Text("Category") },
+            value = productExpiryDate,
+            onValueChange = { productExpiryDate = it },
+            label = { Text("Expiry Date") },
             modifier = Modifier.fillMaxWidth()
         )
+
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded }
+        ) {
+            OutlinedTextField(
+                value = productCategory,
+                onValueChange = {
+                    productCategory = it
+                    expanded = true
+                },
+                label = { Text("Category") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .menuAnchor(),
+                trailingIcon = {
+                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                }
+            )
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                categories.value.filter { it.contains(productCategory, ignoreCase = true) }.forEach { category ->
+                    DropdownMenuItem(
+                        text = { Text(category) },
+                        onClick = {
+                            productCategory = category
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -114,7 +156,8 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                             price = price,
                             brand = productBrand,
                             category = productCategory,
-                            quantity = productQuantity
+                            quantity = productQuantity,
+                            expiryDate = productExpiryDate
                         )
                     )
                     // Reset fields after adding

@@ -1,10 +1,11 @@
 package com.example.quickStock.addProducts
 
 data class Product(
-    val id: String,
+    val id: String, //en un futuro se cambiara a lo que escanee con el barcode scanner y la camara del celular
     val name: String,
     val price: Double,
     val brand: String,
     val category: String,
-    val quantity: Int
+    val quantity: Int,
+    val expiryDate: String //en un futuro se cambiara a Date
 )

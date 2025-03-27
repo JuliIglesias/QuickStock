@@ -59,17 +59,19 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
         modifier = Modifier.fillMaxSize().padding(innerPadding).padding(20.dp)
     ) {
 
+        composable(route = LearningAndroidScreen.Home.name) {
+            MainScreen(
+                onClick = { navController.navigate(it) }
+            )
+        }
+
         composable(route = LearningAndroidScreen.Recipe.name) {
             Main3(
                 onClick = { navController.navigate(it) }
             )
         }
 
-        composable(route = LearningAndroidScreen.Home.name) {
-            MainScreen(
-                onClick = { navController.navigate(it) }
-            )
-        }
+
 
         composable(route = LearningAndroidScreen.AddProduct.name) {
             Main2(

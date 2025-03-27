@@ -50,7 +50,7 @@ fun NavBar(
     )
 
     val cameraAddTab = TabBarItem(
-        title = LearningAndroidScreen.`AddProduct`.name,
+        title = LearningAndroidScreen.AddProduct.name,
         selectedIcon = IconType.Drawable(painterResource(R.drawable.ic_camera_plus_fill)),
         unselectedIcon = IconType.Drawable(painterResource(R.drawable.ic_camera_plus_outline))
     )
@@ -64,7 +64,7 @@ fun NavBar(
 @Composable
 fun TabView(tabBarItems: List<TabBarItem>, onNavigate: (String) -> Unit) {
     var selectedTabIndex by rememberSaveable {
-        mutableIntStateOf(0)
+        mutableIntStateOf(1)
     }
 
     NavigationBar {

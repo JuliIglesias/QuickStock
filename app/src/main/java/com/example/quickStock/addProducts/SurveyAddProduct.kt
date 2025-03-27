@@ -1,5 +1,6 @@
 package com.example.quickStock.addProducts
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -197,4 +198,23 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
             }
         }
     }
+}
+
+
+@Composable
+fun AddProductSurvey(onClick: (String) -> Unit) {
+//    BarcodeScannerScreen { capturedImageUri ->
+//        // Handle the captured image URI here
+//        if (capturedImageUri != null) {
+//            Log.d("BarcodeScanner", "Image captured: $capturedImageUri")
+//            // You can now pass this URI to a barcode scanning library
+//            //or display the image to the user.
+//        } else {
+//            Log.e("BarcodeScanner", "Failed to capture image.")
+//        }
+//    }
+
+    ProductSurvey(onProductAdded = {
+        Log.d("ProductSurvey", "Product added: $it")
+    })
 }

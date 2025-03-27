@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.quickStock.addProducts.AddProductSurvey
 import com.example.quickStock.addProducts.ProductSurvey
 import com.example.quickStock.home.HomeScreen
 import com.example.quickStock.userConfig.UserSettingsPagePreview
@@ -25,24 +26,6 @@ fun Main3(onClick: (String) -> Unit) {
         textAlign = TextAlign.Center)
 }
 
-
-@Composable
-fun Main2(onClick: (String) -> Unit) {
-//    BarcodeScannerScreen { capturedImageUri ->
-//        // Handle the captured image URI here
-//        if (capturedImageUri != null) {
-//            Log.d("BarcodeScanner", "Image captured: $capturedImageUri")
-//            // You can now pass this URI to a barcode scanning library
-//            //or display the image to the user.
-//        } else {
-//            Log.e("BarcodeScanner", "Failed to capture image.")
-//        }
-//    }
-
-    ProductSurvey(onProductAdded = {
-        Log.d("ProductSurvey", "Product added: $it")
-    })
-}
 
 @Composable
 fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostController) {
@@ -65,7 +48,7 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
         }
 
         composable(route = NavBarNames.AddProduct.name) {
-            Main2(
+            AddProductSurvey(
                 onClick = { navController.navigate(it) }
             )
         }

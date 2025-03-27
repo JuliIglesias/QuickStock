@@ -55,17 +55,17 @@ fun Main2(onClick: (String) -> Unit) {
 fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = LearningAndroidScreen.Home.name,
+        startDestination = NavBarNames.Home.name,
         modifier = Modifier.fillMaxSize().padding(innerPadding).padding(20.dp)
     ) {
 
-        composable(route = LearningAndroidScreen.Home.name) {
+        composable(route = NavBarNames.Home.name) {
             MainScreen(
                 onClick = { navController.navigate(it) }
             )
         }
 
-        composable(route = LearningAndroidScreen.Recipe.name) {
+        composable(route = NavBarNames.Recipe.name) {
             Main3(
                 onClick = { navController.navigate(it) }
             )
@@ -73,13 +73,13 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
 
 
 
-        composable(route = LearningAndroidScreen.AddProduct.name) {
+        composable(route = NavBarNames.AddProduct.name) {
             Main2(
                 onClick = { navController.navigate(it) }
             )
         }
 
-        composable(route = LearningAndroidScreen.User.name) {
+        composable(route = NavBarNames.User.name) {
             Main4(
                 onClick = { navController.navigate(it) }
             )

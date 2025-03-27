@@ -1,6 +1,6 @@
 package com.example.quickStock.navigation
 
-enum class LearningAndroidScreen {
+enum class NavBarNames {
     Home,
     User,
     Recipe,

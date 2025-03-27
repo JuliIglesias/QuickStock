@@ -34,23 +34,23 @@ fun NavBar(
     onNavigate: (String) -> Unit,
 ) {
     val homeTab = TabBarItem(
-        title = LearningAndroidScreen.Home.name,
+        title = NavBarNames.Home.name,
         selectedIcon = IconType.Drawable(painterResource(R.drawable.ic_home_fill)),
         unselectedIcon = IconType.Drawable(painterResource(R.drawable.ic_home_outline))
     )
     val recipeTab = TabBarItem(
-        title = LearningAndroidScreen.Recipe.name,
+        title = NavBarNames.Recipe.name,
         selectedIcon = IconType.Drawable(painterResource(R.drawable.ic_recipe_fill)),
         unselectedIcon = IconType.Drawable(painterResource(R.drawable.ic_recipe_outline))
     )
     val profileTab = TabBarItem(
-        title = LearningAndroidScreen.User.name,
+        title = NavBarNames.User.name,
         selectedIcon = IconType.Vector(Icons.Filled.Person),
         unselectedIcon = IconType.Vector(Icons.Outlined.Person)
     )
 
     val cameraAddTab = TabBarItem(
-        title = LearningAndroidScreen.AddProduct.name,
+        title = NavBarNames.AddProduct.name,
         selectedIcon = IconType.Drawable(painterResource(R.drawable.ic_camera_plus_fill)),
         unselectedIcon = IconType.Drawable(painterResource(R.drawable.ic_camera_plus_outline))
     )

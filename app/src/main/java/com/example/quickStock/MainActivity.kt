@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.example.quickStock.navigation.NavBar
 import com.example.quickStock.navigation.NavHostComposable
-import com.example.quickStock.ui.theme.QuickstoreTheme
+import com.example.quickStock.ui.theme.QuickStockTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
-            QuickstoreTheme {
+            QuickStockTheme {
                 Scaffold(
                     modifier = Modifier
                         .fillMaxSize(),

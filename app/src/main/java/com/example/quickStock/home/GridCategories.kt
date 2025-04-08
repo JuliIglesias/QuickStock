@@ -1,10 +1,5 @@
 package com.example.quickStock.home
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cake
 import androidx.compose.material.icons.filled.ChildCare
@@ -24,9 +19,7 @@ import androidx.compose.material.icons.filled.SetMeal
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import com.example.quickStock.R
-import com.example.quickStock.common.CardButton
 import com.example.quickStock.common.CustomGrid
 
 @Composable

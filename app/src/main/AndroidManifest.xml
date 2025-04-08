@@ -10,13 +10,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Quickstore"
+        android:theme="@style/Theme.QuickStock"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Quickstore">
+            android:theme="@style/Theme.QuickStock">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

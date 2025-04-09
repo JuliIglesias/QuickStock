@@ -14,7 +14,6 @@ fun HomeScreen(onClick: (String) -> Unit,) {
     Column(modifier = Modifier.fillMaxSize()) {
         Surface(
             modifier = Modifier.fillMaxWidth(),
-            color = MaterialTheme.colorScheme.primaryContainer
         ) {
             ProductCategoryGrid()
         }

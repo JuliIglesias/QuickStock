@@ -1,26 +1,12 @@
 package com.example.quickStock.home
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Cake
-import androidx.compose.material.icons.filled.ChildCare
-import androidx.compose.material.icons.filled.CleaningServices
-import androidx.compose.material.icons.filled.Devices
-import androidx.compose.material.icons.filled.Egg
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Kitchen
-import androidx.compose.material.icons.filled.LocalDining
-import androidx.compose.material.icons.filled.LocalDrink
-import androidx.compose.material.icons.filled.LocalFlorist
-import androidx.compose.material.icons.filled.LocalGroceryStore
-import androidx.compose.material.icons.filled.LocalOffer
-import androidx.compose.material.icons.filled.Pets
-import androidx.compose.material.icons.filled.Receipt
-import androidx.compose.material.icons.filled.SetMeal
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import com.example.quickStock.R
 import com.example.quickStock.common.CustomGrid
+import com.example.quickStock.icon.IconType
 
 @Composable
 fun ProductCategoryGrid(
@@ -30,37 +16,31 @@ fun ProductCategoryGrid(
     val context = LocalContext.current
     val categories = context.resources.getStringArray(R.array.product_categories)
     val categoryIcons = mapOf(
-        "Refrigerator" to Icons.Default.Kitchen,
-        "Fruits" to Icons.Default.LocalFlorist,
-        "Vegetables" to Icons.Default.LocalFlorist,
-        "Meat" to Icons.Default.LocalDining,
-        "Seafood" to Icons.Default.SetMeal,
-        "Dairy & Eggs" to Icons.Default.Egg,
-        "Bakery" to Icons.Default.Cake,
-        "Grains & Pasta" to Icons.Default.LocalDining,
-        "Canned Goods" to Icons.Default.LocalGroceryStore,
-        "Condiments & Sauces" to Icons.Default.LocalGroceryStore,
-        "Spices & Herbs" to Icons.Default.LocalGroceryStore,
-        "Oils & Vinegars" to Icons.Default.LocalGroceryStore,
-        "Snacks" to Icons.Default.LocalGroceryStore,
-        "Beverages" to Icons.Default.LocalDrink,
-        "Baking Supplies" to Icons.Default.LocalGroceryStore,
-        "Frozen Fruits & Vegetables" to Icons.Default.LocalFlorist,
-        "Frozen Meals" to Icons.Default.LocalDining,
-        "Frozen Desserts" to Icons.Default.LocalDining,
-        "Cleaning" to Icons.Default.CleaningServices,
-        "Personal Care" to Icons.Default.Favorite,
-        "Paper Products" to Icons.Default.Receipt,
-        "Pet Supplies" to Icons.Default.Pets,
-        "Electronics" to Icons.Default.Devices,
-        "Baby" to Icons.Default.ChildCare,
-        "Offers" to Icons.Default.LocalOffer
+        "Refrigerator" to IconType.Drawable(painterResource(R.drawable.ic_refrigerator)),
+        "Fruits" to IconType.Drawable(painterResource(R.drawable.ic_fruit)),
+        "Vegetables" to IconType.Drawable(painterResource(R.drawable.ic_veggie)),
+        "Meat" to IconType.Drawable(painterResource(R.drawable.ic_meat)),
+        "Seafood" to IconType.Drawable(painterResource(R.drawable.ic_fish_cat)),
+        "Dairy & Eggs" to IconType.Drawable(painterResource(R.drawable.ic_egg)),
+        "Bakery" to IconType.Drawable(painterResource(R.drawable.ic_cake)),
+        "Grains & Pasta" to IconType.Drawable(painterResource(R.drawable.ic_pasta)),
+        "Canned Goods" to IconType.Drawable(painterResource(R.drawable.ic_canned_sauce)),
+        "Spices & Herbs" to IconType.Drawable(painterResource(R.drawable.ic_herbs)),
+        "Snacks" to IconType.Drawable(painterResource(R.drawable.ic_cookie)),
+        "Beverages" to IconType.Drawable(painterResource(R.drawable.ic_cocktail)),
+        "Bathroom" to IconType.Drawable(painterResource(R.drawable.ic_bath_paper)),
+        "Personal Care" to IconType.Drawable(painterResource(R.drawable.ic_personal_care)),
+        "Paper Products" to IconType.Drawable(painterResource(R.drawable.ic_school)),
+        "Pet Supplies" to IconType.Drawable(painterResource(R.drawable.ic_paw_pet)),
+        "Electronics" to IconType.Drawable(painterResource(R.drawable.ic_computer)),
+        "Baby" to IconType.Drawable(painterResource(R.drawable.ic_baby_bottle)),
+        "Household" to IconType.Drawable(painterResource(R.drawable.ic_kitchen_suplies)),
     )
 
     val buttonDataList = categories.map { categoryString ->
         CategoryButtonData(
             title = categoryString,
-            icon = categoryIcons[categoryString] ?: Icons.Default.Favorite,
+            icon = categoryIcons[categoryString] ?: IconType.Drawable(painterResource(R.drawable.ic_question_mark)),
             onClick = { onCategoryClick(categoryString) }
         )
     }

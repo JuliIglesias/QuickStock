@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.quickStock.icon.MyIcon
 
 
 @Composable
@@ -31,8 +32,8 @@ fun CardButton(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
-            Icon(
-                imageVector = buttonData.icon,
+            MyIcon(
+                icon = buttonData.icon,
                 contentDescription = buttonData.title,
                 modifier = Modifier.size(72.dp)
             )

@@ -11,8 +11,10 @@ import androidx.compose.material.icons.filled.SetMeal
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import com.example.quickStock.R
 import com.example.quickStock.common.CustomGrid
+import com.example.quickStock.icon.IconType
 
 @Composable
 fun GridRecipes(
@@ -22,34 +24,24 @@ fun GridRecipes(
     val context = LocalContext.current
     val typeOfRecipes = context.resources.getStringArray(R.array.recipe_types)
     val typeOfRecipesIcons = mapOf(
-        "Meat" to Icons.Default.LocalDining,
-        "Chicken" to Icons.Default.SetMeal,
-        "Fish" to Icons.Default.SetMeal,
-        "Vegetarian" to Icons.Default.LocalFlorist,
-        "Vegan" to Icons.Default.LocalFlorist,
-        "Desserts" to Icons.Default.Cake,
-        "Alcoholic Beverages" to Icons.Default.LocalDrink,
-        "Non-Alcoholic Beverages" to Icons.Default.LocalDrink,
-        "Salads" to Icons.Default.LocalFlorist,
-        "Soups" to Icons.Default.LocalDining,
-        "Pasta" to Icons.Default.LocalDining,
-        "Bakery" to Icons.Default.Cake,
-        "Seafood" to Icons.Default.SetMeal,
-        "Appetizers" to Icons.Default.LocalGroceryStore,
-        "Sauces" to Icons.Default.LocalGroceryStore,
-        "Grains and Legumes" to Icons.Default.LocalDining,
-        "Breakfast" to Icons.Default.LocalDining,
-        "Fast Food" to Icons.Default.LocalDining,
-        "International Cuisine" to Icons.Default.LocalDining,
-        "Main Dishes" to Icons.Default.LocalDining,
-        "Starters" to Icons.Default.LocalDining,
-        "Side Dishes" to Icons.Default.LocalDining
+        "Fruits" to IconType.Drawable(painterResource(R.drawable.ic_fruit)),
+        "Vegetables" to IconType.Drawable(painterResource(R.drawable.ic_veggie)),
+        "Meat" to IconType.Drawable(painterResource(R.drawable.ic_meat)),
+        "Seafood" to IconType.Drawable(painterResource(R.drawable.ic_fish_cat)),
+        "Chicken" to IconType.Drawable(painterResource(R.drawable.ic_chicken)),
+        "Vegetarian" to IconType.Drawable(painterResource(R.drawable.ic_salad)),
+        "Desserts" to IconType.Drawable(painterResource(R.drawable.ic_cookie)),
+        "Alcoholic Beverages" to IconType.Drawable(painterResource(R.drawable.ic_cocktail)),
+        "Pasta" to IconType.Drawable(painterResource(R.drawable.ic_pasta)),
+        "Bakery" to IconType.Drawable(painterResource(R.drawable.ic_cake)),
+        "Breakfast" to IconType.Drawable(painterResource(R.drawable.ic_egg)),
+        "Fast Food" to IconType.Drawable(painterResource(R.drawable.ic_hamburger)),
     )
 
     val buttonDataList = typeOfRecipes.map { recipeString ->
         RecipeButtonData(
             title = recipeString,
-            icon = typeOfRecipesIcons[recipeString] ?: Icons.Default.Favorite,
+            icon = typeOfRecipesIcons[recipeString] ?: IconType.Drawable(painterResource(R.drawable.ic_question_mark)),
             onClick = { onRecipeClick(recipeString) }
         )
     }

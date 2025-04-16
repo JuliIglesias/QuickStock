@@ -34,8 +34,7 @@ private val LightColorScheme = lightColorScheme(
     onPrimary = LightDarkText,
     onSecondary = LightDarkText,
     onTertiary = LightDarkText,
-    onBackground = Color(0xFF1F1B1F),
-    onSurface = Color(0xFF1E1B1F),
+
 
 )
 
@@ -43,15 +42,9 @@ private val LightColorScheme = lightColorScheme(
 fun QuickStockTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }

@@ -1,13 +1,14 @@
 package com.example.quickStock.icon
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 
 
 sealed class IconType{
@@ -17,22 +18,16 @@ sealed class IconType{
 
 @Composable
 fun MyIcon(
-    icon: IconType,
+    icon: ImageVector,
     contentDescription: String? = null,
-    modifier: Modifier
+    modifier: Modifier,
+    tint: Color= Color.Unspecified,
 ) {
-    when (icon) {
-        is IconType.Vector -> Icon(
-            imageVector = icon.imageVector,
-            contentDescription = contentDescription,
-            modifier = modifier,
-            tint = Color.Black
-        )
-        is IconType.Drawable -> Image(
-            painter = icon.painter,
-            contentDescription = contentDescription,
-            modifier = modifier
-        )
-    }
+    Icon(
+        imageVector = icon,
+        contentDescription = contentDescription,
+        modifier = modifier,
+        tint = tint
+    )
 }
 

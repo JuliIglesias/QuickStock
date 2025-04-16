@@ -6,7 +6,7 @@ import com.example.quickStock.icon.IconType
 
 interface ICardButton {
     val title: String
-    val icon: IconType
+    val icon: ImageVector
     val onClick: () -> Unit
     val modifier: Modifier
 }

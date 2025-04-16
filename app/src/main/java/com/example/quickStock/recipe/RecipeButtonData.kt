@@ -7,7 +7,7 @@ import com.example.quickStock.icon.IconType
 
 data class RecipeButtonData(
     override val title: String,
-    override val icon: IconType,
+    override val icon: ImageVector,
     override val onClick: () -> Unit,
     override val modifier: Modifier = Modifier
 ) : ICardButton

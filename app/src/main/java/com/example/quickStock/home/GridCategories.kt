@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import com.example.quickStock.R
 import com.example.quickStock.common.CustomGrid
 import com.example.quickStock.icon.IconType
@@ -18,27 +19,26 @@ fun ProductCategoryGrid(
     val context = LocalContext.current
     val categories = context.resources.getStringArray(R.array.product_categories)
     val categoryIcons = mapOf(
-        "Refrigerator" to IconType.Drawable(painterResource(R.drawable.ic_refrigerator)),
-        "Fruits" to IconType.Drawable(painterResource(R.drawable.ic_fruit)),
-        "Vegetables" to IconType.Drawable(painterResource(R.drawable.ic_veggie)),
-        "Meat" to IconType.Drawable(painterResource(R.drawable.ic_meat)),
-        "Seafood" to IconType.Drawable(painterResource(R.drawable.ic_fish_cat)),
-        "Dairy & Eggs" to IconType.Drawable(painterResource(R.drawable.ic_egg)),
-        "Bakery" to IconType.Drawable(painterResource(R.drawable.ic_cake)),
-        "Grains & Pasta" to IconType.Drawable(painterResource(R.drawable.ic_pasta)),
-        "Canned Goods" to IconType.Drawable(painterResource(R.drawable.ic_canned_sauce)),
-        "Spices & Herbs" to IconType.Drawable(painterResource(R.drawable.ic_herbs)),
-        "Snacks" to IconType.Drawable(painterResource(R.drawable.ic_cookie)),
-        "Beverages" to IconType.Drawable(painterResource(R.drawable.ic_cocktail)),
-        "Bathroom" to IconType.Drawable(painterResource(R.drawable.ic_bath_paper)),
-        "Personal Care" to IconType.Drawable(painterResource(R.drawable.ic_personal_care)),
-        "Paper Products" to IconType.Drawable(painterResource(R.drawable.ic_school)),
-        "Pet Supplies" to IconType.Drawable(painterResource(R.drawable.ic_paw_pet)),
-        "Electronics" to IconType.Drawable(painterResource(R.drawable.ic_computer)),
-        "Baby" to IconType.Drawable(painterResource(R.drawable.ic_baby_bottle)),
-        "Household" to IconType.Drawable(painterResource(R.drawable.ic_kitchen_suplies)),
-    )
-
+    stringResource(R.string.refrigerator) to IconType.Drawable(painterResource(R.drawable.ic_refrigerator)),
+    stringResource(R.string.fruits) to IconType.Drawable(painterResource(R.drawable.ic_fruit)),
+    stringResource(R.string.vegetables) to IconType.Drawable(painterResource(R.drawable.ic_veggie)),
+    stringResource(R.string.meat) to IconType.Drawable(painterResource(R.drawable.ic_meat)),
+    stringResource(R.string.seafood) to IconType.Drawable(painterResource(R.drawable.ic_fish_cat)),
+    stringResource(R.string.dairy_and_eggs) to IconType.Drawable(painterResource(R.drawable.ic_egg)),
+    stringResource(R.string.bakery) to IconType.Drawable(painterResource(R.drawable.ic_cake)),
+    stringResource(R.string.grains_and_pasta) to IconType.Drawable(painterResource(R.drawable.ic_pasta)),
+    stringResource(R.string.canned_goods) to IconType.Drawable(painterResource(R.drawable.ic_canned_sauce)),
+    stringResource(R.string.spices_and_herbs) to IconType.Drawable(painterResource(R.drawable.ic_herbs)),
+    stringResource(R.string.snacks) to IconType.Drawable(painterResource(R.drawable.ic_cookie)),
+    stringResource(R.string.beverages) to IconType.Drawable(painterResource(R.drawable.ic_cocktail)),
+    stringResource(R.string.bathroom) to IconType.Drawable(painterResource(R.drawable.ic_bath_paper)),
+    stringResource(R.string.personal_care) to IconType.Drawable(painterResource(R.drawable.ic_personal_care)),
+    stringResource(R.string.paper_products) to IconType.Drawable(painterResource(R.drawable.ic_school)),
+    stringResource(R.string.pet_supplies) to IconType.Drawable(painterResource(R.drawable.ic_paw_pet)),
+    stringResource(R.string.electronics) to IconType.Drawable(painterResource(R.drawable.ic_computer)),
+    stringResource(R.string.baby) to IconType.Drawable(painterResource(R.drawable.ic_baby_bottle)),
+    stringResource(R.string.household) to IconType.Drawable(painterResource(R.drawable.ic_kitchen_suplies)),
+)
     val buttonDataList = categories.map { categoryString ->
         CategoryButtonData(
             title = categoryString,

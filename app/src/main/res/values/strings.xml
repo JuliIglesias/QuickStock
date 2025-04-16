@@ -2,27 +2,26 @@
     <string name="app_name">QuickStock</string>
 
     <string-array name="product_categories">
-        <item>Refrigerator</item>
-        <item>Fruits</item>
-        <item>Vegetables</item>
         <item>Meat</item>
         <item>Seafood</item>
+        <item>Fruits</item>
+        <item>Vegetables</item>
+        <item>Refrigerator</item>
         <item>Dairy &amp; Eggs</item>
-        <item>Bakery</item>
         <item>Grains &amp; Pasta</item>
         <item>Canned Goods</item>
         <item>Spices &amp; Herbs</item>
-        <item>Snacks</item>
         <item>Beverages</item>
+        <item>Bakery</item>
+        <item>Snacks</item>
+        <item>Baby</item>
         <item>Bathroom</item>
         <item>Household</item>
         <item>Personal Care</item>
         <item>Paper Products</item>
         <item>Pet Supplies</item>
         <item>Electronics</item>
-        <item>Baby</item>
     </string-array>
-
 
     <string-array name="recipe_types">
         <item>Meat</item>
@@ -39,6 +38,20 @@
         <item>Fast Food</item>
     </string-array>
 
+    <string name="refrigerator">Refrigerator</string>
+    <string name="dairy_and_eggs">Dairy &amp; Eggs</string>
+    <string name="grains_and_pasta">Grains &amp; Pasta</string>
+    <string name="canned_goods">Canned Goods</string>
+    <string name="spices_and_herbs">Spices &amp; Herbs</string>
+    <string name="snacks">Snacks</string>
+    <string name="beverages">Beverages</string>
+    <string name="bathroom">Bathroom</string>
+    <string name="personal_care">Personal Care</string>
+    <string name="paper_products">Paper Products</string>
+    <string name="pet_supplies">Pet Supplies</string>
+    <string name="electronics">Electronics</string>
+    <string name="baby">Baby</string>
+    <string name="household">Household</string>
     <string name="meat">Meat</string>
     <string name="chicken">Chicken</string>
     <string name="seafood">Seafood</string>

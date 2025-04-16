@@ -2,10 +2,16 @@ package com.example.quickStock.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Green80 = Color(0xFFC8FFBC)
-val GreenGrey80 = Color(0xFFCCDCC2)
-val GreenDark80 = Color(0xFFB0EB8B)
+//Dark theme colors
+val DarkGreen1 = Color(0xFFF2F2F2)
+val DarkGreenBack = Color(0xFF262626)
+val DarkGreen2 = Color(0xFF98D996)
+val DarkGreen3 = Color(0xFF51A644)
+val DarkLightText = Color(0xFFCFF3CE)
 
-val Green40 = Color(0xFF70A450)
-val GreenGrey40 = Color(0xFF62715B)
-val GreenDark40 = Color(0xFF537D52)
+//Light theme colors
+val LightGreen1 = Color(0xFF98D996)
+val LightGreenBack = Color(0xFF6DAA46)
+val LightGreen2 = Color(0xFFB0EB8B)
+val LightGreen3 = Color(0xFF98D996)
+val LightDarkText = Color(0xFF262626)

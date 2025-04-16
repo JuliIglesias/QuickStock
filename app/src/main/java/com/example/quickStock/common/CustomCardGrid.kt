@@ -1,5 +1,6 @@
 package com.example.quickStock.common
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -19,10 +20,11 @@ fun CustomGrid(
     onItemClick: (ICardButton) -> Unit = {}
 ) {
     LazyVerticalGrid(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().background(color = androidx.compose.ui.graphics.Color.Transparent),
         columns = GridCells.Fixed(columns),
         verticalArrangement = Arrangement.spacedBy(verticalSpacing.dp),
         horizontalArrangement = Arrangement.spacedBy(horizontalSpacing.dp),
+
     ) {
         items(items) { item ->
             CardButton(buttonData = item)

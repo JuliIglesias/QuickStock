@@ -23,8 +23,11 @@ import com.example.quickStock.R
 import com.example.quickStock.icon.IconType
 import com.example.quickStock.icon.MyIcon
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -76,6 +79,10 @@ fun TabView(tabBarItems: List<TabBarItem>, onNavigate: (String) -> Unit) {
 
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.surface,
+        modifier = Modifier.height(80.dp)
+            .shadow(10.dp,
+                shape = RectangleShape,
+                clip = true, ambientColor = Color.Black,)
     ) {
         tabBarItems.forEachIndexed { index, tabBarItem ->
             NavigationBarItem(

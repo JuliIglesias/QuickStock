@@ -27,26 +27,16 @@
     <string-array name="recipe_types">
         <item>Meat</item>
         <item>Chicken</item>
-        <item>Fish</item>
-        <item>Vegetarian</item>
-        <item>Vegan</item>
-        <item>Desserts</item>
-        <item>Alcoholic Beverages</item>
-        <item>Non-Alcoholic Beverages</item>
-        <item>Salads</item>
-        <item>Soups</item>
-        <item>Pasta</item>
-        <item>Bakery</item>
         <item>Seafood</item>
-        <item>Appetizers</item>
-        <item>Sauces</item>
-        <item>Grains and Legumes</item>
+        <item>Salads</item>
+        <item>Vegetables</item>
+        <item>Fruits</item>
         <item>Breakfast</item>
+        <item>Pasta</item>
+        <item>Desserts</item>
+        <item>Bakery</item>
+        <item>Alcoholic Beverages</item>
         <item>Fast Food</item>
-        <item>International Cuisine</item>
-        <item>Main Dishes</item>
-        <item>Starters</item>
-        <item>Side Dishes</item>
     </string-array>
 
 </resources>

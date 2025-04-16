@@ -29,7 +29,7 @@ fun GridRecipes(
         "Meat" to IconType.Drawable(painterResource(R.drawable.ic_meat)),
         "Seafood" to IconType.Drawable(painterResource(R.drawable.ic_fish_cat)),
         "Chicken" to IconType.Drawable(painterResource(R.drawable.ic_chicken)),
-        "Vegetarian" to IconType.Drawable(painterResource(R.drawable.ic_salad)),
+        "Salads" to IconType.Drawable(painterResource(R.drawable.ic_salad)),
         "Desserts" to IconType.Drawable(painterResource(R.drawable.ic_cookie)),
         "Alcoholic Beverages" to IconType.Drawable(painterResource(R.drawable.ic_cocktail)),
         "Pasta" to IconType.Drawable(painterResource(R.drawable.ic_pasta)),

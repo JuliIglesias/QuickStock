@@ -39,4 +39,17 @@
         <item>Fast Food</item>
     </string-array>
 
+    <string name="meat">Meat</string>
+    <string name="chicken">Chicken</string>
+    <string name="seafood">Seafood</string>
+    <string name="salads">Salads</string>
+    <string name="vegetables">Vegetables</string>
+    <string name="fruits">Fruits</string>
+    <string name="breakfast">Breakfast</string>
+    <string name="pasta">Pasta</string>
+    <string name="desserts">Desserts</string>
+    <string name="bakery">Bakery</string>
+    <string name="alcoholic_beverages">Alcoholic Beverages</string>
+    <string name="fast_food">Fast Food</string>
+
 </resources>

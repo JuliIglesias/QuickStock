@@ -1,5 +1,6 @@
 package com.example.quickStock.userConfig
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,12 +24,13 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun UserSettingsPage() {
     var notificationsEnabled by remember {
-        mutableStateOf(
-            true
-        )
+        mutableStateOf(true)
     }
 
     var username by remember { mutableStateOf("John Doe") }
+
+    val systemDarkTheme = isSystemInDarkTheme()
+    var darkModeEnabled by remember { mutableStateOf(DarkModeConfig.darkModeEnabled ?: systemDarkTheme) }
 
     Column(
         modifier = Modifier
@@ -67,18 +69,12 @@ fun UserSettingsPage() {
         ) {
             Text("Dark Mode")
             Switch(
-                checked = DarkModeConfig.darkModeEnabled,
-                onCheckedChange = { DarkModeConfig.darkModeEnabled = it }
+                checked = darkModeEnabled,
+                onCheckedChange = { isChecked ->
+                    darkModeEnabled = isChecked
+                    DarkModeConfig.saveSettings(isChecked)
+                }
             )
-        }
-
-        Button(
-            onClick = {
-                DarkModeConfig.saveSettings()
-            },
-            modifier = Modifier.align(Alignment.End)
-        ) {
-            Text("Save Settings")
         }
     }
 }

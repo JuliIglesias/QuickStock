@@ -43,7 +43,8 @@ private val LightColorScheme = lightColorScheme(
 fun QuickStockTheme(
     content: @Composable () -> Unit
 ) {
-    val darkTheme = DarkModeConfig.darkModeEnabled
+    val systemDarkTheme = isSystemInDarkTheme()
+    val darkTheme = DarkModeConfig.darkModeEnabled ?: systemDarkTheme
 
     val colorScheme = if (darkTheme) {
         DarkColorScheme

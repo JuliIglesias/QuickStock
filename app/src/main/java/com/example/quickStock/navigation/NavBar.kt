@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.example.quickStock.R
 import com.example.quickStock.icon.MyIcon
 import androidx.compose.foundation.border
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.draw.shadow
@@ -81,7 +82,7 @@ fun TabView(tabBarItems: List<TabBarItem>, onNavigate: (String) -> Unit) {
     }
 
     val gradientBrush = Brush.verticalGradient(
-        colors = if (DarkModeConfig.darkModeEnabled) {
+        colors = if (DarkModeConfig.darkModeEnabled ?: isSystemInDarkTheme()) {
             listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.surface)
         } else {
             listOf(MaterialTheme.colorScheme.tertiary, MaterialTheme.colorScheme.surface)

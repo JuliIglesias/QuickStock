@@ -5,9 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
 object DarkModeConfig {
-    fun saveSettings() {
-        darkModeEnabled = !darkModeEnabled
-    }
+    var darkModeEnabled: Boolean? by mutableStateOf(null)
 
-    var darkModeEnabled by mutableStateOf(false)
+    fun saveSettings(isEnabled: Boolean?) {
+        darkModeEnabled = isEnabled
+    }
 }

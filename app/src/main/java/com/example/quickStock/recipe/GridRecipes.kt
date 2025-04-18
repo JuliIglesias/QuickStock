@@ -1,5 +1,10 @@
 package com.example.quickStock.recipe
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -8,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import com.example.quickStock.R
 import com.example.quickStock.common.CustomGrid
+import com.example.quickStock.common.SimpleSearchBar
 
 @Composable
 fun GridRecipes(
@@ -39,11 +45,23 @@ fun GridRecipes(
         )
     }
 
-    CustomGrid(
-        items = buttonDataList,
-        modifier = modifier,
-        columns = 2,
-        verticalSpacing = 16,
-        horizontalSpacing = 16
-    )
+
+
+    Column(modifier = Modifier.fillMaxWidth().fillMaxSize(),
+        verticalArrangement = Arrangement.Top,
+    ) {
+        SimpleSearchBar(
+            textFieldState = TextFieldState(),
+            onSearch = { /* Handle search */ },
+            searchResults = typeOfRecipes.toList(),
+            modifier = Modifier
+        )
+        CustomGrid(
+            items = buttonDataList,
+            modifier = modifier,
+            columns = 2,
+            verticalSpacing = 16,
+            horizontalSpacing = 16
+        )
+    }
 }

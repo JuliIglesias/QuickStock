@@ -173,7 +173,6 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                             Product(
                                 id = productId,
                                 name = productName,
-                                price = price,
                                 brand = productBrand,
                                 category = productCategory,
                                 quantity = productQuantity,
@@ -183,7 +182,6 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                         // Reset fields after adding
                         productId = ""
                         productName = ""
-                        productPrice = ""
                         productBrand = ""
                         productCategory = ""
                         productQuantity = 1

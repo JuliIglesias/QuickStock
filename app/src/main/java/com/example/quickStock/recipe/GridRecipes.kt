@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -48,6 +47,7 @@ fun GridRecipes(
     }
 
     val query = rememberSaveable { mutableStateOf("") }
+    val filter = typeOfRecipes.toList().filter { it.contains(query.value, ignoreCase = true) }
 
 
     Column(modifier = Modifier.fillMaxWidth().fillMaxSize(),
@@ -56,8 +56,8 @@ fun GridRecipes(
         SimpleSearchBar(
             query = query.value,
             onQueryChange = { query.value = it },
-            onSearch = { /* Handle search */ },
-            searchResults = typeOfRecipes.toList(),
+            onSearch = filter,
+            searchResults = filter,
             modifier = Modifier
         )
         CustomGrid(

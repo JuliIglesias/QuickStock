@@ -73,7 +73,9 @@ fun UserSettingsPage() {
         }
 
         Button(
-            onClick = { /* TODO: Implement save settings logic */ },
+            onClick = {
+                DarkModeConfig.saveSettings()
+            },
             modifier = Modifier.align(Alignment.End)
         ) {
             Text("Save Settings")

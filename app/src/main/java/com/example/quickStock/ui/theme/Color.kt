@@ -8,6 +8,7 @@ val DarkGreenBack = Color(0xFF262626)
 val DarkGreen2 = Color(0xFF98D996)
 val DarkGreen3 = Color(0xFF51A644)
 val DarkLightText = Color(0xFFCFF3CE)
+val DarkDarkText = Color(0xFF262626)
 
 //Light theme colors
 val LightGreen1 = Color(0xFF98D996)

@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import com.example.quickStock.userConfig.DarkModeConfig
 
 data class TabBarItem(
     val title: String,
@@ -80,7 +81,11 @@ fun TabView(tabBarItems: List<TabBarItem>, onNavigate: (String) -> Unit) {
     }
 
     val gradientBrush = Brush.verticalGradient(
-        colors = listOf(MaterialTheme.colorScheme.tertiary, MaterialTheme.colorScheme.surface),
+        colors = if (DarkModeConfig.darkModeEnabled) {
+            listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.surface)
+        } else {
+            listOf(MaterialTheme.colorScheme.tertiary, MaterialTheme.colorScheme.surface)
+        },
         startY = 0.0f,
         endY = 500.0f,
         tileMode = TileMode.Clamp
@@ -117,7 +122,7 @@ fun TabView(tabBarItems: List<TabBarItem>, onNavigate: (String) -> Unit) {
                     )
                 },
                 colors = androidx.compose.material3.NavigationBarItemDefaults.colors(
-                    selectedTextColor = MaterialTheme.colorScheme.onPrimary,
+                    selectedTextColor = MaterialTheme.colorScheme.onSecondary,
                     unselectedTextColor = MaterialTheme.colorScheme.secondary,
                     indicatorColor = Color.Transparent // Color del indicador redondeado
                 ),
@@ -139,7 +144,7 @@ fun TabBarIconView(
             icon = if (isSelected) {selectedIcon} else {unselectedIcon},
             contentDescription = title,
             modifier = Modifier.size(32.dp),
-            tint = if (isSelected) {MaterialTheme.colorScheme.onPrimary}
+            tint = if (isSelected) {MaterialTheme.colorScheme.onSecondary}
             else {MaterialTheme.colorScheme.secondary}
         )
     }

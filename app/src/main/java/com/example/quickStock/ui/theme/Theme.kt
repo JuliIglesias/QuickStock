@@ -10,17 +10,18 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import com.example.quickStock.userConfig.DarkModeConfig
 
 private val DarkColorScheme = darkColorScheme(
-    primary = DarkGreen1,
+    primary = DarkGreen3,
     secondary = DarkGreen2,
-    tertiary = DarkGreen3,
+    tertiary = DarkGreen1,
 
     background = DarkGreenBack,
     surface = DarkGreenBack,
-    onPrimary = LightDarkText,
-    onSecondary = LightDarkText,
-    onTertiary = LightDarkText,
+    onPrimary = DarkDarkText,
+    onSecondary = DarkLightText,
+    onTertiary = DarkDarkText,
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -40,13 +41,14 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun QuickStockTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+    val darkTheme = DarkModeConfig.darkModeEnabled
+
+    val colorScheme = if (darkTheme) {
+        DarkColorScheme
+    } else {
+        LightColorScheme
     }
 
     MaterialTheme(

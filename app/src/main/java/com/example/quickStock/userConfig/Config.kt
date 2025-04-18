@@ -27,11 +27,7 @@ fun UserSettingsPage() {
             true
         )
     }
-    var darkModeEnabled by remember {
-        mutableStateOf(
-            false
-        )
-    }
+
     var username by remember { mutableStateOf("John Doe") }
 
     Column(
@@ -71,8 +67,8 @@ fun UserSettingsPage() {
         ) {
             Text("Dark Mode")
             Switch(
-                checked = darkModeEnabled,
-                onCheckedChange = { darkModeEnabled = it }
+                checked = DarkModeConfig.darkModeEnabled,
+                onCheckedChange = { DarkModeConfig.darkModeEnabled = it }
             )
         }
 

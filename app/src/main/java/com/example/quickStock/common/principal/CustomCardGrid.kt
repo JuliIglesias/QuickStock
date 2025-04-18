@@ -1,4 +1,4 @@
-package com.example.quickStock.common
+package com.example.quickStock.common.principal
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

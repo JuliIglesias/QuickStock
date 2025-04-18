@@ -13,7 +13,7 @@ import com.example.quickStock.addProducts.AddProductSurvey
 import com.example.quickStock.home.HomeScreen
 import com.example.quickStock.home.stock.StockListScreen
 import com.example.quickStock.navigation.categories.CategoryRoutes
-import com.example.quickStock.recipe.RecipeScreen
+import com.example.quickStock.recipeScreens.RecipeScreen
 import com.example.quickStock.userConfig.UserSettingsPagePreview
 
 @Composable

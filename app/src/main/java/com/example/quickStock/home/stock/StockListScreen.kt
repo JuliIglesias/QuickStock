@@ -11,12 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.quickStock.R
-import com.example.quickStock.common.ScreenName
+import com.example.quickStock.common.goBack.ScreenName
 import com.example.quickStock.mocking.getProductsByCategory
 
 @Composable

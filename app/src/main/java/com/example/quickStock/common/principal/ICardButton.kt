@@ -1,4 +1,4 @@
-package com.example.quickStock.common
+package com.example.quickStock.common.principal
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector

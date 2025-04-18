@@ -53,20 +53,25 @@ fun ProductCategoryGrid(
     }
 
     val query = rememberSaveable { mutableStateOf("") }
-    val filter = categories.toList().filter { it.contains(query.value, ignoreCase = true) }
+    val filteredCategories = rememberSaveable { mutableStateOf(buttonDataList) }
 
-    Column(modifier = Modifier.fillMaxWidth().fillMaxSize(),
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Top,
     ) {
         SimpleSearchBar(
             query = query.value,
             onQueryChange = { query.value = it },
-            onSearch =  filter,
-            searchResults = filter,
+            onSearch = {
+                filteredCategories.value = buttonDataList.filter { it.title.contains(query.value, ignoreCase = true) }
+            },
+            searchResults = filteredCategories.value.map { it.title },
             modifier = Modifier
         )
         CustomGrid(
-            items = buttonDataList,
+            items = filteredCategories.value,
             modifier = modifier,
             columns = 2,
             verticalSpacing = 16,

@@ -47,21 +47,26 @@ fun GridRecipes(
     }
 
     val query = rememberSaveable { mutableStateOf("") }
-    val filter = typeOfRecipes.toList().filter { it.contains(query.value, ignoreCase = true) }
+    val filteredRecipes = rememberSaveable { mutableStateOf(buttonDataList) }
 
-
-    Column(modifier = Modifier.fillMaxWidth().fillMaxSize(),
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Top,
     ) {
         SimpleSearchBar(
             query = query.value,
             onQueryChange = { query.value = it },
-            onSearch = filter,
-            searchResults = filter,
+            onSearch = {
+                // Filtra las recetas que coincidan con el texto ingresado
+                filteredRecipes.value = buttonDataList.filter { it.title.contains(query.value, ignoreCase = true) }
+            },
+            searchResults = filteredRecipes.value.map { it.title },
             modifier = Modifier
         )
         CustomGrid(
-            items = buttonDataList,
+            items = filteredRecipes.value,
             modifier = modifier,
             columns = 2,
             verticalSpacing = 16,

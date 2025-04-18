@@ -25,12 +25,11 @@ import androidx.compose.ui.unit.dp
 fun SimpleSearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
-    onSearch: List<String>,
+    onSearch: () -> Unit,
     searchResults: List<String>,
     modifier: Modifier = Modifier
 ) {
-    // Controla el estado de expansión del SearchBar
-    val expanded = rememberSaveable { mutableStateOf(false) }
+    var expanded = false
 
     Box(
         modifier
@@ -39,22 +38,18 @@ fun SimpleSearchBar(
         SearchBar(
             modifier = Modifier
                 .fillMaxWidth()
-                .offset(x = (0).dp, y = (-16).dp)
+                .offset(x = 0.dp, y = (-16).dp)
                 .semantics { traversalIndex = 0f },
             query = query,
             onQueryChange = { onQueryChange(it) },
             onSearch = {
-                // Filtra los resultados basados en el query
-                val filteredResults = onSearch.filter { it.contains(query, ignoreCase = true) }
-                // Actualiza los resultados de búsqueda
-                onQueryChange(filteredResults.joinToString(", "))
-                expanded.value = false
+                onSearch()
+                //expanded.value = false
             },
-            active = expanded.value,
-            onActiveChange = { expanded.value = it },
+            active = expanded,
+            onActiveChange = { expanded = it },
             placeholder = { Text("Search") }
         ) {
-            // Muestra los resultados de búsqueda en una columna desplazable
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 searchResults.forEach { result ->
                     ListItem(
@@ -62,7 +57,7 @@ fun SimpleSearchBar(
                         modifier = Modifier
                             .clickable {
                                 onQueryChange(result)
-                                expanded.value = false
+                                expanded = false
                             }
                             .fillMaxWidth()
                     )

@@ -4,12 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import com.example.quickStock.R
 import com.example.quickStock.common.CustomGrid
-import com.example.quickStock.icon.IconType
 
 @Composable
 fun GridRecipes(

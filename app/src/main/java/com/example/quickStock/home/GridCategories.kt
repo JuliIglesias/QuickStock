@@ -11,7 +11,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import com.example.quickStock.R
 import com.example.quickStock.common.CustomGrid
-import com.example.quickStock.icon.IconType
 
 @Composable
 fun ProductCategoryGrid(

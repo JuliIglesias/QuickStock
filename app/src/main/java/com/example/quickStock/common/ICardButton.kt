@@ -2,7 +2,6 @@ package com.example.quickStock.common
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.quickStock.icon.IconType
 
 interface ICardButton {
     val title: String

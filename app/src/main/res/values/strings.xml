@@ -151,7 +151,7 @@
         <string-array name="products_paper_products">
             <item>Napkins</item>
             <item>Paper Towels</item>
-            <item>Cardstock</item>
+            <item>Card stock</item>
         </string-array>
         <string-array name="products_pet_supplies">
             <item>Dog Food</item>

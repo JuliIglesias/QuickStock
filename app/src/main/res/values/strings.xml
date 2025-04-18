@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QuickStock</string>
+    <string name="app_name" translatable="false">QuickStock</string>
 
     <string-array name="product_categories">
         <item>Meat</item>
@@ -64,5 +64,104 @@
     <string name="bakery">Bakery</string>
     <string name="alcoholic_beverages">Alcoholic Beverages</string>
     <string name="fast_food">Fast Food</string>
+
+
+    <!-- Add more strings as needed just for mocking -->
+        <!-- Products for each category -->
+        <string-array name="products_meat">
+            <item>Beef</item>
+            <item>Pork</item>
+            <item>Lamb</item>
+        </string-array>
+        <string-array name="products_seafood">
+            <item>Salmon</item>
+            <item>Shrimp</item>
+            <item>Tuna</item>
+        </string-array>
+        <string-array name="products_fruits">
+            <item>Apples</item>
+            <item>Bananas</item>
+            <item>Oranges</item>
+        </string-array>
+        <string-array name="products_vegetables">
+            <item>Carrots</item>
+            <item>Tomatoes</item>
+            <item>Spinach</item>
+        </string-array>
+        <string-array name="products_refrigerator">
+            <item>Milk</item>
+            <item>Butter</item>
+            <item>Yogurt</item>
+        </string-array>
+        <string-array name="products_dairy_and_eggs">
+            <item>Eggs</item>
+            <item>Cheese</item>
+            <item>Cream</item>
+        </string-array>
+        <string-array name="products_grains_and_pasta">
+            <item>Rice</item>
+            <item>Spaghetti</item>
+            <item>Quinoa</item>
+        </string-array>
+        <string-array name="products_canned_goods">
+            <item>Canned Beans</item>
+            <item>Canned Tomatoes</item>
+            <item>Canned Tuna</item>
+        </string-array>
+        <string-array name="products_spices_and_herbs">
+            <item>Oregano</item>
+            <item>Pepper</item>
+            <item>Cinnamon</item>
+        </string-array>
+        <string-array name="products_beverages">
+            <item>Water</item>
+            <item>Orange Juice</item>
+            <item>Soda</item>
+        </string-array>
+        <string-array name="products_bakery">
+            <item>Bread</item>
+            <item>Cakes</item>
+            <item>Cookies</item>
+        </string-array>
+        <string-array name="products_snacks">
+            <item>Chips</item>
+            <item>Chocolate</item>
+            <item>Granola Bars</item>
+        </string-array>
+        <string-array name="products_baby">
+            <item>Baby Formula</item>
+            <item>Baby Wipes</item>
+            <item>Diapers</item>
+        </string-array>
+        <string-array name="products_bathroom">
+            <item>Toilet Paper</item>
+            <item>Soap</item>
+            <item>Shampoo</item>
+        </string-array>
+        <string-array name="products_household">
+            <item>Detergent</item>
+            <item>Sponges</item>
+            <item>All-Purpose Cleaner</item>
+        </string-array>
+        <string-array name="products_personal_care">
+            <item>Toothpaste</item>
+            <item>Deodorant</item>
+            <item>Moisturizer</item>
+        </string-array>
+        <string-array name="products_paper_products">
+            <item>Napkins</item>
+            <item>Paper Towels</item>
+            <item>Cardstock</item>
+        </string-array>
+        <string-array name="products_pet_supplies">
+            <item>Dog Food</item>
+            <item>Cat Food</item>
+            <item>Cat Litter</item>
+        </string-array>
+        <string-array name="products_electronics">
+            <item>Mobile Phone</item>
+            <item>Headphones</item>
+            <item>Keyboard</item>
+        </string-array>
 
 </resources>

@@ -57,11 +57,14 @@ fun GridRecipes(
     ) {
         SimpleSearchBar(
             query = query.value,
-            onQueryChange = { query.value = it },
+            onQueryChange = { newQuery ->
+                query.value = newQuery
+                filteredRecipes.value = buttonDataList.filter { it.title.contains(newQuery, ignoreCase = true) }
+            },
             onSearch = {
                 // Filtra las recetas que coincidan con el texto ingresado
                 filteredRecipes.value = buttonDataList.filter { it.title.contains(query.value, ignoreCase = true) }
-            },
+                       },
             searchResults = filteredRecipes.value.map { it.title },
             modifier = Modifier
         )

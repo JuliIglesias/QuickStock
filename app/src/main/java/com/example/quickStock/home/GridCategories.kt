@@ -63,7 +63,10 @@ fun ProductCategoryGrid(
     ) {
         SimpleSearchBar(
             query = query.value,
-            onQueryChange = { query.value = it },
+            onQueryChange = { newQuery ->
+                query.value = newQuery
+                filteredCategories.value = buttonDataList.filter { it.title.contains(newQuery, ignoreCase = true) }
+            },
             onSearch = {
                 filteredCategories.value = buttonDataList.filter { it.title.contains(query.value, ignoreCase = true) }
             },

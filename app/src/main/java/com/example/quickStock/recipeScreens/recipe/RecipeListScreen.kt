@@ -27,7 +27,7 @@ fun RecipeListScreen(
     val recipeButtons = recipeTypeList.map { recipe ->
         RecipeButtonData(
             title = recipe.name,
-            time = 10, //recipe.preparationTime.toInt() + (recipe.cookingTime?.toInt() ?: 0),
+            image = recipe.image,
             onClick = { /* Acción al hacer clic en el producto */ }
         )
     }
@@ -62,8 +62,17 @@ fun RecipeListScreen(
                             fontSize = 18.sp,
                             color = MaterialTheme.colorScheme.onPrimary
                         )
+                        /*
+                        RecipeImage(
+                            image = productButton.image,
+                            contentDescription = productButton.title,
+                            modifier = Modifier
+                                .size(48.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                        )
+                         */
                         Text(
-                            text = productButton.time.toString(),
+                            text = productButton.image,
                             fontSize = 18.sp,
                             color = MaterialTheme.colorScheme.onPrimary
                         )

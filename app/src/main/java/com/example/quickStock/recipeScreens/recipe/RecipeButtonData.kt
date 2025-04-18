@@ -4,7 +4,7 @@ import androidx.compose.ui.Modifier
 
 data class RecipeButtonData(
     val title: String,
-    val time: Int,
+    val image: String,
     val onClick: () -> Unit,
     val modifier: Modifier = Modifier
 )

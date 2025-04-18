@@ -4,7 +4,6 @@ data class RecipeData(
     val id: String,
     val name: String,
     val ingredients: List<String>,
-    val preparationTime: String,
-    val cookingTime: String? = null,
+    val image: String,
     val steps: List<String>
 )

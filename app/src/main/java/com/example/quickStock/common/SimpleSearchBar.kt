@@ -27,12 +27,13 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SimpleSearchBar(
-    textFieldState: TextFieldState,
+    query: String,
+    onQueryChange: (String) -> Unit,
     onSearch: (String) -> Unit,
     searchResults: List<String>,
     modifier: Modifier = Modifier
 ) {
-    // Controls expansion state of the search bar
+    // Controla el estado de expansión del SearchBar
     val expanded = rememberSaveable { mutableStateOf(false) }
 
     Box(
@@ -41,32 +42,27 @@ fun SimpleSearchBar(
     ) {
         SearchBar(
             modifier = Modifier
-                .fillMaxWidth().offset(x = (0).dp, y = (-16).dp)
+                .fillMaxWidth()
+                .offset(x = (0).dp, y = (-16).dp)
                 .semantics { traversalIndex = 0f },
-            inputField = {
-                SearchBarDefaults.InputField(
-                    query = textFieldState.text.toString(),
-                    onQueryChange = { textFieldState.edit { replace(0, length, it) } },
-                    onSearch = {
-                        onSearch(textFieldState.text.toString())
-                        expanded.value = false
-                    },
-                    expanded = expanded.value,
-                    onExpandedChange = { expanded.value = it },
-                    placeholder = { Text("Search") }
-                )
+            query = query,
+            onQueryChange = { onQueryChange(it) },
+            onSearch = {
+                onSearch(query)
+                expanded.value = false
             },
-            expanded = expanded.value,
-            onExpandedChange = { expanded.value = it },
+            active = expanded.value,
+            onActiveChange = { expanded.value = it },
+            placeholder = { Text("Search") }
         ) {
-            // Display search results in a scrollable column
+            // Muestra los resultados de búsqueda en una columna desplazable
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 searchResults.forEach { result ->
                     ListItem(
                         headlineContent = { Text(result) },
                         modifier = Modifier
                             .clickable {
-                                textFieldState.edit { replace(0, length, result) }
+                                onQueryChange(result)
                                 expanded.value = false
                             }
                             .fillMaxWidth()

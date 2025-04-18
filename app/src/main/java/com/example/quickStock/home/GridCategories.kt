@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -58,11 +60,14 @@ fun ProductCategoryGrid(
         )
     }
 
+    val query = rememberSaveable { mutableStateOf("") }
+
     Column(modifier = Modifier.fillMaxWidth().fillMaxSize(),
         verticalArrangement = Arrangement.Top,
     ) {
         SimpleSearchBar(
-            textFieldState = TextFieldState(),
+            query = query.value,
+            onQueryChange = { query.value = it },
             onSearch = { /* Handle search */ },
             searchResults = categories.toList(),
             modifier = Modifier

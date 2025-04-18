@@ -67,7 +67,7 @@
 
 
     <!-- Add more strings as needed just for mocking -->
-        <!-- Products for each category -->
+        <!-- Products for each category stock-->
         <string-array name="products_meat">
             <item>Beef</item>
             <item>Pork</item>
@@ -163,5 +163,68 @@
             <item>Headphones</item>
             <item>Keyboard</item>
         </string-array>
+
+        <!-- Recipes for each type of recipe-->
+        <string-array name="recipes_meat">
+            <item>Grilled Steak</item>
+            <item>Beef Stew</item>
+            <item>Pork Chops</item>
+        </string-array>
+        <string-array name="recipes_chicken">
+            <item>Chicken Curry</item>
+            <item>Grilled Chicken</item>
+            <item>Chicken Salad</item>
+        </string-array>
+        <string-array name="recipes_seafood">
+            <item>Grilled Salmon</item>
+            <item>Shrimp Scampi</item>
+            <item>Tuna Salad</item>
+        </string-array>
+        <string-array name="recipes_salads">
+            <item>Caesar Salad</item>
+            <item>Greek Salad</item>
+            <item>Fruit Salad</item>
+        </string-array>
+        <string-array name="recipes_vegetables">
+            <item>Vegetable Stir Fry</item>
+            <item>Roasted Vegetables</item>
+            <item>Vegetable Soup</item>
+        </string-array>
+        <string-array name="recipes_fruits">
+            <item>Fruit Smoothie</item>
+            <item>Fruit Salad</item>
+            <item>Fruit Tart</item>
+        </string-array>
+        <string-array name="recipes_breakfast">
+            <item>Pancakes</item>
+            <item>Omelette</item>
+            <item>Fruit Salad</item>
+        </string-array>
+        <string-array name="recipes_pasta">
+            <item>Spaghetti Bolognese</item>
+            <item>Pasta Primavera</item>
+            <item>Macaroni and Cheese</item>
+        </string-array>
+        <string-array name="recipes_desserts">
+            <item>Chocolate Cake</item>
+            <item>Ice Cream</item>
+            <item>Fruit Tart</item>
+        </string-array>
+        <string-array name="recipes_bakery">
+            <item>Bread</item>
+            <item>Croissants</item>
+            <item>Cookies</item>
+        </string-array>
+        <string-array name="recipes_alcoholic_beverages">
+            <item>Margarita</item>
+            <item>Martini</item>
+            <item>Whiskey Sour</item>
+        </string-array>
+        <string-array name="recipes_fast_food">
+            <item>Burgers</item>
+            <item>Fries</item>
+            <item>Pizza</item>
+        </string-array>
+
 
 </resources>

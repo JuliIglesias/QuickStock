@@ -1,4 +1,4 @@
-package com.example.quickStock.recipe
+package com.example.quickStock.recipeScreens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import com.example.quickStock.R
-import com.example.quickStock.common.CustomGrid
+import com.example.quickStock.common.principal.CustomGrid
 import com.example.quickStock.common.SimpleSearchBar
 
 @Composable

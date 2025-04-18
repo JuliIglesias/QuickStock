@@ -11,11 +11,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.quickStock.addProducts.AddProductSurvey
 import com.example.quickStock.home.HomeScreen
+import com.example.quickStock.home.stock.StockListScreen
+import com.example.quickStock.navigation.categories.CategoryRoutes
 import com.example.quickStock.recipe.RecipeScreen
 import com.example.quickStock.userConfig.UserSettingsPagePreview
-
-
-
 
 @Composable
 fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostController) {
@@ -25,6 +24,7 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
         modifier = Modifier.fillMaxSize().padding(innerPadding).padding(20.dp)
     ) {
 
+        //NavBar navigation
         composable(route = NavBarNames.Home.name) {
             HomeScreen(
                 onClick = { navController.navigate(it) }
@@ -49,5 +49,15 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
             )
         }
 
+        // Category navigation
+        CategoryRoutes.entries.forEach { category ->
+            composable(category.route) {
+                StockListScreen(category = category.name,
+                    onGoBack = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+        }
     }
 }

@@ -15,7 +15,7 @@ fun HomeScreen(onClick: (String) -> Unit,) {
         Surface(
             modifier = Modifier.fillMaxWidth(),
         ) {
-            ProductCategoryGrid()
+            ProductCategoryGrid(onCategoryClick = onClick)
         }
     }
 }

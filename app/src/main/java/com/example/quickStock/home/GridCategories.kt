@@ -45,6 +45,7 @@ fun ProductCategoryGrid(
         stringResource(R.string.baby) to ImageVector.vectorResource(R.drawable.ic_baby_bottle),
         stringResource(R.string.household) to ImageVector.vectorResource(R.drawable.ic_kitchen_suplies),
     )
+
     val buttonDataList = categories.map { categoryString ->
         val route = CategoryRoutes.entries.find { it.name.equals(categoryString, ignoreCase = true) }?.route
         CategoryButtonData(

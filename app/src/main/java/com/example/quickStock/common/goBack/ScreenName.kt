@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Modifier
 
 @Composable
-fun ScreenName(onGoBack: () -> Unit, name:String) {
+fun ScreenName(onGoBack: () -> Unit, title:String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -24,7 +24,7 @@ fun ScreenName(onGoBack: () -> Unit, name:String) {
         }
 
         Text(
-            text = "Stock for $name",
+            text = title,
             fontSize = 24.sp,
             color = MaterialTheme.colorScheme.onSecondary
         )

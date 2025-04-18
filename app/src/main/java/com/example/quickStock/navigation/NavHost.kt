@@ -13,7 +13,9 @@ import com.example.quickStock.addProducts.AddProductSurvey
 import com.example.quickStock.home.HomeScreen
 import com.example.quickStock.home.stock.StockListScreen
 import com.example.quickStock.navigation.categories.CategoryRoutes
+import com.example.quickStock.navigation.categories.RecipeRoutes
 import com.example.quickStock.recipeScreens.RecipeScreen
+import com.example.quickStock.recipeScreens.recipe.RecipeListScreen
 import com.example.quickStock.userConfig.UserSettingsPagePreview
 
 @Composable
@@ -61,9 +63,9 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
         }
 
         // Recipe navigation
-        CategoryRoutes.entries.forEach { category ->
-            composable(category.route) {
-                StockListScreen(category = category.name,
+        RecipeRoutes.entries.forEach { recipe ->
+            composable(recipe.route) {
+                RecipeListScreen(recipeType = recipe.name,
                     onGoBack = {
                         navController.popBackStack()
                     }

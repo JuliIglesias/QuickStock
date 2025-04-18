@@ -15,6 +15,8 @@ import androidx.compose.ui.res.vectorResource
 import com.example.quickStock.R
 import com.example.quickStock.common.principal.CustomGrid
 import com.example.quickStock.common.SimpleSearchBar
+import com.example.quickStock.navigation.categories.CategoryRoutes
+import com.example.quickStock.navigation.categories.RecipeRoutes
 
 @Composable
 fun GridRecipes(
@@ -39,10 +41,15 @@ fun GridRecipes(
     )
 
     val buttonDataList = typeOfRecipes.map { recipeString ->
+        val route = RecipeRoutes.entries.find { it.name.equals(recipeString, ignoreCase = true) }?.route
         RecipeButtonData(
             title = recipeString,
             icon = typeOfRecipesIcons[recipeString] ?: ImageVector.vectorResource(R.drawable.ic_question_mark),
-            onClick = { onRecipeClick(recipeString) }
+            onClick = {
+                if (route != null) {
+                    onRecipeClick(route)
+                }
+            }
         )
     }
 
@@ -62,9 +69,8 @@ fun GridRecipes(
                 filteredRecipes.value = buttonDataList.filter { it.title.contains(newQuery, ignoreCase = true) }
             },
             onSearch = {
-                // Filtra las recetas que coincidan con el texto ingresado
                 filteredRecipes.value = buttonDataList.filter { it.title.contains(query.value, ignoreCase = true) }
-                       },
+           },
             searchResults = filteredRecipes.value.map { it.title },
             modifier = Modifier
         )

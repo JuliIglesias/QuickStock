@@ -1,4 +1,4 @@
-package com.example.quickStock.home.stock
+package com.example.quickStock.recipeScreens.recipe
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,20 +14,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.quickStock.common.goBack.ScreenName
-import com.example.quickStock.mocking.getProductsByCategory
+import com.example.quickStock.mocking.getRecipesByType
 
 @Composable
-fun StockListScreen(
-    category: String,
+fun RecipeListScreen(
+    recipeType: String,
     modifier: Modifier = Modifier,
     onGoBack: () -> Unit // Callback para manejar la acción de volver atrás
 ) {
-    val products = getProductsByCategory(category)
+    val recipeTypeList = getRecipesByType(recipeType)
 
-    val productButtons = products.map { product ->
-        StockButtonData(
-            title = product.name,
-            quantity = product.quantity,
+    val recipeButtons = recipeTypeList.map { recipe ->
+        RecipeButtonData(
+            title = recipe.name,
+            time = 10, //recipe.preparationTime.toInt() + (recipe.cookingTime?.toInt() ?: 0),
             onClick = { /* Acción al hacer clic en el producto */ }
         )
     }
@@ -38,13 +38,13 @@ fun StockListScreen(
             .padding(16.dp)
     ) {
         ScreenName(
-            title = "Stock for $category",
+            title = "Recipes of $recipeType",
             onGoBack = onGoBack,
         )
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(productButtons) { productButton ->
+            items(recipeButtons) { productButton ->
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -63,7 +63,7 @@ fun StockListScreen(
                             color = MaterialTheme.colorScheme.onPrimary
                         )
                         Text(
-                            text = productButton.quantity.toString(),
+                            text = productButton.time.toString(),
                             fontSize = 18.sp,
                             color = MaterialTheme.colorScheme.onPrimary
                         )

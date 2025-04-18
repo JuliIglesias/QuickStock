@@ -59,5 +59,16 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
                 )
             }
         }
+
+        // Recipe navigation
+        CategoryRoutes.entries.forEach { category ->
+            composable(category.route) {
+                StockListScreen(category = category.name,
+                    onGoBack = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+        }
     }
 }

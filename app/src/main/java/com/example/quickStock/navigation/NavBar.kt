@@ -1,5 +1,6 @@
 package com.example.quickStock.navigation
 
+import android.graphics.drawable.shapes.OvalShape
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -26,8 +27,10 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -77,12 +80,21 @@ fun TabView(tabBarItems: List<TabBarItem>, onNavigate: (String) -> Unit) {
         mutableIntStateOf(1)
     }
 
+    val gradientBrush = Brush.verticalGradient(
+        colors = listOf(MaterialTheme.colorScheme.tertiary, MaterialTheme.colorScheme.surface),
+        startY = 0.0f,
+        endY = 500.0f,
+        tileMode = TileMode.Clamp
+    )
+
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.surface,
-        modifier = Modifier.height(80.dp)
-            .shadow(10.dp,
-                shape = RectangleShape,
-                clip = true, ambientColor = Color.Black,)
+        tonalElevation = 8.dp,
+        modifier = Modifier.border(
+            width = 4.dp, // Grosor del borde
+            brush = gradientBrush, // Degradado aplicado al borde
+            shape = RectangleShape // Forma del borde
+        )
     ) {
         tabBarItems.forEachIndexed { index, tabBarItem ->
             NavigationBarItem(
@@ -109,7 +121,7 @@ fun TabView(tabBarItems: List<TabBarItem>, onNavigate: (String) -> Unit) {
                     selectedTextColor = MaterialTheme.colorScheme.onPrimary,
                     unselectedTextColor = MaterialTheme.colorScheme.secondary,
                     indicatorColor = Color.Transparent // Color del indicador redondeado
-                )
+                ),
             )
         }
     }

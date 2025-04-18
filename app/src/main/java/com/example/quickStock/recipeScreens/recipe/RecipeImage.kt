@@ -11,11 +11,9 @@ import coil.compose.AsyncImage
 import com.example.quickStock.R
 
 @Composable
-fun RecipeImage(imageUrl: String, contentDescription: String) {
+fun RecipeImage(imageUrl: String, contentDescription: String, modifier: Modifier) {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp) // Altura del rectángulo
+        modifier = modifier
     ) {
         AsyncImage(
             model = imageUrl,

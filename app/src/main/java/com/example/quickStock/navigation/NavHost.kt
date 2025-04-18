@@ -12,9 +12,11 @@ import androidx.navigation.compose.composable
 import com.example.quickStock.addProducts.AddProductSurvey
 import com.example.quickStock.home.HomeScreen
 import com.example.quickStock.home.stock.StockListScreen
+import com.example.quickStock.mocking.getRecipesByType
 import com.example.quickStock.navigation.categories.CategoryRoutes
 import com.example.quickStock.navigation.categories.RecipeRoutes
 import com.example.quickStock.recipeScreens.RecipeScreen
+import com.example.quickStock.recipeScreens.recipe.RecipeDetailScreen
 import com.example.quickStock.recipeScreens.recipe.RecipeListScreen
 import com.example.quickStock.userConfig.UserSettingsPagePreview
 
@@ -68,7 +70,22 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
                 RecipeListScreen(recipeType = recipe.name,
                     onGoBack = {
                         navController.popBackStack()
+                    },
+                    onClick = { recipeId ->
+                        navController.navigate("recipe/${recipe.name.lowercase()}/detail/$recipeId")
                     }
+                )
+            }
+        }
+
+        composable("recipe/{recipeType}/detail/{recipeId}") { backStackEntry ->
+            val recipeId = backStackEntry.arguments?.getString("recipeId")
+            val recipeType = backStackEntry.arguments?.getString("recipeType")
+            val recipe = getRecipesByType(recipeType?.replaceFirstChar { it.uppercase() } ?: "").find { it.id == recipeId }
+            if (recipe != null) {
+                RecipeDetailScreen(
+                    recipe = recipe,
+                    onGoBack = { navController.popBackStack() }
                 )
             }
         }

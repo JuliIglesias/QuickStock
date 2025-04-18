@@ -20,7 +20,8 @@ import com.example.quickStock.mocking.getRecipesByType
 fun RecipeListScreen(
     recipeType: String,
     modifier: Modifier = Modifier,
-    onGoBack: () -> Unit // Callback para manejar la acción de volver atrás
+    onGoBack: () -> Unit,
+    onClick: (String) -> Unit
 ) {
     val recipeTypeList = getRecipesByType(recipeType)
 
@@ -28,7 +29,7 @@ fun RecipeListScreen(
         RecipeButtonData(
             title = recipe.name,
             image = recipe.image,
-            onClick = { /* Acción al hacer clic en el producto */ }
+            onClick = { onClick(recipe.id) }
         )
     }
 

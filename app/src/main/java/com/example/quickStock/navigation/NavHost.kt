@@ -1,5 +1,8 @@
 package com.example.quickStock.navigation
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -22,6 +25,7 @@ import com.example.quickStock.recipeScreens.recipe.RecipeDetailScreen
 import com.example.quickStock.recipeScreens.recipe.RecipeListScreen
 import com.example.quickStock.userConfig.UserSettingsPagePreview
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostController) {
     NavHost(
@@ -58,12 +62,13 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
         // Category navigation
         CategoryRoutes.entries.forEach { category ->
             composable(category.route) {
+
                 StockListScreen(category = category.name,
                     onGoBack = {
                         navController.popBackStack()
                     },
                     onClick = { productId ->
-                        navController.navigate("category/${category.name.lowercase()}/product/$productId")
+                        navController.navigate("${category.route}/product/$productId")
                     }
                 )
             }

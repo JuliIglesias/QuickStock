@@ -17,9 +17,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.quickStock.R
 import com.example.quickStock.addProducts.Product
 import com.example.quickStock.common.goBack.ScreenName
 import java.time.LocalDate
@@ -35,6 +39,30 @@ fun ProductDetailScreen(
 ) {
     val scrollState = rememberScrollState()
     val primaryGreen = Color(0xFF4CAF50)
+
+    val context = LocalContext.current
+    val categories = context.resources.getStringArray(R.array.product_categories)
+    val categoryIcons = mapOf(
+        "Refrigerator" to ImageVector.vectorResource(R.drawable.ic_refrigerator),
+        "Fruits" to ImageVector.vectorResource(R.drawable.ic_fruit),
+        "Vegetables" to ImageVector.vectorResource(R.drawable.ic_veggie),
+        "Meat" to ImageVector.vectorResource(R.drawable.ic_meat),
+        "Seafood" to ImageVector.vectorResource(R.drawable.ic_fish_cat),
+        "Dairy & Eggs" to ImageVector.vectorResource(R.drawable.ic_egg),
+        "Bakery" to ImageVector.vectorResource(R.drawable.ic_cake),
+        "Grains & Pasta" to ImageVector.vectorResource(R.drawable.ic_pasta),
+        "Canned Goods" to ImageVector.vectorResource(R.drawable.ic_canned_sauce),
+        "Spices & Herbs" to ImageVector.vectorResource(R.drawable.ic_herbs),
+        "Snacks" to ImageVector.vectorResource(R.drawable.ic_cookie),
+        "Beverages" to ImageVector.vectorResource(R.drawable.ic_cocktail),
+        "Bathroom" to ImageVector.vectorResource(R.drawable.ic_bath_paper),
+        "Personal Care" to ImageVector.vectorResource(R.drawable.ic_personal_care),
+        "Paper Products" to ImageVector.vectorResource(R.drawable.ic_school),
+        "Pet Supplies" to ImageVector.vectorResource(R.drawable.ic_paw_pet),
+        "Electronics" to ImageVector.vectorResource(R.drawable.ic_computer),
+        "Baby" to ImageVector.vectorResource(R.drawable.ic_baby_bottle),
+        "Household" to ImageVector.vectorResource(R.drawable.ic_kitchen_suplies)
+    )
 
     Column(
         modifier = Modifier
@@ -99,9 +127,9 @@ fun ProductDetailScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Category,
+                            imageVector = categoryIcons[product.category] ?: Icons.Default.Category,
                             contentDescription = "Category",
-                            tint = primaryGreen,
+                            tint = Color.Unspecified,
                             modifier = Modifier.size(24.dp)
                         )
                         Spacer(modifier = Modifier.width(12.dp))

@@ -47,7 +47,12 @@ fun ProductCategoryGrid(
     )
 
     val buttonDataList = categories.map { categoryString ->
-        val route = CategoryRoutes.entries.find { it.name.equals(categoryString, ignoreCase = true) }?.route
+val route = CategoryRoutes.entries.find {
+        it.getRouteSlug().equals(
+            categoryString.replace(" ", "_").replace("&", "and").lowercase(),
+            ignoreCase = true
+        )
+    }?.route
         CategoryButtonData(
             title = categoryString,
             icon = categoryIcons[categoryString] ?: ImageVector.vectorResource(R.drawable.ic_question_mark),

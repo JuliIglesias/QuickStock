@@ -134,6 +134,7 @@ fun getProductsByCategory(category: String): List<Product> {
                 )
             )
         )
+
         // Continúa con el resto de las categorías siguiendo el mismo formato
         else -> emptyList()
     }

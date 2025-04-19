@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.quickStock.common.goBack.ScreenName
 import com.example.quickStock.mocking.getProductsByCategory
+import com.example.quickStock.navigation.categories.CategoryRoutes
 
 @Composable
 fun StockListScreen(
@@ -23,6 +24,10 @@ fun StockListScreen(
     onGoBack: () -> Unit,
     onClick: (String) -> Unit
 ) {
+    val categoryRoute = CategoryRoutes.entries.find { it.name == category }
+    val formattedCategoryName = categoryRoute?.getFormattedName() ?: category
+
+
     val products = getProductsByCategory(category)
 
     val productButtons = products.map { product ->
@@ -39,7 +44,7 @@ fun StockListScreen(
             .padding(16.dp)
     ) {
         ScreenName(
-            title = "Stock for $category",
+            title = "Stock for $formattedCategoryName",
             onGoBack = onGoBack,
         )
         LazyColumn(

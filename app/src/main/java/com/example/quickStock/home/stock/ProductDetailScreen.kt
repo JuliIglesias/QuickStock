@@ -1,5 +1,7 @@
 package com.example.quickStock.home.stock
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -24,6 +26,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ProductDetailScreen(
     product: Product,
@@ -88,7 +91,7 @@ fun ProductDetailScreen(
                         }
                     }
 
-                    Divider()
+                    HorizontalDivider()
                     Spacer(modifier = Modifier.height(12.dp))
 
                     // Category row
@@ -148,7 +151,7 @@ fun ProductDetailScreen(
                         )
                     }
 
-                    Divider()
+                    HorizontalDivider()
                     Spacer(modifier = Modifier.height(8.dp))
 
                     // Column headers
@@ -247,7 +250,7 @@ fun ProductDetailScreen(
 
                     // Total row
                     Spacer(modifier = Modifier.height(16.dp))
-                    Divider()
+                    HorizontalDivider()
                     Spacer(modifier = Modifier.height(12.dp))
 
                     Row(

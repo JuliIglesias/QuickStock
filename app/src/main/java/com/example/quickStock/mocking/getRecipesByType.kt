@@ -1,5 +1,6 @@
 package com.example.quickStock.mocking
 
+import com.example.quickStock.R
 import com.example.quickStock.recipeScreens.recipe.RecipeData
 
 fun getRecipesByType(type: String): List<RecipeData> {
@@ -9,21 +10,18 @@ fun getRecipesByType(type: String): List<RecipeData> {
                 id = "1",
                 name = "Grilled Steak",
                 ingredients = listOf("Steak", "Salt", "Pepper", "Olive Oil"),
-                image = "steak.jpg",
                 steps = listOf("Season the steak", "Heat the grill", "Cook the steak for 7 minutes per side")
             ),
             RecipeData(
                 id = "2",
                 name = "Beef Stroganoff",
                 ingredients = listOf("Beef", "Mushrooms", "Onion", "Sour Cream"),
-                image = "stroganoff.jpg",
                 steps = listOf("Slice the beef", "Cook the onions and mushrooms", "Add sour cream and simmer")
             ),
             RecipeData(
                 id = "3",
                 name = "Meatballs",
                 ingredients = listOf("Ground Beef", "Breadcrumbs", "Egg", "Garlic"),
-                image = "meatballs.jpg",
                 steps = listOf("Mix ingredients", "Form meatballs", "Cook in sauce")
             )
         )
@@ -32,21 +30,18 @@ fun getRecipesByType(type: String): List<RecipeData> {
                 id = "4",
                 name = "Grilled Salmon",
                 ingredients = listOf("Salmon", "Lemon", "Garlic", "Dill"),
-                image = "salmon.jpg",
                 steps = listOf("Season the salmon", "Preheat the grill", "Grill the salmon for 10 minutes per side")
             ),
             RecipeData(
                 id = "5",
                 name = "Shrimp Scampi",
                 ingredients = listOf("Shrimp", "Garlic", "Butter", "Parsley"),
-                image = "scampi.jpg",
                 steps = listOf("Cook garlic in butter", "Add shrimp and cook until pink", "Garnish with parsley")
             ),
             RecipeData(
                 id = "6",
                 name = "Tuna Salad",
                 ingredients = listOf("Tuna", "Mayonnaise", "Celery", "Lemon Juice"),
-                image = "tuna_salad.jpg",
                 steps = listOf("Mix all ingredients", "Serve chilled")
             )
         )

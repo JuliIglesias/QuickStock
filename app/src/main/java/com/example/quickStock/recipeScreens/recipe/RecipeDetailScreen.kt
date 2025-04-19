@@ -7,14 +7,16 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 import com.example.quickStock.R
 import com.example.quickStock.common.goBack.ScreenName
+import com.google.accompanist.web.WebView
+import com.google.accompanist.web.rememberWebViewState
 
 @Composable
 fun RecipeDetailScreen(
@@ -36,19 +38,19 @@ fun RecipeDetailScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         // Imagen de la receta
-//        RecipeImage(
-//            imageUrl = recipe.image,
-//            contentDescription = recipe.name,
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .height(200.dp) // Altura del rectángulo
-//        )
+        RecipeImage(
+            imageUrl = "https://i.kym-cdn.com/photos/images/newsfeed/002/422/058/391.jpg", //recipe.image,
+            contentDescription = recipe.name,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp) // Altura del rectángulo
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Ingredientes
+        // Ingredients
         Text(
-            text = "Ingredientes:",
+            text = "Ingredients:",
             style = MaterialTheme.typography.titleMedium,
             fontSize = 20.sp
         )
@@ -62,9 +64,9 @@ fun RecipeDetailScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Pasos
+        // Steps
         Text(
-            text = "Pasos:",
+            text = "Steps:",
             style = MaterialTheme.typography.titleMedium,
             fontSize = 20.sp
         )
@@ -73,6 +75,23 @@ fun RecipeDetailScreen(
                 text = "${index + 1}. $step",
                 style = MaterialTheme.typography.bodyMedium,
                 fontSize = 16.sp
+            )
+        }
+
+        // Yutu
+        recipe.youtubeUrl?.let { url ->
+            Text(
+                text = "Youtube video:",
+                style = MaterialTheme.typography.titleMedium,
+                fontSize = 20.sp
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            val webViewState = rememberWebViewState(url = "https://www.youtube.com/watch?v=G1CAsRvbxmg")//url)
+            WebView(
+                state = webViewState,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
             )
         }
     }

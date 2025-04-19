@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.quickStock.common.goBack.ScreenName
@@ -63,20 +64,15 @@ fun RecipeListScreen(
                             fontSize = 18.sp,
                             color = MaterialTheme.colorScheme.onPrimary
                         )
-                        /*
+
                         RecipeImage(
-                            image = productButton.image,
+                            imageUrl = "https://www.themealdb.com/images/media/meals/wai9bw1619788844.jpg", //productButton.image,
                             contentDescription = productButton.title,
                             modifier = Modifier
-                                .size(48.dp)
+                                .size(80.dp)
                                 .clip(RoundedCornerShape(8.dp))
                         )
-                         */
-                        Text(
-                            text = productButton.image,
-                            fontSize = 18.sp,
-                            color = MaterialTheme.colorScheme.onPrimary
-                        )
+
                     }
                 }
             }

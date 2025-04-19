@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.RestaurantMenu
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.FormatListNumbered
+import androidx.compose.material.icons.filled.Kitchen
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.quickStock.common.goBack.ScreenName
@@ -82,7 +84,7 @@ fun RecipeDetailScreen(
                 }
             }
 
-            // Ingredients Card
+            // Ingredients with Measurements Card
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -101,7 +103,7 @@ fun RecipeDetailScreen(
                         modifier = Modifier.padding(bottom = 12.dp)
                     ) {
                         Icon(
-                            imageVector = Icons.Default.RestaurantMenu,
+                            imageVector = Icons.Default.Kitchen,
                             contentDescription = "Ingredients",
                             tint = primaryGreen,
                             modifier = Modifier.size(24.dp)
@@ -114,32 +116,58 @@ fun RecipeDetailScreen(
                         )
                     }
 
-                    Divider()
-                    Spacer(modifier = Modifier.height(12.dp))
+                    HorizontalDivider(color = primaryGreen.copy(alpha = 0.3f))
+                    Spacer(modifier = Modifier.height(8.dp))
 
-                    // Ingredients list
+                    // Ingredients and measurements list
                     recipe.ingredients.forEachIndexed { index, ingredient ->
+                        val measurement = if (index < recipe.measurements.size) recipe.measurements[index] else ""
+
                         Row(
-                            verticalAlignment = Alignment.Top,
-                            modifier = Modifier.padding(vertical = 4.dp)
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Box(
-                                modifier = Modifier
-                                    .size(24.dp)
-                                    .clip(RoundedCornerShape(12.dp))
-                                    .background(primaryGreen.copy(alpha = 0.15f)),
-                                contentAlignment = Alignment.Center
+                            // Ingredient dot and name
+                            Row(
+                                modifier = Modifier.weight(1f),
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(20.dp)
+                                        .clip(RoundedCornerShape(10.dp))
+                                        .background(primaryGreen.copy(alpha = 0.15f)),
+                                    contentAlignment = Alignment.TopCenter
+                                ) {
+                                    Text(
+                                        text = "•",
+                                        color = primaryGreen,
+                                        fontWeight = FontWeight.Bold,
+                                    )
+                                }
+                                Spacer(modifier = Modifier.width(8.dp))
                                 Text(
-                                    text = "•",
-                                    color = primaryGreen,
-                                    fontWeight = FontWeight.Bold
+                                    text = ingredient,
+                                    style = MaterialTheme.typography.bodyMedium
                                 )
                             }
-                            Spacer(modifier = Modifier.width(12.dp))
+
+                            // Measurement
                             Text(
-                                text = ingredient,
-                                style = MaterialTheme.typography.bodyMedium
+                                text = measurement,
+                                modifier = Modifier.weight(1f),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+                                textAlign = TextAlign.End
+                            )
+                        }
+
+                        if (index < recipe.ingredients.size - 1) {
+                            Divider(
+                                modifier = Modifier.padding(vertical = 2.dp),
+                                color = Color.LightGray.copy(alpha = 0.5f)
                             )
                         }
                     }
@@ -178,7 +206,7 @@ fun RecipeDetailScreen(
                         )
                     }
 
-                    Divider()
+                    HorizontalDivider(color = primaryGreen.copy(alpha = 0.3f))
                     Spacer(modifier = Modifier.height(12.dp))
 
                     // Steps list
@@ -242,17 +270,21 @@ fun RecipeDetailScreen(
                             )
                         }
 
-                        Divider()
+                        HorizontalDivider(color = primaryGreen.copy(alpha = 0.3f))
                         Spacer(modifier = Modifier.height(12.dp))
 
                         // YouTube WebView
-                        val webViewState = rememberWebViewState(url = url)
+                        val embedUrl = recipe.youtubeUrl.replace("watch?v=", "embed/")
+                        val webViewState = rememberWebViewState(url = embedUrl ?: "")
                         WebView(
                             state = webViewState,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(240.dp)
-                                .clip(RoundedCornerShape(8.dp))
+                                .clip(RoundedCornerShape(8.dp)),
+                            onCreated = { webView ->
+                                webView.settings.javaScriptEnabled = true // Habilitar JavaScript
+                            }
                         )
                     }
                 }

@@ -18,13 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.quickStock.R
-import com.example.quickStock.screensUI.addProducts.Product
+import com.example.quickStock.model.addProduct.Product
 import com.example.quickStock.screensUI.common.goBack.ScreenName
 import com.example.quickStock.screensUI.icon.getCategoryIcon
 import java.time.LocalDate

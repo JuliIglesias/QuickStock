@@ -1,10 +1,10 @@
-package com.example.quickStock.screensUI.home.stock
+package com.example.quickStock.model.recipe
 
 import androidx.compose.ui.Modifier
 
-data class StockButtonData(
+data class RecipeListData(
     val title: String,
-    val quantity: Int,
+    val image: String?,
     val onClick: () -> Unit,
     val modifier: Modifier = Modifier
 )

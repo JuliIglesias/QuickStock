@@ -1,10 +1,10 @@
-package com.example.quickStock.screensUI.home
+package com.example.quickStock.model.recipe
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.quickStock.screensUI.common.principal.ICardButton
+import com.example.quickStock.model.common.ICardButton
 
-data class CategoryButtonData(
+data class RecipeButtonData(
     override val title: String,
     override val icon: ImageVector,
     override val onClick: () -> Unit,

@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.quickStock.screensUI.common.goBack.ScreenName
 import com.example.quickStock.mocking.getRecipesByType
+import com.example.quickStock.model.recipe.RecipeListData
 
 @Composable
 fun RecipeListScreen(
@@ -27,7 +28,7 @@ fun RecipeListScreen(
     val recipeTypeList = getRecipesByType(recipeType)
 
     val recipeButtons = recipeTypeList.map { recipe ->
-        RecipeButtonData(
+        RecipeListData(
             title = recipe.name,
             image = recipe.image,
             onClick = { onClick(recipe.id) }

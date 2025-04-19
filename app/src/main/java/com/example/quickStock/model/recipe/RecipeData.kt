@@ -1,4 +1,4 @@
-package com.example.quickStock.screensUI.recipeScreens.recipe
+package com.example.quickStock.model.recipe
 
 data class RecipeData(
     val id: String,

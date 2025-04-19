@@ -1,7 +1,6 @@
 package com.example.quickStock.screensUI.navigation
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +17,7 @@ import com.example.quickStock.screensUI.home.stock.ProductDetailScreen
 import com.example.quickStock.screensUI.home.stock.StockListScreen
 import com.example.quickStock.mocking.getProductsByCategory
 import com.example.quickStock.mocking.getRecipesByType
+import com.example.quickStock.model.navigation.NavBarNames
 import com.example.quickStock.screensUI.navigation.categories.CategoryRoutes
 import com.example.quickStock.screensUI.navigation.categories.RecipeRoutes
 import com.example.quickStock.screensUI.recipeScreens.RecipeScreen

@@ -1,12 +1,10 @@
 package com.example.quickStock.viewModel.home.stock
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.quickStock.mocking.getProductsByCategory
-import com.example.quickStock.screensUI.home.stock.StockButtonData
+import com.example.quickStock.model.home.StockButtonData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

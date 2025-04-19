@@ -1,4 +1,4 @@
-package com.example.quickStock.screensUI.addProducts
+package com.example.quickStock.model.addProduct
 
 data class Product(
     val id: String, //en un futuro se cambiara a lo que escanee con el barcode scanner y la camara del celular

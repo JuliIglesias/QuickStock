@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.example.quickStock.model.recipe.RecipeData
 import com.example.quickStock.screensUI.common.goBack.ScreenName
 import com.google.accompanist.web.WebView
 import com.google.accompanist.web.rememberWebViewState

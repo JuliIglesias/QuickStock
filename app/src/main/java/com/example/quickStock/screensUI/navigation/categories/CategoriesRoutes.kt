@@ -33,11 +33,4 @@ enum class CategoryRoutes(val route: String, private val stringResId: Int) {
     fun getRouteSlug(): String {
         return route.substringAfterLast("/")
     }
-
-    companion object {
-        // Método para encontrar una categoría por su slug
-        fun findBySlug(slug: String): CategoryRoutes? {
-            return entries.find { it.getRouteSlug() == slug }
-        }
-    }
 }

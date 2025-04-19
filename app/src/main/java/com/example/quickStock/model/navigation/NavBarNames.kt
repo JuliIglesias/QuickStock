@@ -1,4 +1,4 @@
-package com.example.quickStock.screensUI.navigation
+package com.example.quickStock.model.navigation
 
 enum class NavBarNames {
     Home,

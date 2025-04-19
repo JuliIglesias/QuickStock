@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.quickStock.model.common.ICardButton
 import com.example.quickStock.screensUI.icon.MyIcon
 
 

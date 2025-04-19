@@ -43,7 +43,6 @@ fun RecipeDetailScreen(
             contentDescription = recipe.name,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp) // Altura del rectángulo
         )
 
         Spacer(modifier = Modifier.height(16.dp))

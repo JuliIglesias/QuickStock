@@ -69,7 +69,7 @@ fun RecipeListScreen(
                             imageUrl = "https://www.themealdb.com/images/media/meals/wai9bw1619788844.jpg", //productButton.image,
                             contentDescription = productButton.title,
                             modifier = Modifier
-                                .size(80.dp)
+                                .size(96.dp)
                                 .clip(RoundedCornerShape(8.dp))
                         )
 

@@ -15,6 +15,7 @@ import androidx.compose.ui.res.vectorResource
 import com.example.quickStock.R
 import com.example.quickStock.common.principal.CustomGrid
 import com.example.quickStock.common.SimpleSearchBar
+import com.example.quickStock.icon.getRecipesTypesIcon
 import com.example.quickStock.navigation.categories.CategoryRoutes
 import com.example.quickStock.navigation.categories.RecipeRoutes
 
@@ -25,26 +26,12 @@ fun GridRecipes(
 ) {
     val context = LocalContext.current
     val typeOfRecipes = context.resources.getStringArray(R.array.recipe_types)
-    val typeOfRecipesIcons = mapOf(
-        stringResource(R.string.fruits) to ImageVector.vectorResource(R.drawable.ic_fruit),
-        stringResource(R.string.vegetables) to ImageVector.vectorResource(R.drawable.ic_veggie),
-        stringResource(R.string.meat) to ImageVector.vectorResource(R.drawable.ic_meat),
-        stringResource(R.string.seafood) to ImageVector.vectorResource(R.drawable.ic_fish_cat),
-        stringResource(R.string.chicken) to ImageVector.vectorResource(R.drawable.ic_chicken),
-        stringResource(R.string.salads) to ImageVector.vectorResource(R.drawable.ic_salad),
-        stringResource(R.string.desserts) to ImageVector.vectorResource(R.drawable.ic_cookie),
-        stringResource(R.string.alcoholic_beverages) to ImageVector.vectorResource(R.drawable.ic_cocktail),
-        stringResource(R.string.pasta) to ImageVector.vectorResource(R.drawable.ic_pasta),
-        stringResource(R.string.bakery) to ImageVector.vectorResource(R.drawable.ic_cake),
-        stringResource(R.string.breakfast) to ImageVector.vectorResource(R.drawable.ic_egg),
-        stringResource(R.string.fast_food) to ImageVector.vectorResource(R.drawable.ic_hamburger),
-    )
 
     val buttonDataList = typeOfRecipes.map { recipeString ->
         val route = RecipeRoutes.entries.find { it.name.equals(recipeString, ignoreCase = true) }?.route
         RecipeButtonData(
             title = recipeString,
-            icon = typeOfRecipesIcons[recipeString] ?: ImageVector.vectorResource(R.drawable.ic_question_mark),
+            icon = getRecipesTypesIcon(recipeString),
             onClick = {
                 if (route != null) {
                     onRecipeClick(route)

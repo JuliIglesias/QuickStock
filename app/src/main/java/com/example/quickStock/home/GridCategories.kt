@@ -5,25 +5,37 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.quickStock.R
 import com.example.quickStock.common.principal.CustomGrid
 import com.example.quickStock.common.SimpleSearchBar
-import com.example.quickStock.navigation.categories.CategoryRoutes
 
 @Composable
 fun ProductCategoryGrid(
     modifier: Modifier = Modifier,
     onCategoryClick: (String) -> Unit = {}
 ) {
-    val context = LocalContext.current
-    val categories = context.resources.getStringArray(R.array.product_categories)
+    val viewModel = hiltViewModel<GridCategoryViewModel>()
+
+    val searchQuery by viewModel.searchQuery.collectAsState()
+    val filteredCategoryNames by viewModel.filteredCategories.collectAsState()
+    val selectedCategoryRoute by viewModel.selectedCategoryRoute.collectAsState()
+
+    // Si se seleccionó una categoría, navega a ella
+    selectedCategoryRoute?.let { route ->
+        onCategoryClick(route)
+        viewModel.resetCategorySelection() // Reinicia el estado después de navegar
+    }
+
+    // Mapeo de iconos - lo mantenemos en la UI ya que necesitamos Context y recursos
     val categoryIcons = mapOf(
         stringResource(R.string.refrigerator) to ImageVector.vectorResource(R.drawable.ic_refrigerator),
         stringResource(R.string.fruits) to ImageVector.vectorResource(R.drawable.ic_fruit),
@@ -46,26 +58,22 @@ fun ProductCategoryGrid(
         stringResource(R.string.household) to ImageVector.vectorResource(R.drawable.ic_kitchen_suplies),
     )
 
-    val buttonDataList = categories.map { categoryString ->
-val route = CategoryRoutes.entries.find {
-        it.getRouteSlug().equals(
-            categoryString.replace(" ", "_").replace("&", "and").lowercase(),
-            ignoreCase = true
-        )
-    }?.route
+    val defaultIcon = ImageVector.vectorResource(R.drawable.ic_question_mark)
+
+    // Convertimos los nombres de categorías en objetos CategoryButtonData con íconos
+    val categoryItems = filteredCategoryNames.map { categoryName ->
+        val route = viewModel.getCategoryRoute(categoryName)
+
         CategoryButtonData(
-            title = categoryString,
-            icon = categoryIcons[categoryString] ?: ImageVector.vectorResource(R.drawable.ic_question_mark),
+            title = categoryName,
+            icon = categoryIcons[categoryName] ?: defaultIcon,
             onClick = {
                 if (route != null) {
-                    onCategoryClick(route)
+                    viewModel.onCategorySelected(route)
                 }
             }
         )
     }
-
-    val query = rememberSaveable { mutableStateOf("") }
-    val filteredCategories = rememberSaveable { mutableStateOf(buttonDataList) }
 
     Column(
         modifier = Modifier
@@ -74,19 +82,15 @@ val route = CategoryRoutes.entries.find {
         verticalArrangement = Arrangement.Top,
     ) {
         SimpleSearchBar(
-            query = query.value,
-            onQueryChange = { newQuery ->
-                query.value = newQuery
-                filteredCategories.value = buttonDataList.filter { it.title.contains(newQuery, ignoreCase = true) }
-            },
-            onSearch = {
-                filteredCategories.value = buttonDataList.filter { it.title.contains(query.value, ignoreCase = true) }
-            },
-            searchResults = filteredCategories.value.map { it.title },
+            query = searchQuery,
+            onQueryChange = { viewModel.updateSearchQuery(it) },
+            onSearch = { /* La búsqueda ya se maneja en updateSearchQuery */ },
+            searchResults = filteredCategoryNames,
             modifier = Modifier
         )
+
         CustomGrid(
-            items = filteredCategories.value,
+            items = categoryItems,
             modifier = modifier,
             columns = 2,
             verticalSpacing = 16,
@@ -94,3 +98,6 @@ val route = CategoryRoutes.entries.find {
         )
     }
 }
+
+
+

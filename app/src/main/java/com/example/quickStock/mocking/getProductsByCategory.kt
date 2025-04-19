@@ -1,7 +1,7 @@
 package com.example.quickStock.mocking
 
-import com.example.quickStock.addProducts.Product
-import com.example.quickStock.addProducts.QuantityExpirationDate
+import com.example.quickStock.screensUI.addProducts.Product
+import com.example.quickStock.screensUI.addProducts.QuantityExpirationDate
 
 
 fun getProductsByCategory(category: String): List<Product> {

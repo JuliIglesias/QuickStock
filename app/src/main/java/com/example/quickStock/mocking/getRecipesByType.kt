@@ -1,7 +1,7 @@
 package com.example.quickStock.mocking
 
 import com.example.quickStock.R
-import com.example.quickStock.recipeScreens.recipe.RecipeData
+import com.example.quickStock.screensUI.recipeScreens.recipe.RecipeData
 
 fun getRecipesByType(type: String): List<RecipeData> {
     return when (type) {

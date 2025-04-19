@@ -9,13 +9,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.quickStock.screensUI.common.goBack.ScreenName
 import com.example.quickStock.mocking.getProductsByCategory
 import com.example.quickStock.screensUI.navigation.categories.CategoryRoutes
+import com.example.quickStock.viewModel.home.stock.StockListViewModel
 
 @Composable
 fun StockListScreen(
@@ -24,19 +29,17 @@ fun StockListScreen(
     onGoBack: () -> Unit,
     onClick: (String) -> Unit
 ) {
+    val viewModel = hiltViewModel<StockListViewModel>()
+    val products by viewModel.products.collectAsState()
+
+    // Carga los productos cuando se inicia el composable o cambia la categoría
+    LaunchedEffect(category) {
+        viewModel.loadProductsByCategory(category, onClick)
+    }
+
+
     val categoryRoute = CategoryRoutes.entries.find { it.name == category }
     val formattedCategoryName = categoryRoute?.getFormattedName() ?: category
-
-
-    val products = getProductsByCategory(category)
-
-    val productButtons = products.map { product ->
-        StockButtonData(
-            title = product.name,
-            quantity = product.quantityExpirationDate.sumOf { it.quantity },
-            onClick = { onClick(product.id) }
-        )
-    }
 
     Column(
         modifier = modifier
@@ -50,7 +53,7 @@ fun StockListScreen(
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(productButtons) { productButton ->
+            items(products) { productButton ->
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()

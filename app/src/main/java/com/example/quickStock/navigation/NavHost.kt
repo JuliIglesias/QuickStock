@@ -11,7 +11,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.quickStock.addProducts.AddProductSurvey
 import com.example.quickStock.home.HomeScreen
+import com.example.quickStock.home.stock.ProductDetailScreen
 import com.example.quickStock.home.stock.StockListScreen
+import com.example.quickStock.mocking.getProductsByCategory
 import com.example.quickStock.mocking.getRecipesByType
 import com.example.quickStock.navigation.categories.CategoryRoutes
 import com.example.quickStock.navigation.categories.RecipeRoutes
@@ -59,7 +61,22 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
                 StockListScreen(category = category.name,
                     onGoBack = {
                         navController.popBackStack()
+                    },
+                    onClick = { productId ->
+                        navController.navigate("category/${category.name.lowercase()}/product/$productId")
                     }
+                )
+            }
+        }
+
+        composable("category/{categoryType}/product/{productId}") { backStackEntry ->
+            val productId = backStackEntry.arguments?.getString("productId")
+            val categoryType = backStackEntry.arguments?.getString("categoryType")
+            val product = getProductsByCategory(categoryType?.replaceFirstChar { it.uppercase() } ?: "").find { it.id == productId }
+            if (product != null) {
+                ProductDetailScreen(
+                    product = product,
+                    onGoBack = { navController.popBackStack() }
                 )
             }
         }

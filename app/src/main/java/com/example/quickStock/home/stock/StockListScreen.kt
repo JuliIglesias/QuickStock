@@ -20,15 +20,16 @@ import com.example.quickStock.mocking.getProductsByCategory
 fun StockListScreen(
     category: String,
     modifier: Modifier = Modifier,
-    onGoBack: () -> Unit // Callback para manejar la acción de volver atrás
+    onGoBack: () -> Unit,
+    onClick: (String) -> Unit
 ) {
     val products = getProductsByCategory(category)
 
     val productButtons = products.map { product ->
         StockButtonData(
             title = product.name,
-            quantity = product.quantity,
-            onClick = { /* Acción al hacer clic en el producto */ }
+            quantity = product.quantityExpirationDate.sumOf { it.quantity },
+            onClick = { onClick(product.id) }
         )
     }
 

@@ -38,7 +38,6 @@ import androidx.compose.ui.unit.dp
 fun ProductSurvey(onProductAdded: (Product) -> Unit) {
     var productId by remember { mutableStateOf("") }
     var productName by remember { mutableStateOf("") }
-    var productPrice by remember { mutableStateOf("") }
     var productBrand by remember { mutableStateOf("") }
     var productCategory by remember { mutableStateOf("") }
     var productQuantity by remember { mutableIntStateOf(1) }
@@ -75,16 +74,6 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                 onValueChange = { productName = it },
                 label = { Text("Product Name") },
                 modifier = Modifier.fillMaxWidth()
-            )
-        }
-
-        item {
-            OutlinedTextField(
-                value = productPrice,
-                onValueChange = { productPrice = it },
-                label = { Text("Price") },
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
         }
 
@@ -167,16 +156,18 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
         item {
             Button(
                 onClick = {
-                    val price = productPrice.toDoubleOrNull()
-                    if (price != null) {
                         onProductAdded(
                             Product(
                                 id = productId,
                                 name = productName,
                                 brand = productBrand,
                                 category = productCategory,
-                                quantity = productQuantity,
-                                expiryDate = productExpiryDate
+                                quantityExpirationDate = listOf(
+                                    QuantityExpirationDate(
+                                        quantity = productQuantity,
+                                        expiryDate = productExpiryDate
+                                    )
+                                )
                             )
                         )
                         // Reset fields after adding
@@ -186,10 +177,6 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                         productCategory = ""
                         productQuantity = 1
                         productExpiryDate = ""
-                    } else {
-                        // Handle invalid price (e.g., show error message)
-                        println("Invalid price format.")
-                    }
                 }
             ) {
                 Text("Add Product")

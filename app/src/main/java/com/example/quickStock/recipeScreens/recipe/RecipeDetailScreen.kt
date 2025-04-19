@@ -39,7 +39,7 @@ fun RecipeDetailScreen(
 
         // Imagen de la receta
         RecipeImage(
-            imageUrl = "https://i.kym-cdn.com/photos/images/newsfeed/002/422/058/391.jpg", //recipe.image,
+            imageUrl = recipe.image, // "https://i.kym-cdn.com/photos/images/newsfeed/002/422/058/391.jpg",
             contentDescription = recipe.name,
             modifier = Modifier
                 .fillMaxWidth()

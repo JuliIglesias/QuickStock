@@ -5,6 +5,10 @@ data class Product(
     val name: String,
     val brand: String,
     val category: String,
+    val quantityExpirationDate: List<QuantityExpirationDate>,
+)
+
+data class QuantityExpirationDate(
     val quantity: Int,
-    val expiryDate: String //en un futuro se cambiara a Date
+    val expiryDate: String
 )

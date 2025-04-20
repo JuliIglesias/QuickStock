@@ -194,7 +194,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                                 imageVector = getCategoryIcon(categoryName = productCategory, Icons.Default.Category),
                                 contentDescription = "Category",
                                 modifier = Modifier.size(24.dp),
-                                tint = if (productCategory.isEmpty()) primaryGreen else { Color.Unspecified }
+                                tint = if (productCategory.isEmpty() || expanded) primaryGreen else { Color.Unspecified }
                             )
                         },
                         modifier = Modifier

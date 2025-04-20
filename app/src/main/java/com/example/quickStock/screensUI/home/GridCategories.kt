@@ -8,7 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.quickStock.R
 import com.example.quickStock.model.home.CategoryButtonData
 import com.example.quickStock.screensUI.common.principal.CustomGrid
 import com.example.quickStock.screensUI.common.SimpleSearchBar
@@ -38,7 +41,7 @@ fun ProductCategoryGrid(
 
         CategoryButtonData(
             title = categoryName,
-            icon = getCategoryIcon(categoryName),
+            icon = getCategoryIcon(categoryName, ImageVector.vectorResource(R.drawable.ic_question_mark)),
             onClick = {
                 if (route != null) {
                     viewModel.onCategorySelected(route)

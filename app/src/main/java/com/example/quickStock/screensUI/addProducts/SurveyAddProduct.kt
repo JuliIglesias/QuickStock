@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.example.quickStock.R
 import com.example.quickStock.model.addProduct.Product
 import com.example.quickStock.model.addProduct.QuantityExpirationDate
+import com.example.quickStock.screensUI.icon.getCategoryIcon
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -190,9 +191,10 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                         label = { Text("Category") },
                         leadingIcon = {
                             Icon(
-                                imageVector = Icons.Default.Category,
+                                imageVector = getCategoryIcon(categoryName = productCategory, Icons.Default.Category),
                                 contentDescription = "Category",
-                                tint = primaryGreen
+                                modifier = Modifier.size(24.dp),
+                                tint = if (productCategory.isEmpty()) primaryGreen else { Color.Unspecified }
                             )
                         },
                         modifier = Modifier
@@ -267,7 +269,11 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                                 modifier = Modifier
                                     .size(36.dp)
                                     .clip(RoundedCornerShape(18.dp))
-                                    .background(if (productQuantity > 1) primaryGreen else Color.Gray.copy(alpha = 0.5f))
+                                    .background(
+                                        if (productQuantity > 1) primaryGreen else Color.Gray.copy(
+                                            alpha = 0.5f
+                                        )
+                                    )
                             ) {
                                 Icon(
                                     Icons.Default.Remove,

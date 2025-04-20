@@ -102,11 +102,7 @@ fun ProductDetailScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            imageVector = if (getCategoryIcon(categoryName = product.category) == ImageVector.vectorResource(R.drawable.ic_question_mark)) {
-                                Icons.Default.Category
-                            } else {
-                                getCategoryIcon(categoryName = product.category)
-                            },
+                            imageVector = getCategoryIcon(categoryName = product.category, Icons.Default.Category),
                             contentDescription = "Category",
                             tint = Color.Unspecified,
                             modifier = Modifier.size(24.dp)

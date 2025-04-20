@@ -7,7 +7,7 @@ import androidx.compose.ui.res.vectorResource
 import com.example.quickStock.R
 
 @Composable
-fun getCategoryIcon(categoryName: String): ImageVector {
+fun getCategoryIcon(categoryName: String, doNotHaveIcon: ImageVector): ImageVector {
     val categoryIcons = mapOf(
         stringResource(R.string.refrigerator) to ImageVector.vectorResource(R.drawable.ic_refrigerator),
         stringResource(R.string.fruits) to ImageVector.vectorResource(R.drawable.ic_fruit),
@@ -30,5 +30,5 @@ fun getCategoryIcon(categoryName: String): ImageVector {
         stringResource(R.string.household) to ImageVector.vectorResource(R.drawable.ic_kitchen_suplies),
     )
 
-    return categoryIcons[categoryName] ?: ImageVector.vectorResource(R.drawable.ic_question_mark)
+    return categoryIcons[categoryName] ?: doNotHaveIcon
 }

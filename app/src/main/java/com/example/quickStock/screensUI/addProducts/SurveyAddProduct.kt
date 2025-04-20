@@ -19,22 +19,22 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.quickStock.R
 import com.example.quickStock.model.addProduct.Product
 import com.example.quickStock.model.addProduct.QuantityExpirationDate
 import com.example.quickStock.screensUI.icon.getCategoryIcon
+import com.example.quickStock.viewModel.addProducts.ProductSurveyViewModel
+import com.example.quickStock.viewModel.home.GridCategoryViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductSurvey(onProductAdded: (Product) -> Unit) {
-    var productId by remember { mutableStateOf("") }
-    var productName by remember { mutableStateOf("") }
-    var productBrand by remember { mutableStateOf("") }
-    var productCategory by remember { mutableStateOf("") }
-    var productQuantity by remember { mutableIntStateOf(1) }
-    var productExpiryDate by remember { mutableStateOf("") }
-    var expanded by remember { mutableStateOf(false) }
+    val viewModel = hiltViewModel<ProductSurveyViewModel>()
+
+    val uiState by viewModel.uiState.collectAsState()
+    val isDropdownExpanded by viewModel.isDropdownExpanded.collectAsState()
     val context = LocalContext.current
     val categories = context.resources.getStringArray(R.array.product_categories)
     val scrollState = rememberScrollState()
@@ -94,8 +94,8 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
             ) {
                 // Product ID Field
                 OutlinedTextField(
-                    value = productId,
-                    onValueChange = { productId = it },
+                    value = uiState.productId,
+                    onValueChange = { viewModel.updateProductId(it) },
                     label = { Text("Product ID") },
                     modifier = Modifier.fillMaxWidth(),
                     leadingIcon = {
@@ -115,8 +115,8 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
 
                 // Product Name Field
                 OutlinedTextField(
-                    value = productName,
-                    onValueChange = { productName = it },
+                    value = uiState.productName,
+                    onValueChange = { viewModel.updateProductName(it) },
                     label = { Text("Product Name") },
                     modifier = Modifier.fillMaxWidth(),
                     leadingIcon = {
@@ -136,8 +136,8 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
 
                 // Brand Field
                 OutlinedTextField(
-                    value = productBrand,
-                    onValueChange = { productBrand = it },
+                    value = uiState.productBrand,
+                    onValueChange = { viewModel.updateProductBrand(it) },
                     label = { Text("Brand") },
                     modifier = Modifier.fillMaxWidth(),
                     leadingIcon = {
@@ -157,8 +157,8 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
 
                 // Expiry Date Field
                 OutlinedTextField(
-                    value = productExpiryDate,
-                    onValueChange = { productExpiryDate = it },
+                    value = uiState.productExpiryDate,
+                    onValueChange = { viewModel.updateExpiryDate(it) },
                     label = { Text("Expiry Date (YYYY-MM-DD)") },
                     modifier = Modifier.fillMaxWidth(),
                     leadingIcon = {
@@ -179,29 +179,28 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
 
                 // Category Dropdown
                 ExposedDropdownMenuBox(
-                    expanded = expanded,
-                    onExpandedChange = { expanded = !expanded }
+                    expanded = isDropdownExpanded,
+                    onExpandedChange = { viewModel.toggleDropdown() }
                 ) {
                     OutlinedTextField(
-                        value = productCategory,
+                        value = uiState.productCategory,
                         onValueChange = {
-                            productCategory = it
-                            expanded = true
+                            viewModel.updateProductCategory(it)
                         },
                         label = { Text("Category") },
                         leadingIcon = {
                             Icon(
-                                imageVector = getCategoryIcon(categoryName = productCategory, Icons.Default.Category),
+                                imageVector = getCategoryIcon(categoryName = uiState.productCategory, Icons.Default.Category),
                                 contentDescription = "Category",
                                 modifier = Modifier.size(24.dp),
-                                tint = if (productCategory.isEmpty() || expanded) primaryGreen else { Color.Unspecified }
+                                tint = if (uiState.productCategory.isEmpty() || isDropdownExpanded) primaryGreen else { Color.Unspecified }
                             )
                         },
                         modifier = Modifier
                             .fillMaxWidth()
                             .menuAnchor(),
                         trailingIcon = {
-                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = isDropdownExpanded)
                         },
                         singleLine = true,
                         colors = OutlinedTextFieldDefaults.colors(
@@ -212,18 +211,18 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                     )
 
                     ExposedDropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false },
+                        expanded = isDropdownExpanded,
+                        onDismissRequest = { viewModel.closeDropdown() },
                         modifier = Modifier.background(MaterialTheme.colorScheme.surface)
                     ) {
                         categories.filter {
-                            it.contains(productCategory, ignoreCase = true) || productCategory.isEmpty()
+                            it.contains(uiState.productCategory, ignoreCase = true) || uiState.productCategory.isEmpty()
                         }.forEach { category ->
                             DropdownMenuItem(
                                 text = { Text(category) },
                                 onClick = {
-                                    productCategory = category
-                                    expanded = false
+                                    viewModel.updateProductCategory(category)
+                                    viewModel.closeDropdown()
                                 },
                                 leadingIcon = {
                                     Icon(
@@ -265,12 +264,12 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             IconButton(
-                                onClick = { if (productQuantity > 1) productQuantity-- },
+                                onClick = { viewModel.decrementQuantity() },
                                 modifier = Modifier
                                     .size(36.dp)
                                     .clip(RoundedCornerShape(18.dp))
                                     .background(
-                                        if (productQuantity > 1) primaryGreen else Color.Gray.copy(
+                                        if (uiState.productQuantity > 1) primaryGreen else Color.Gray.copy(
                                             alpha = 0.5f
                                         )
                                     )
@@ -291,14 +290,14 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    text = productQuantity.toString(),
+                                    text = uiState.productQuantity.toString(),
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.Bold
                                 )
                             }
 
                             IconButton(
-                                onClick = { productQuantity++ },
+                                onClick = { viewModel.incrementQuantity() },
                                 modifier = Modifier
                                     .size(36.dp)
                                     .clip(RoundedCornerShape(18.dp))
@@ -319,27 +318,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
         // Add Button
         Button(
             onClick = {
-                onProductAdded(
-                    Product(
-                        id = productId,
-                        name = productName,
-                        brand = productBrand,
-                        category = productCategory,
-                        quantityExpirationDate = listOf(
-                            QuantityExpirationDate(
-                                quantity = productQuantity,
-                                expiryDate = productExpiryDate
-                            )
-                        )
-                    )
-                )
-                // Reset fields after adding
-                productId = ""
-                productName = ""
-                productBrand = ""
-                productCategory = ""
-                productQuantity = 1
-                productExpiryDate = ""
+                viewModel.addProduct(onProductAdded)
             },
             modifier = Modifier
                 .fillMaxWidth()

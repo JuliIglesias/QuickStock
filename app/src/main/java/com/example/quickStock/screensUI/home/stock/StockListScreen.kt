@@ -14,12 +14,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.quickStock.R
 import com.example.quickStock.screensUI.common.goBack.ScreenName
 import com.example.quickStock.mocking.getProductsByCategory
 import com.example.quickStock.screensUI.navigation.categories.CategoryRoutes
+import com.example.quickStock.ui.theme.*
 import com.example.quickStock.viewModel.home.stock.StockListViewModel
 
 @Composable
@@ -37,29 +38,32 @@ fun StockListScreen(
         viewModel.loadProductsByCategory(category, onClick)
     }
 
-
     val categoryRoute = CategoryRoutes.entries.find { it.name == category }
     val formattedCategoryName = categoryRoute?.getFormattedName() ?: category
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(paddingExtraLarge)
     ) {
         ScreenName(
-            title = "Stock for $formattedCategoryName",
+            title = stringResource(R.string.stock_for, formattedCategoryName),
             onGoBack = onGoBack,
         )
+
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(spacingMedium)
         ) {
             items(products) { productButton ->
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(8.dp))
-                        .padding(16.dp)
+                        .background(
+                            MaterialTheme.colorScheme.primary,
+                            shape = RoundedCornerShape(radiusSmall)
+                        )
                         .clickable { productButton.onClick() }
+                        .padding(paddingExtraLarge)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -68,12 +72,12 @@ fun StockListScreen(
                     ) {
                         Text(
                             text = productButton.title,
-                            fontSize = 18.sp,
+                            fontSize = textSizeLarge,
                             color = MaterialTheme.colorScheme.onPrimary
                         )
                         Text(
                             text = productButton.quantity.toString(),
-                            fontSize = 18.sp,
+                            fontSize = textSizeLarge,
                             color = MaterialTheme.colorScheme.onPrimary
                         )
                     }

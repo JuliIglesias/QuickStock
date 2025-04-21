@@ -15,12 +15,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.quickStock.R
 import com.example.quickStock.screensUI.common.goBack.ScreenName
 import com.example.quickStock.mocking.getRecipesByType
 import com.example.quickStock.model.recipe.RecipeListData
+import com.example.quickStock.ui.theme.*
 import com.example.quickStock.viewModel.recipeScreens.GridRecipesViewModel
 import com.example.quickStock.viewModel.recipeScreens.RecipeListViewModel
 
@@ -47,23 +48,26 @@ fun RecipeListScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(paddingExtraLarge)
     ) {
         ScreenName(
             title = screenTitle,
-            //title = "Recipes of $recipeType",
             onGoBack = onGoBack,
         )
+
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(spacingMedium)
         ) {
             items(recipes) { productButton ->
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(8.dp))
-                        .padding(16.dp)
+                        .background(
+                            MaterialTheme.colorScheme.primary,
+                            shape = RoundedCornerShape(radiusSmall)
+                        )
                         .clickable { productButton.onClick() }
+                        .padding(paddingExtraLarge)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -72,7 +76,7 @@ fun RecipeListScreen(
                     ) {
                         Text(
                             text = productButton.title,
-                            fontSize = 18.sp,
+                            fontSize = textSizeLarge,
                             color = MaterialTheme.colorScheme.onPrimary
                         )
 
@@ -80,10 +84,9 @@ fun RecipeListScreen(
                             imageUrl = "https://www.themealdb.com/images/media/meals/wai9bw1619788844.jpg", //productButton.image,
                             contentDescription = productButton.title,
                             modifier = Modifier
-                                .size(96.dp)
-                                .clip(RoundedCornerShape(8.dp))
+                                .size(sizeImageMedium)
+                                .clip(RoundedCornerShape(radiusSmall))
                         )
-
                     }
                 }
             }

@@ -227,4 +227,16 @@
         </string-array>
 
 
+    <string name="brand">Brand</string>
+    <string name="category">Category</string>
+    <string name="total_stock">Total Stock</string>
+    <string name="expiration_dates_quantities">Expiration Dates &amp; Quantities</string>
+    <string name="date">Date</string>
+    <string name="quantity">Quantity</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="steps">Steps</string>
+    <string name="video_tutorial">Video Tutorial</string>
+    <string name="stock_for">Stock for %1$s</string>
+    <string name="recipes_of">Recipes of %1$s</string>
+
 </resources>

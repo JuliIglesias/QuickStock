@@ -44,42 +44,45 @@ fun StockListScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(paddingExtraLarge)
     ) {
         ScreenName(
             title = stringResource(R.string.stock_for, formattedCategoryName),
             onGoBack = onGoBack,
         )
 
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(spacingMedium)
+        Column(
+            modifier = Modifier.padding(paddingExtraLarge)
         ) {
-            items(products) { productButton ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            MaterialTheme.colorScheme.primary,
-                            shape = RoundedCornerShape(radiusSmall)
-                        )
-                        .clickable { productButton.onClick() }
-                        .padding(paddingExtraLarge)
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(spacingMedium)
+            ) {
+                items(products) { productButton ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(
+                                MaterialTheme.colorScheme.primary,
+                                shape = RoundedCornerShape(radiusSmall)
+                            )
+                            .clickable { productButton.onClick() }
+                            .padding(paddingExtraLarge)
                     ) {
-                        Text(
-                            text = productButton.title,
-                            fontSize = textSizeLarge,
-                            color = MaterialTheme.colorScheme.onPrimary
-                        )
-                        Text(
-                            text = productButton.quantity.toString(),
-                            fontSize = textSizeLarge,
-                            color = MaterialTheme.colorScheme.onPrimary
-                        )
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = productButton.title,
+                                fontSize = textSizeLarge,
+                                color = MaterialTheme.colorScheme.onPrimary
+                            )
+                            Text(
+                                text = productButton.quantity.toString(),
+                                fontSize = textSizeLarge,
+                                color = MaterialTheme.colorScheme.onPrimary
+                            )
+                        }
                     }
                 }
             }

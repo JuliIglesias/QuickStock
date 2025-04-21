@@ -48,45 +48,48 @@ fun RecipeListScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(paddingExtraLarge)
     ) {
         ScreenName(
             title = screenTitle,
             onGoBack = onGoBack,
         )
 
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(spacingMedium)
+        Column(
+            modifier = Modifier.padding(paddingExtraLarge)
         ) {
-            items(recipes) { productButton ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            MaterialTheme.colorScheme.primary,
-                            shape = RoundedCornerShape(radiusSmall)
-                        )
-                        .clickable { productButton.onClick() }
-                        .padding(paddingExtraLarge)
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(spacingMedium)
+            ) {
+                items(recipes) { productButton ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(
+                                MaterialTheme.colorScheme.primary,
+                                shape = RoundedCornerShape(radiusSmall)
+                            )
+                            .clickable { productButton.onClick() }
+                            .padding(paddingExtraLarge)
                     ) {
-                        Text(
-                            text = productButton.title,
-                            fontSize = textSizeLarge,
-                            color = MaterialTheme.colorScheme.onPrimary
-                        )
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = productButton.title,
+                                fontSize = textSizeLarge,
+                                color = MaterialTheme.colorScheme.onPrimary
+                            )
 
-                        RecipeImage(
-                            imageUrl = "https://www.themealdb.com/images/media/meals/wai9bw1619788844.jpg", //productButton.image,
-                            contentDescription = productButton.title,
-                            modifier = Modifier
-                                .size(sizeImageMedium)
-                                .clip(RoundedCornerShape(radiusSmall))
-                        )
+                            RecipeImage(
+                                imageUrl = "https://www.themealdb.com/images/media/meals/wai9bw1619788844.jpg", // productButton.image
+                                contentDescription = productButton.title,
+                                modifier = Modifier
+                                    .size(sizeImageMedium)
+                                    .clip(RoundedCornerShape(radiusSmall))
+                            )
+                        }
                     }
                 }
             }

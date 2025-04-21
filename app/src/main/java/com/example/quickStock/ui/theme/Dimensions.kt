@@ -23,8 +23,10 @@ val sizeImageLarge = 200.dp
 val sizeQuantityBadge = 48.dp
 val sizeQuantityCircle = 56.dp
 val sizeCircles = 20.dp
+val sizeCircleButton = 36.dp
 
 // Corner radius
+val radiusExtraSmall = 4.dp
 val radiusSmall = 10.dp
 val radiusMedium = 12.dp
 val radiusLarge = 16.dp
@@ -44,11 +46,13 @@ val heightVideo = 240.dp
 
 // Width
 val widthText = 80.dp
+val widthBoxSurvey = 48.dp
 val widthCard = 120.dp
 val widthCardLarge = 200.dp
 val widthCardExtraLarge = 300.dp
 
 // Elevation
+val noElevation = 0.dp
 val elevationSmall = 2.dp
 val elevationMedium = 4.dp
 val elevationLarge = 8.dp

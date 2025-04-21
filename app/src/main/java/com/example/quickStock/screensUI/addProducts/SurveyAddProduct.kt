@@ -18,14 +18,30 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.quickStock.R
 import com.example.quickStock.model.addProduct.Product
-import com.example.quickStock.model.addProduct.QuantityExpirationDate
 import com.example.quickStock.screensUI.icon.getCategoryIcon
+import com.example.quickStock.ui.theme.LightGray
+import com.example.quickStock.ui.theme.PrimaryGreen
+import com.example.quickStock.ui.theme.elevationMedium
+import com.example.quickStock.ui.theme.elevationSmall
+import com.example.quickStock.ui.theme.heightButton
+import com.example.quickStock.ui.theme.heightRow
+import com.example.quickStock.ui.theme.noElevation
+import com.example.quickStock.ui.theme.paddingExtraLarge
+import com.example.quickStock.ui.theme.radiusExtraSmall
+import com.example.quickStock.ui.theme.radiusLarge
+import com.example.quickStock.ui.theme.radiusRound
+import com.example.quickStock.ui.theme.radiusSmall
+import com.example.quickStock.ui.theme.sizeCircleButton
+import com.example.quickStock.ui.theme.sizeCircles
+import com.example.quickStock.ui.theme.sizeIcon
+import com.example.quickStock.ui.theme.spacingExtraLarge
+import com.example.quickStock.ui.theme.spacingMedium
+import com.example.quickStock.ui.theme.widthBoxSurvey
+import com.example.quickStock.ui.theme.widthText
 import com.example.quickStock.viewModel.addProducts.ProductSurveyViewModel
-import com.example.quickStock.viewModel.home.GridCategoryViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,7 +54,6 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
     val context = LocalContext.current
     val categories = context.resources.getStringArray(R.array.product_categories)
     val scrollState = rememberScrollState()
-    val primaryGreen = Color(0xFF4CAF50)
 
     val categoryIcons = mapOf(
         "Refrigerator" to ImageVector.vectorResource(R.drawable.ic_refrigerator),
@@ -69,9 +84,9 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .verticalScroll(scrollState)
-            .padding(16.dp)
+            .padding(paddingExtraLarge)
             .imePadding(),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(spacingExtraLarge)
     ) {
         // Header
         Text(
@@ -83,14 +98,14 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
         // Forms Card
         Card(
             modifier = Modifier.fillMaxWidth(),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = elevationMedium),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
             )
         ) {
             Column(
-                modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                modifier = Modifier.padding(paddingExtraLarge),
+                verticalArrangement = Arrangement.spacedBy(spacingExtraLarge)
             ) {
                 // Product ID Field
                 OutlinedTextField(
@@ -102,14 +117,14 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                         Icon(
                             imageVector = Icons.Default.QrCodeScanner,
                             contentDescription = "Product ID",
-                            tint = primaryGreen
+                            tint = PrimaryGreen
                         )
                     },
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = primaryGreen,
-                        focusedLabelColor = primaryGreen,
-                        cursorColor = primaryGreen
+                        focusedBorderColor = PrimaryGreen,
+                        focusedLabelColor = PrimaryGreen,
+                        cursorColor = PrimaryGreen
                     )
                 )
 
@@ -123,14 +138,14 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                         Icon(
                             imageVector = Icons.Default.ShoppingBag,
                             contentDescription = "Product Name",
-                            tint = primaryGreen
+                            tint = PrimaryGreen
                         )
                     },
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = primaryGreen,
-                        focusedLabelColor = primaryGreen,
-                        cursorColor = primaryGreen
+                        focusedBorderColor = PrimaryGreen,
+                        focusedLabelColor = PrimaryGreen,
+                        cursorColor = PrimaryGreen
                     )
                 )
 
@@ -144,14 +159,14 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                         Icon(
                             imageVector = Icons.Default.Store,
                             contentDescription = "Brand",
-                            tint = primaryGreen
+                            tint = PrimaryGreen
                         )
                     },
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = primaryGreen,
-                        focusedLabelColor = primaryGreen,
-                        cursorColor = primaryGreen
+                        focusedBorderColor = PrimaryGreen,
+                        focusedLabelColor = PrimaryGreen,
+                        cursorColor = PrimaryGreen
                     )
                 )
 
@@ -165,15 +180,15 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                         Icon(
                             imageVector = Icons.Default.CalendarToday,
                             contentDescription = "Expiry Date",
-                            tint = primaryGreen
+                            tint = PrimaryGreen
                         )
                     },
                     placeholder = { Text("2024-04-30") },
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = primaryGreen,
-                        focusedLabelColor = primaryGreen,
-                        cursorColor = primaryGreen
+                        focusedBorderColor = PrimaryGreen,
+                        focusedLabelColor = PrimaryGreen,
+                        cursorColor = PrimaryGreen
                     )
                 )
 
@@ -192,8 +207,8 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                             Icon(
                                 imageVector = getCategoryIcon(categoryName = uiState.productCategory, Icons.Default.Category),
                                 contentDescription = "Category",
-                                modifier = Modifier.size(24.dp),
-                                tint = if (uiState.productCategory.isEmpty() || isDropdownExpanded) primaryGreen else { Color.Unspecified }
+                                modifier = Modifier.size(sizeIcon),
+                                tint = if (uiState.productCategory.isEmpty() || isDropdownExpanded) PrimaryGreen else { Color.Unspecified }
                             )
                         },
                         modifier = Modifier
@@ -204,9 +219,9 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                         },
                         singleLine = true,
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = primaryGreen,
-                            focusedLabelColor = primaryGreen,
-                            cursorColor = primaryGreen
+                            focusedBorderColor = PrimaryGreen,
+                            focusedLabelColor = PrimaryGreen,
+                            cursorColor = PrimaryGreen
                         )
                     )
 
@@ -228,7 +243,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                                     Icon(
                                         imageVector = categoryIcons[category] ?: Icons.Default.Category,
                                         contentDescription = category,
-                                        modifier = Modifier.size(24.dp),
+                                        modifier = Modifier.size(sizeIcon),
                                         tint = Color.Unspecified
                                     )
                                 }
@@ -240,18 +255,18 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                 // Quantity Selector
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = noElevation),
                     colors = CardDefaults.cardColors(
-                        containerColor = primaryGreen.copy(alpha = 0.1f)
+                        containerColor = PrimaryGreen.copy(alpha = 0.1f)
                     ),
-                    shape = RoundedCornerShape(8.dp)
+                    shape = RoundedCornerShape(radiusSmall)
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp)
+                            .padding(paddingExtraLarge)
                     ) {
                         Text(
                             text = "Quantity",
@@ -261,15 +276,15 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
 
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            horizontalArrangement = Arrangement.spacedBy(spacingMedium)
                         ) {
                             IconButton(
                                 onClick = { viewModel.decrementQuantity() },
                                 modifier = Modifier
-                                    .size(36.dp)
-                                    .clip(RoundedCornerShape(18.dp))
+                                    .size(sizeCircleButton)
+                                    .clip(RoundedCornerShape(radiusLarge))
                                     .background(
-                                        if (uiState.productQuantity > 1) primaryGreen else Color.Gray.copy(
+                                        if (uiState.productQuantity > 1) PrimaryGreen else LightGray.copy(
                                             alpha = 0.5f
                                         )
                                     )
@@ -283,10 +298,9 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
 
                             Box(
                                 modifier = Modifier
-                                    .width(48.dp)
-                                    .height(36.dp)
-                                    .clip(RoundedCornerShape(4.dp))
-                                    .background(MaterialTheme.colorScheme.surface),
+                                    .width(widthBoxSurvey)
+                                    .height(heightRow)
+                                    .clip(RoundedCornerShape(radiusExtraSmall)),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
@@ -299,9 +313,9 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                             IconButton(
                                 onClick = { viewModel.incrementQuantity() },
                                 modifier = Modifier
-                                    .size(36.dp)
-                                    .clip(RoundedCornerShape(18.dp))
-                                    .background(primaryGreen)
+                                    .size(sizeCircleButton)
+                                    .clip(RoundedCornerShape(radiusLarge))
+                                    .background(PrimaryGreen)
                             ) {
                                 Icon(
                                     Icons.Default.Add,
@@ -322,20 +336,23 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp),
-            shape = RoundedCornerShape(28.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = primaryGreen)
+                .height(heightButton),
+            shape = RoundedCornerShape(radiusRound),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary
+            )
         ) {
             Icon(
                 Icons.Default.Add,
                 contentDescription = "Add Product",
-                tint = Color.White
+                tint = MaterialTheme.colorScheme.onSecondary
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(spacingMedium))
             Text(
                 "Add Product",
                 style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSecondary
             )
         }
     }

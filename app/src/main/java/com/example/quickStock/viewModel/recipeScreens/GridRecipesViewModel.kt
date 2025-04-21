@@ -25,10 +25,15 @@ class GridRecipesViewModel : ViewModel() {
     val searchResults: StateFlow<List<String>> = _searchResults.asStateFlow()
 
     // Inicializar el ViewModel con la lista de recetas
+    private var recipesInitialized = false
+
     fun setRecipes(recipes: List<RecipeButtonData>) {
-        _allRecipes.value = recipes
-        _filteredRecipes.value = recipes
-        updateSearchResults()
+        if (!recipesInitialized) {
+            _allRecipes.value = recipes
+            _filteredRecipes.value = recipes
+            updateSearchResults()
+            recipesInitialized = true
+        }
     }
 
     // Actualizar la consulta de búsqueda

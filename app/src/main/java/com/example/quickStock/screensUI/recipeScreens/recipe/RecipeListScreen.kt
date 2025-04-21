@@ -9,14 +9,20 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.quickStock.screensUI.common.goBack.ScreenName
 import com.example.quickStock.mocking.getRecipesByType
 import com.example.quickStock.model.recipe.RecipeListData
+import com.example.quickStock.viewModel.recipeScreens.GridRecipesViewModel
+import com.example.quickStock.viewModel.recipeScreens.RecipeListViewModel
 
 @Composable
 fun RecipeListScreen(
@@ -25,14 +31,17 @@ fun RecipeListScreen(
     onGoBack: () -> Unit,
     onClick: (String) -> Unit
 ) {
-    val recipeTypeList = getRecipesByType(recipeType)
+    val viewModel = hiltViewModel<RecipeListViewModel>()
 
-    val recipeButtons = recipeTypeList.map { recipe ->
-        RecipeListData(
-            title = recipe.name,
-            image = recipe.image,
-            onClick = { onClick(recipe.id) }
-        )
+    // Recolectar estados del ViewModel
+    val screenTitle by viewModel.screenTitle.collectAsState()
+    val recipes by viewModel.recipes.collectAsState()
+
+    // Cargar recetas cuando se inicia la pantalla
+    LaunchedEffect(recipeType) {
+        viewModel.loadRecipesByType(recipeType) { recipeName ->
+            onClick(recipeName) // Navegar al detalle de la receta
+        }
     }
 
     Column(
@@ -41,13 +50,14 @@ fun RecipeListScreen(
             .padding(16.dp)
     ) {
         ScreenName(
-            title = "Recipes of $recipeType",
+            title = screenTitle,
+            //title = "Recipes of $recipeType",
             onGoBack = onGoBack,
         )
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(recipeButtons) { productButton ->
+            items(recipes) { productButton ->
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()

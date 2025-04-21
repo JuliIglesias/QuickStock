@@ -1,6 +1,7 @@
 package com.example.quickStock.screensUI.userConfig
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,12 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.quickStock.model.userConfig.UserSettingsState
-import com.example.quickStock.viewModel.home.GridCategoryViewModel
+import com.example.quickStock.R
+import com.example.quickStock.ui.theme.*
 import com.example.quickStock.viewModel.userConfig.UserSettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,74 +28,79 @@ fun UserSettingsPage() {
 
     val uiState by viewModel.uiState.collectAsState()
     val scrollState = rememberScrollState()
-    val primaryGreen = Color(0xFF4CAF50)
+
+    // Use MaterialTheme colors directly
+    val cardBackground = MaterialTheme.colorScheme.surfaceVariant
+    val detailBackground = MaterialTheme.colorScheme.outlineVariant
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .verticalScroll(scrollState)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(paddingExtraLarge),
+        verticalArrangement = Arrangement.spacedBy(spacingLarge)
     ) {
         // Header
         Text(
-            text = "User Settings",
+            text = stringResource(R.string.user_settings),
             style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onBackground
         )
 
         // User Profile Card
         Card(
             modifier = Modifier.fillMaxWidth(),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = elevationMedium),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
+                containerColor = cardBackground
+            ),
+            shape = RoundedCornerShape(radiusMedium)
         ) {
             Column(
-                modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                modifier = Modifier.padding(paddingExtraLarge),
+                verticalArrangement = Arrangement.spacedBy(spacingExtraLarge)
             ) {
                 // Username Field
                 OutlinedTextField(
                     value = uiState.username,
                     onValueChange = { viewModel.updateUsername(it) },
-                    label = { Text("Username") },
+                    label = { Text(stringResource(R.string.username)) },
                     modifier = Modifier.fillMaxWidth(),
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Person,
-                            contentDescription = "Username",
-                            tint = primaryGreen
+                            contentDescription = stringResource(R.string.username),
+                            tint = PrimaryGreen
                         )
                     },
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = primaryGreen,
-                        focusedLabelColor = primaryGreen,
-                        cursorColor = primaryGreen
+                        focusedBorderColor = PrimaryGreen,
+                        focusedLabelColor = PrimaryGreen,
+                        cursorColor = PrimaryGreen
                     )
                 )
 
                 // Email Field
                 OutlinedTextField(
                     value = uiState.email,
-                    onValueChange = {viewModel.updateEmail(it)},
-                    label = { Text("Email") },
+                    onValueChange = { viewModel.updateEmail(it) },
+                    label = { Text(stringResource(R.string.email)) },
                     modifier = Modifier.fillMaxWidth(),
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Email,
-                            contentDescription = "Email",
-                            tint = primaryGreen
+                            contentDescription = stringResource(R.string.email),
+                            tint = PrimaryGreen
                         )
                     },
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = primaryGreen,
-                        focusedLabelColor = primaryGreen,
-                        cursorColor = primaryGreen
+                        focusedBorderColor = PrimaryGreen,
+                        focusedLabelColor = PrimaryGreen,
+                        cursorColor = PrimaryGreen
                     )
                 )
             }
@@ -104,19 +109,21 @@ fun UserSettingsPage() {
         // Preferences Card
         Card(
             modifier = Modifier.fillMaxWidth(),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = elevationMedium),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
+                containerColor = cardBackground
+            ),
+            shape = RoundedCornerShape(radiusMedium)
         ) {
             Column(
-                modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                modifier = Modifier.padding(paddingExtraLarge),
+                verticalArrangement = Arrangement.spacedBy(spacingExtraLarge)
             ) {
                 Text(
-                    text = "Preferences",
+                    text = stringResource(R.string.preferences),
                     style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
                 // Language Selector
@@ -128,12 +135,12 @@ fun UserSettingsPage() {
                         value = uiState.language,
                         onValueChange = {},
                         readOnly = true,
-                        label = { Text("Language") },
+                        label = { Text(stringResource(R.string.language)) },
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Default.Language,
-                                contentDescription = "Language",
-                                tint = primaryGreen
+                                contentDescription = stringResource(R.string.language),
+                                tint = PrimaryGreen
                             )
                         },
                         modifier = Modifier
@@ -143,9 +150,9 @@ fun UserSettingsPage() {
                             ExposedDropdownMenuDefaults.TrailingIcon(expanded = uiState.expandedLanguage)
                         },
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = primaryGreen,
-                            focusedLabelColor = primaryGreen,
-                            cursorColor = primaryGreen
+                            focusedBorderColor = PrimaryGreen,
+                            focusedLabelColor = PrimaryGreen,
+                            cursorColor = PrimaryGreen
                         )
                     )
 
@@ -169,33 +176,36 @@ fun UserSettingsPage() {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(primaryGreen.copy(alpha = 0.1f))
-                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                        .clip(RoundedCornerShape(radiusSmall))
+                        .background(detailBackground)
+                        .padding(horizontal = paddingExtraLarge, vertical = paddingLarge),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        horizontalArrangement = Arrangement.spacedBy(paddingLarge)
                     ) {
                         Icon(
                             imageVector = Icons.Default.Notifications,
-                            contentDescription = "Notifications",
-                            tint = primaryGreen
+                            contentDescription = stringResource(R.string.notifications),
+                            tint = PrimaryGreen
                         )
-                        Text("Enable Notifications")
+                        Text(
+                            text = stringResource(R.string.enable_notifications),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
                     Switch(
                         checked = uiState.notificationsEnabled,
                         onCheckedChange = { viewModel.toggleNotifications() },
                         colors = SwitchDefaults.colors(
                             checkedThumbColor = Color.White,
-                            checkedTrackColor = primaryGreen,
-                            checkedBorderColor = primaryGreen,
+                            checkedTrackColor = PrimaryGreen,
+                            checkedBorderColor = PrimaryGreen,
                             uncheckedThumbColor = Color.White,
-                            uncheckedTrackColor = Color.Gray.copy(alpha = 0.5f),
-                            uncheckedBorderColor = Color.Gray.copy(alpha = 0.5f)
+                            uncheckedTrackColor = LightGray.copy(alpha = 0.5f),
+                            uncheckedBorderColor = LightGray.copy(alpha = 0.5f)
                         )
                     )
                 }
@@ -204,33 +214,36 @@ fun UserSettingsPage() {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(primaryGreen.copy(alpha = 0.1f))
-                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                        .clip(RoundedCornerShape(radiusSmall))
+                        .background(detailBackground)
+                        .padding(horizontal = paddingExtraLarge, vertical = paddingLarge),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        horizontalArrangement = Arrangement.spacedBy(paddingLarge)
                     ) {
                         Icon(
                             imageVector = Icons.Default.DarkMode,
-                            contentDescription = "Dark Mode",
-                            tint = primaryGreen
+                            contentDescription = stringResource(R.string.dark_mode),
+                            tint = PrimaryGreen
                         )
-                        Text("Dark Mode")
+                        Text(
+                            text = stringResource(R.string.dark_mode),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
                     Switch(
                         checked = uiState.darkModeEnabled,
                         onCheckedChange = { viewModel.toggleDarkMode() },
                         colors = SwitchDefaults.colors(
                             checkedThumbColor = Color.White,
-                            checkedTrackColor = primaryGreen,
-                            checkedBorderColor = primaryGreen,
+                            checkedTrackColor = PrimaryGreen,
+                            checkedBorderColor = PrimaryGreen,
                             uncheckedThumbColor = Color.White,
-                            uncheckedTrackColor = Color.Gray.copy(alpha = 0.5f),
-                            uncheckedBorderColor = Color.Gray.copy(alpha = 0.5f)
+                            uncheckedTrackColor = LightGray.copy(alpha = 0.5f),
+                            uncheckedBorderColor = LightGray.copy(alpha = 0.5f)
                         )
                     )
                 }
@@ -240,19 +253,21 @@ fun UserSettingsPage() {
         // Account Actions
         Card(
             modifier = Modifier.fillMaxWidth(),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = elevationMedium),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
+                containerColor = cardBackground
+            ),
+            shape = RoundedCornerShape(radiusMedium)
         ) {
             Column(
-                modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                modifier = Modifier.padding(paddingExtraLarge),
+                verticalArrangement = Arrangement.spacedBy(spacingExtraLarge)
             ) {
                 Text(
-                    text = "Account",
+                    text = stringResource(R.string.account),
                     style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
                 // Save Settings Button
@@ -260,20 +275,21 @@ fun UserSettingsPage() {
                     onClick = { /* Handle save */ },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(48.dp),
-                    shape = RoundedCornerShape(24.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = primaryGreen)
+                        .height(heightButton),
+                    shape = RoundedCornerShape(radiusRound),
+                    colors = ButtonDefaults.buttonColors(containerColor = PrimaryGreen)
                 ) {
                     Icon(
                         Icons.Default.Save,
-                        contentDescription = "Save Settings",
-                        tint = Color.White
+                        contentDescription = stringResource(R.string.save_settings),
+                        tint = MaterialTheme.colorScheme.onPrimary
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(spacingSmall))
                     Text(
-                        "Save Settings",
+                        stringResource(R.string.save_settings),
                         style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onPrimary
                     )
                 }
 
@@ -282,20 +298,21 @@ fun UserSettingsPage() {
                     onClick = { viewModel.logout() },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(48.dp),
-                    shape = RoundedCornerShape(24.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red.copy(alpha = 0.8f))
+                        .height(heightButton),
+                    shape = RoundedCornerShape(radiusRound),
+                    colors = ButtonDefaults.buttonColors(containerColor = ErrorRed)
                 ) {
                     Icon(
                         Icons.Default.Logout,
-                        contentDescription = "Logout",
+                        contentDescription = stringResource(R.string.logout),
                         tint = Color.White
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(spacingSmall))
                     Text(
-                        "Logout",
+                        stringResource(R.string.logout),
                         style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
                     )
                 }
             }

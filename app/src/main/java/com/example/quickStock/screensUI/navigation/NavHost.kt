@@ -55,7 +55,7 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
 
         composable(route = NavBarNames.User.name) {
             UserSettingsPagePreview(
-                onClick = { navController.navigate(it) }
+                 onClick = { navController.navigate(it) }
             )
         }
 

@@ -38,6 +38,7 @@ val textSizeTitle = 22.sp
 
 // Height
 val heightRow = 32.dp
+val heightButton = 48.dp
 val heightCard = 120.dp
 val heightVideo = 240.dp
 

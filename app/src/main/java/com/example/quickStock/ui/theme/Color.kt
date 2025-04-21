@@ -33,6 +33,14 @@ val LightQuantityBadgeBackground = Color(0xFF4CAF50) // Primary green
 val LightQuantityTextColor = Color(0xFFFFFFFF)
 val LightDividerColor = Color(0xFF4CAF50)
 
-// Common colors
-val PrimaryGreen = Color(0xFF4CAF50)
-val LightGray = Color(0xFFEEEEEE)
+// Common Colors
+val PrimaryGreen = Color(0xFF4CAF50)  // For backward compatibility
+val PrimaryVariant = Color(0xFF388E3C)
+val SecondaryBlue = Color(0xFF2196F3)
+
+// Utility colors
+val LightGray = Color(0xFFBDBDBD)
+val DarkGray = Color(0xFF616161)
+val ErrorRed = Color(0xFFD32F2F)
+val SuccessGreen = Color(0xFF388E3C)
+val WarningOrange = Color(0xFFF57C00)

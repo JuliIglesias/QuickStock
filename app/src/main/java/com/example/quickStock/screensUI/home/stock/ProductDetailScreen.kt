@@ -3,6 +3,7 @@ package com.example.quickStock.screensUI.home.stock
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,13 +19,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import com.example.quickStock.R
 import com.example.quickStock.model.addProduct.Product
 import com.example.quickStock.screensUI.common.goBack.ScreenName
 import com.example.quickStock.screensUI.icon.getCategoryIcon
+import com.example.quickStock.ui.theme.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
@@ -37,7 +38,6 @@ fun ProductDetailScreen(
     onGoBack: () -> Unit
 ) {
     val scrollState = rememberScrollState()
-    val primaryGreen = Color(0xFF4CAF50)
 
     Column(
         modifier = Modifier
@@ -53,36 +53,36 @@ fun ProductDetailScreen(
 
         // Product info cards
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(paddingExtraLarge)
         ) {
             // Brand and Category Card
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                    .padding(bottom = paddingExtraLarge),
+                elevation = CardDefaults.cardElevation(defaultElevation = elevationMedium),
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surface
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant
                 )
             ) {
                 Column(
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(paddingExtraLarge)
                 ) {
                     // Brand row
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(bottom = 12.dp)
+                        modifier = Modifier.padding(bottom = paddingLarge)
                     ) {
                         Icon(
                             imageVector = Icons.Default.Store,
-                            contentDescription = "Brand",
-                            tint = primaryGreen,
-                            modifier = Modifier.size(24.dp)
+                            contentDescription = stringResource(R.string.brand),
+                            tint = PrimaryGreen,
+                            modifier = Modifier.size(sizeIcon)
                         )
-                        Spacer(modifier = Modifier.width(12.dp))
+                        Spacer(modifier = Modifier.width(paddingLarge))
                         Column {
                             Text(
-                                text = "Brand",
+                                text = stringResource(R.string.brand),
                                 style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -95,7 +95,7 @@ fun ProductDetailScreen(
                     }
 
                     HorizontalDivider()
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(paddingLarge))
 
                     // Category row
                     Row(
@@ -103,14 +103,14 @@ fun ProductDetailScreen(
                     ) {
                         Icon(
                             imageVector = getCategoryIcon(categoryName = product.category, Icons.Default.Category),
-                            contentDescription = "Category",
+                            contentDescription = stringResource(R.string.category),
                             tint = Color.Unspecified,
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(sizeIcon)
                         )
-                        Spacer(modifier = Modifier.width(12.dp))
+                        Spacer(modifier = Modifier.width(paddingLarge))
                         Column {
                             Text(
-                                text = "Category",
+                                text = stringResource(R.string.category),
                                 style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -127,35 +127,35 @@ fun ProductDetailScreen(
             // Expiration Dates Card
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                elevation = CardDefaults.cardElevation(elevationMedium),
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surface
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant
                 )
             ) {
                 Column(
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(paddingExtraLarge)
                 ) {
                     // Header
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(bottom = 16.dp)
+                        modifier = Modifier.padding(bottom = paddingExtraLarge)
                     ) {
                         Icon(
                             imageVector = Icons.Default.CalendarToday,
-                            contentDescription = "Expiration",
-                            tint = primaryGreen,
-                            modifier = Modifier.size(24.dp)
+                            contentDescription = stringResource(R.string.expiration_dates_quantities),
+                            tint = PrimaryGreen,
+                            modifier = Modifier.size(sizeIcon)
                         )
-                        Spacer(modifier = Modifier.width(12.dp))
+                        Spacer(modifier = Modifier.width(paddingLarge))
                         Text(
-                            text = "Expiration Dates & Quantities",
+                            text = stringResource(R.string.expiration_dates_quantities),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.SemiBold
                         )
                     }
 
-                    HorizontalDivider()
-                    Spacer(modifier = Modifier.height(8.dp))
+                    HorizontalDivider(color = if (isSystemInDarkTheme()) DarkDividerColor else LightDividerColor)
+                    Spacer(modifier = Modifier.height(spacingMedium))
 
                     // Column headers
                     Row(
@@ -163,21 +163,21 @@ fun ProductDetailScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "Date",
+                            text = stringResource(R.string.date),
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.weight(1f)
                         )
                         Text(
-                            text = "Quantity",
+                            text = stringResource(R.string.quantity),
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.width(80.dp),
+                            modifier = Modifier.width(widthText),
                             maxLines = 1
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(spacingMedium))
 
                     // Sort expiration dates if possible
                     val sortedQuantityDates = try {
@@ -198,16 +198,18 @@ fun ProductDetailScreen(
                             false
                         }
 
+                        val expiringBadgeColor = if (isSystemInDarkTheme()) DarkExpiringBadge else LightExpiringBadge
+
                         val rowBackground = if (isExpiringSoon) {
                             Modifier
                                 .fillMaxWidth()
-                                .clip(RoundedCornerShape(8.dp))
-                                .background(Color(0xFFFFF9C4))
-                                .padding(8.dp)
+                                .clip(RoundedCornerShape(radiusMedium))
+                                .background(expiringBadgeColor)
+                                .padding(paddingMedium)
                         } else {
                             Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 4.dp, horizontal = 8.dp)
+                                .padding(vertical = paddingSmall, horizontal = paddingMedium)
                         }
 
                         Row(
@@ -231,30 +233,30 @@ fun ProductDetailScreen(
 
                             Box(
                                 modifier = Modifier
-                                    .width(48.dp)
-                                    .height(32.dp)
-                                    .clip(RoundedCornerShape(16.dp))
-                                    .background(primaryGreen.copy(alpha = 0.15f)),
+                                    .width(sizeQuantityBadge)
+                                    .height(heightRow)
+                                    .clip(RoundedCornerShape(radiusLarge))
+                                    .background(PrimaryGreen.copy(alpha = 0.15f)),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
                                     text = item.quantity.toString(),
                                     style = MaterialTheme.typography.bodyMedium,
                                     fontWeight = FontWeight.Medium,
-                                    color = primaryGreen
+                                    color = PrimaryGreen
                                 )
                             }
                         }
 
                         if (index < product.quantityExpirationDate.size - 1) {
-                            Spacer(modifier = Modifier.height(4.dp))
+                            Spacer(modifier = Modifier.height(spacingSmall))
                         }
                     }
 
                     // Total row
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(paddingExtraLarge))
                     HorizontalDivider()
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(paddingLarge))
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -262,25 +264,28 @@ fun ProductDetailScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Total Stock",
+                            text = stringResource(R.string.total_stock),
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.SemiBold
                         )
 
                         val totalQuantity = product.quantityExpirationDate.sumOf { it.quantity }
+                        val quantityCircleColor = if (isSystemInDarkTheme()) DarkQuantityBadgeBackground else LightQuantityBadgeBackground
+                        val quantityTextColor = if (isSystemInDarkTheme()) DarkQuantityTextColor else LightQuantityTextColor
+
                         Box(
                             modifier = Modifier
-                                .size(56.dp)
+                                .size(sizeQuantityCircle)
                                 .aspectRatio(1f)
-                                .clip(RoundedCornerShape(28.dp))
-                                .background(primaryGreen),
+                                .clip(RoundedCornerShape(radiusRound))
+                                .background(quantityCircleColor),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
                                 text = totalQuantity.toString(),
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold,
-                                color = Color.White
+                                color = quantityTextColor
                             )
                         }
                     }

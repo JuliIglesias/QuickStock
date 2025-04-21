@@ -2,6 +2,7 @@ package com.example.quickStock.screensUI.recipeScreens.recipe
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,12 +19,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.example.quickStock.R
 import com.example.quickStock.model.recipe.RecipeData
 import com.example.quickStock.screensUI.common.goBack.ScreenName
+import com.example.quickStock.ui.theme.*
 import com.google.accompanist.web.WebView
 import com.google.accompanist.web.rememberWebViewState
 
@@ -34,7 +37,6 @@ fun RecipeDetailScreen(
     onGoBack: () -> Unit
 ) {
     val scrollState = rememberScrollState()
-    val primaryGreen = Color(0xFF4CAF50)
 
     Column(
         modifier = Modifier
@@ -50,15 +52,15 @@ fun RecipeDetailScreen(
 
         // Content
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(paddingExtraLarge)
         ) {
             // Recipe Image Card
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-                shape = RoundedCornerShape(12.dp)
+                    .padding(bottom = paddingExtraLarge),
+                elevation = CardDefaults.cardElevation(defaultElevation = elevationMedium),
+                shape = RoundedCornerShape(radiusMedium)
             ) {
                 recipe.image?.let { imageUrl ->
                     Image(
@@ -67,20 +69,20 @@ fun RecipeDetailScreen(
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(200.dp)
+                            .height(sizeImageLarge)
                     )
                 } ?: Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(120.dp)
-                        .background(Color.LightGray),
+                        .height(heightCard)
+                        .background(LightGray),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.RestaurantMenu,
                         contentDescription = "Recipe",
                         tint = Color.White,
-                        modifier = Modifier.size(48.dp)
+                        modifier = Modifier.size(sizeLargeIcon)
                     )
                 }
             }
@@ -89,36 +91,37 @@ fun RecipeDetailScreen(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                    .padding(bottom = paddingExtraLarge),
+                elevation = CardDefaults.cardElevation(defaultElevation = elevationMedium),
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surface
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant
                 )
             ) {
                 Column(
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(paddingExtraLarge)
                 ) {
                     // Header
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(bottom = 12.dp)
+                        modifier = Modifier.padding(bottom = paddingLarge)
                     ) {
                         Icon(
                             imageVector = Icons.Default.Kitchen,
-                            contentDescription = "Ingredients",
-                            tint = primaryGreen,
-                            modifier = Modifier.size(24.dp)
+                            contentDescription = stringResource(R.string.ingredients),
+                            tint = PrimaryGreen,
+                            modifier = Modifier.size(sizeIcon)
                         )
-                        Spacer(modifier = Modifier.width(12.dp))
+                        Spacer(modifier = Modifier.width(paddingLarge))
                         Text(
-                            text = "Ingredients",
+                            text = stringResource(R.string.ingredients),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.SemiBold
                         )
                     }
 
-                    HorizontalDivider(color = primaryGreen.copy(alpha = 0.3f))
-                    Spacer(modifier = Modifier.height(8.dp))
+                    val dividerColor = if (isSystemInDarkTheme()) DarkDividerColor else LightDividerColor
+                    HorizontalDivider(color = dividerColor.copy(alpha = 0.3f))
+                    Spacer(modifier = Modifier.height(spacingMedium))
 
                     // Ingredients and measurements list
                     recipe.ingredients.forEachIndexed { index, ingredient ->
@@ -127,7 +130,7 @@ fun RecipeDetailScreen(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 6.dp),
+                                .padding(vertical = paddingMedium),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             // Ingredient dot and name
@@ -137,18 +140,18 @@ fun RecipeDetailScreen(
                             ) {
                                 Box(
                                     modifier = Modifier
-                                        .size(20.dp)
-                                        .clip(RoundedCornerShape(10.dp))
-                                        .background(primaryGreen.copy(alpha = 0.15f)),
+                                        .size(sizeCircles)
+                                        .clip(RoundedCornerShape(radiusSmall))
+                                        .background(PrimaryGreen.copy(alpha = 0.15f)),
                                     contentAlignment = Alignment.TopCenter
                                 ) {
                                     Text(
                                         text = "•",
-                                        color = primaryGreen,
+                                        color = PrimaryGreen,
                                         fontWeight = FontWeight.Bold,
                                     )
                                 }
-                                Spacer(modifier = Modifier.width(8.dp))
+                                Spacer(modifier = Modifier.width(spacingMedium))
                                 Text(
                                     text = ingredient,
                                     style = MaterialTheme.typography.bodyMedium
@@ -166,9 +169,9 @@ fun RecipeDetailScreen(
                         }
 
                         if (index < recipe.ingredients.size - 1) {
-                            Divider(
-                                modifier = Modifier.padding(vertical = 2.dp),
-                                color = Color.LightGray.copy(alpha = 0.5f)
+                            HorizontalDivider(
+                                modifier = Modifier.padding(vertical = paddingSmall),
+                                color = LightGray.copy(alpha = 0.5f)
                             )
                         }
                     }
@@ -179,48 +182,49 @@ fun RecipeDetailScreen(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                    .padding(bottom = paddingExtraLarge),
+                elevation = CardDefaults.cardElevation(defaultElevation = elevationMedium),
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surface
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant
                 )
             ) {
                 Column(
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(paddingExtraLarge)
                 ) {
                     // Header
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(bottom = 12.dp)
+                        modifier = Modifier.padding(bottom = paddingLarge)
                     ) {
                         Icon(
                             imageVector = Icons.Default.FormatListNumbered,
-                            contentDescription = "Steps",
-                            tint = primaryGreen,
-                            modifier = Modifier.size(24.dp)
+                            contentDescription = stringResource(R.string.steps),
+                            tint = PrimaryGreen,
+                            modifier = Modifier.size(sizeIcon)
                         )
-                        Spacer(modifier = Modifier.width(12.dp))
+                        Spacer(modifier = Modifier.width(paddingLarge))
                         Text(
-                            text = "Steps",
+                            text = stringResource(R.string.steps),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.SemiBold
                         )
                     }
 
-                    HorizontalDivider(color = primaryGreen.copy(alpha = 0.3f))
-                    Spacer(modifier = Modifier.height(12.dp))
+                    val dividerColor = if (isSystemInDarkTheme()) DarkDividerColor else LightDividerColor
+                    HorizontalDivider(color = dividerColor.copy(alpha = 0.3f))
+                    Spacer(modifier = Modifier.height(paddingLarge))
 
                     // Steps list
                     recipe.steps.forEachIndexed { index, step ->
                         Row(
                             verticalAlignment = Alignment.Top,
-                            modifier = Modifier.padding(vertical = 8.dp)
+                            modifier = Modifier.padding(vertical = paddingMedium)
                         ) {
                             Box(
                                 modifier = Modifier
-                                    .size(24.dp)
-                                    .clip(RoundedCornerShape(12.dp))
-                                    .background(primaryGreen),
+                                    .size(sizeIcon)
+                                    .clip(RoundedCornerShape(radiusMedium))
+                                    .background(PrimaryGreen),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
@@ -230,7 +234,7 @@ fun RecipeDetailScreen(
                                     fontWeight = FontWeight.Bold
                                 )
                             }
-                            Spacer(modifier = Modifier.width(12.dp))
+                            Spacer(modifier = Modifier.width(paddingLarge))
                             Text(
                                 text = step,
                                 style = MaterialTheme.typography.bodyMedium
@@ -241,38 +245,39 @@ fun RecipeDetailScreen(
             }
 
             // YouTube Video Card (if available)
-            recipe.youtubeUrl?.let { url ->
+            recipe.youtubeUrl?.let {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = elevationMedium),
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant
                     )
                 ) {
                     Column(
-                        modifier = Modifier.padding(16.dp)
+                        modifier = Modifier.padding(paddingExtraLarge)
                     ) {
                         // Header
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(bottom = 12.dp)
+                            modifier = Modifier.padding(bottom = paddingLarge)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.PlayArrow,
-                                contentDescription = "YouTube Video",
-                                tint = primaryGreen,
-                                modifier = Modifier.size(24.dp)
+                                contentDescription = stringResource(R.string.video_tutorial),
+                                tint = PrimaryGreen,
+                                modifier = Modifier.size(sizeIcon)
                             )
-                            Spacer(modifier = Modifier.width(12.dp))
+                            Spacer(modifier = Modifier.width(paddingLarge))
                             Text(
-                                text = "Video Tutorial",
+                                text = stringResource(R.string.video_tutorial),
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.SemiBold
                             )
                         }
 
-                        HorizontalDivider(color = primaryGreen.copy(alpha = 0.3f))
-                        Spacer(modifier = Modifier.height(12.dp))
+                        val dividerColor = if (isSystemInDarkTheme()) DarkDividerColor else LightDividerColor
+                        HorizontalDivider(color = dividerColor.copy(alpha = 0.3f))
+                        Spacer(modifier = Modifier.height(paddingLarge))
 
                         // YouTube WebView
                         val embedUrl = recipe.youtubeUrl.replace("watch?v=", "embed/")
@@ -281,10 +286,10 @@ fun RecipeDetailScreen(
                             state = webViewState,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(240.dp)
-                                .clip(RoundedCornerShape(8.dp)),
+                                .height(heightVideo)
+                                .clip(RoundedCornerShape(radiusSmall)),
                             onCreated = { webView ->
-                                webView.settings.javaScriptEnabled = true // Habilitar JavaScript
+                                webView.settings.javaScriptEnabled = true
                             }
                         )
                     }

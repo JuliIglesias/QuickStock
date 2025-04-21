@@ -1,7 +1,6 @@
 package com.example.quickStock.screensUI.userConfig
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,24 +15,20 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.quickStock.model.userConfig.UserSettingsState
+import com.example.quickStock.viewModel.home.GridCategoryViewModel
+import com.example.quickStock.viewModel.userConfig.UserSettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserSettingsPage() {
-    // State variables
-    var notificationsEnabled by remember { mutableStateOf(true) }
-    var username by remember { mutableStateOf("John Doe") }
-    val systemDarkTheme = isSystemInDarkTheme()
-    var darkModeEnabled by remember { mutableStateOf(DarkModeConfig.darkModeEnabled ?: systemDarkTheme) }
-    var language by remember { mutableStateOf("English") }
-    var expandedLanguage by remember { mutableStateOf(false) }
-    var dataBackupEnabled by remember { mutableStateOf(false) }
-    var autoSyncEnabled by remember { mutableStateOf(true) }
+    val viewModel = hiltViewModel<UserSettingsViewModel>()
 
+    val uiState by viewModel.uiState.collectAsState()
     val scrollState = rememberScrollState()
     val primaryGreen = Color(0xFF4CAF50)
-
-    val languages = listOf("English", "Spanish", "French", "German")
 
     Column(
         modifier = Modifier
@@ -64,8 +59,8 @@ fun UserSettingsPage() {
             ) {
                 // Username Field
                 OutlinedTextField(
-                    value = username,
-                    onValueChange = { username = it },
+                    value = uiState.username,
+                    onValueChange = { viewModel.updateUsername(it) },
                     label = { Text("Username") },
                     modifier = Modifier.fillMaxWidth(),
                     leadingIcon = {
@@ -85,8 +80,8 @@ fun UserSettingsPage() {
 
                 // Email Field
                 OutlinedTextField(
-                    value = "johndoe@example.com",
-                    onValueChange = { },
+                    value = uiState.email,
+                    onValueChange = {viewModel.updateEmail(it)},
                     label = { Text("Email") },
                     modifier = Modifier.fillMaxWidth(),
                     leadingIcon = {
@@ -126,11 +121,11 @@ fun UserSettingsPage() {
 
                 // Language Selector
                 ExposedDropdownMenuBox(
-                    expanded = expandedLanguage,
-                    onExpandedChange = { expandedLanguage = !expandedLanguage }
+                    expanded = uiState.expandedLanguage,
+                    onExpandedChange = { viewModel.toggleLanguageDropdown() }
                 ) {
                     OutlinedTextField(
-                        value = language,
+                        value = uiState.language,
                         onValueChange = {},
                         readOnly = true,
                         label = { Text("Language") },
@@ -145,7 +140,7 @@ fun UserSettingsPage() {
                             .fillMaxWidth()
                             .menuAnchor(),
                         trailingIcon = {
-                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedLanguage)
+                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = uiState.expandedLanguage)
                         },
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = primaryGreen,
@@ -155,15 +150,15 @@ fun UserSettingsPage() {
                     )
 
                     ExposedDropdownMenu(
-                        expanded = expandedLanguage,
-                        onDismissRequest = { expandedLanguage = false }
+                        expanded = uiState.expandedLanguage,
+                        onDismissRequest = { viewModel.dismissLanguageDropdown() }
                     ) {
-                        languages.forEach { option ->
+                        viewModel.languages.forEach { option ->
                             DropdownMenuItem(
                                 text = { Text(option) },
                                 onClick = {
-                                    language = option
-                                    expandedLanguage = false
+                                    viewModel.setLanguage(option)
+                                    viewModel.dismissLanguageDropdown()
                                 }
                             )
                         }
@@ -192,8 +187,8 @@ fun UserSettingsPage() {
                         Text("Enable Notifications")
                     }
                     Switch(
-                        checked = notificationsEnabled,
-                        onCheckedChange = { notificationsEnabled = it },
+                        checked = uiState.notificationsEnabled,
+                        onCheckedChange = { viewModel.toggleNotifications() },
                         colors = SwitchDefaults.colors(
                             checkedThumbColor = Color.White,
                             checkedTrackColor = primaryGreen,
@@ -227,11 +222,8 @@ fun UserSettingsPage() {
                         Text("Dark Mode")
                     }
                     Switch(
-                        checked = darkModeEnabled,
-                        onCheckedChange = { isChecked ->
-                            darkModeEnabled = isChecked
-                            DarkModeConfig.saveSettings(isChecked)
-                        },
+                        checked = uiState.darkModeEnabled,
+                        onCheckedChange = { viewModel.toggleDarkMode() },
                         colors = SwitchDefaults.colors(
                             checkedThumbColor = Color.White,
                             checkedTrackColor = primaryGreen,
@@ -287,7 +279,7 @@ fun UserSettingsPage() {
 
                 // Logout Button
                 Button(
-                    onClick = { /* Handle logout */ },
+                    onClick = { viewModel.logout() },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp),

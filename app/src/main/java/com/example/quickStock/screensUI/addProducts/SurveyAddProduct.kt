@@ -284,7 +284,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                                     .size(sizeCircleButton)
                                     .clip(RoundedCornerShape(radiusLarge))
                                     .background(
-                                        if (uiState.productQuantity > 1) PrimaryGreen else LightGray.copy(
+                                        if (uiState.productQuantity > 1) MaterialTheme.colorScheme.primary else LightGray.copy(
                                             alpha = 0.5f
                                         )
                                     )
@@ -292,7 +292,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                                 Icon(
                                     Icons.Default.Remove,
                                     contentDescription = "Decrease Quantity",
-                                    tint = Color.White
+                                    tint = MaterialTheme.colorScheme.onSecondary
                                 )
                             }
 
@@ -315,12 +315,12 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                                 modifier = Modifier
                                     .size(sizeCircleButton)
                                     .clip(RoundedCornerShape(radiusLarge))
-                                    .background(PrimaryGreen)
+                                    .background(MaterialTheme.colorScheme.primary)
                             ) {
                                 Icon(
                                     Icons.Default.Add,
                                     contentDescription = "Increase Quantity",
-                                    tint = Color.White
+                                    tint = MaterialTheme.colorScheme.onSecondary
                                 )
                             }
                         }
@@ -339,9 +339,11 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                 .height(heightButton),
             shape = RoundedCornerShape(radiusRound),
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            )
-        ) {
+                containerColor = MaterialTheme.colorScheme.primary,
+            ),
+            elevation = ButtonDefaults.buttonElevation(defaultElevation = elevationMedium),
+
+            ) {
             Icon(
                 Icons.Default.Add,
                 contentDescription = "Add Product",

@@ -84,4 +84,6 @@ dependencies {
 
     implementation("com.google.accompanist:accompanist-webview:0.30.1")
 
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit:converter-gson:2.0.0-beta2")
 }

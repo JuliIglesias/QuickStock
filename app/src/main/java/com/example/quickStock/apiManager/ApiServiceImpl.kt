@@ -5,6 +5,8 @@ import android.widget.Toast
 import com.example.quickStock.R
 import com.example.quickStock.api.Meal
 import com.example.quickStock.api.RecipeType
+import com.example.quickStock.apiManager.responses.MealDetail
+import com.example.quickStock.apiManager.responses.MealDetailResponse
 import com.example.quickStock.apiManager.responses.MealResponse
 import com.example.quickStock.apiManager.responses.RecipeTypesResponse
 import retrofit.Call
@@ -86,6 +88,45 @@ class ApiServiceImpl @Inject constructor() {
 
             override fun onFailure(t: Throwable?) {
                 Toast.makeText(context, "Can't get meals for $category", Toast.LENGTH_SHORT).show()
+                onFail()
+                loadingFinished()
+            }
+        })
+    }
+
+
+    fun getMealById(
+        context: Context,
+        mealId: String,
+        onSuccess: (MealDetail?) -> Unit,
+        onFail: () -> Unit,
+        loadingFinished: () -> Unit
+    ) {
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl(
+                context.getString(R.string.recipes_url)
+            )
+            .addConverterFactory(
+                GsonConverterFactory.create()
+            )
+            .build()
+
+        val service: ApiService = retrofit.create(ApiService::class.java)
+        val call: Call<MealDetailResponse> = service.getMealById(mealId)
+
+        call.enqueue(object : Callback<MealDetailResponse> {
+            override fun onResponse(response: Response<MealDetailResponse>?, retrofit: Retrofit?) {
+                loadingFinished()
+                if(response?.isSuccess == true) {
+                    val mealDetail = response.body()?.meals?.firstOrNull()
+                    onSuccess(mealDetail)
+                } else {
+                    onFailure(Exception("Bad request"))
+                }
+            }
+
+            override fun onFailure(t: Throwable?) {
+                Toast.makeText(context, "Can't get meal details for ID: $mealId", Toast.LENGTH_SHORT).show()
                 onFail()
                 loadingFinished()
             }

@@ -56,7 +56,7 @@ data class MealDetail(
     val dateModified: String?
 ) {
     // Función para obtener pares de ingredientes y medidas como lista
-    fun getIngredientsList(): List<Pair<String, String>> {
+    fun getIngredientsListWithMeasures(): List<Pair<String, String>> {
         val ingredientMeasures = mutableListOf<Pair<String, String>>()
 
         // Lista de todos los ingredientes y medidas

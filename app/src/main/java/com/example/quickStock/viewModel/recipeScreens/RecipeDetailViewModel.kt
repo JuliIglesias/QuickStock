@@ -73,13 +73,34 @@ class RecipeDetailViewModel @Inject constructor(
             id = mealDetail.idMeal,
             name = mealDetail.strMeal,
             image = mealDetail.strMealThumb,
-            // Separamos las instrucciones en pasos por párrafos
-            steps = mealDetail.strInstructions.split("\r\n", "\n").filter { it.isNotBlank() },
-            // Extraemos los ingredientes
+            // Limpiamos las instrucciones y quitamos la numeración
+            steps = cleanInstructions(mealDetail.strInstructions),
             ingredients = ingredientsWithMeasures.map { it.first },
-            // Extraemos las medidas
             measurements = ingredientsWithMeasures.map { it.second },
             youtubeUrl = mealDetail.strYoutube
         )
+    }
+
+    // Función para limpiar las instrucciones
+    private fun cleanInstructions(instructions: String): List<String> {
+        // Dividimos por saltos de línea
+        val rawLines = instructions.split("\r\n", "\n")
+
+        // Patrón para identificar líneas que son solo números
+        val numberOnlyPattern = Regex("^\\s*\\d+\\s*$")
+
+        // Patrón para remover números al inicio de un paso (ej: "1. " o "2) " o "3 - ")
+        val leadingNumberPattern = Regex("^\\s*\\d+[.\\)\\s\\-–—]*\\s*")
+
+        // Filtramos líneas vacías y las que solo contienen números
+        val cleanSteps = rawLines
+            .filter { !it.isBlank() && !numberOnlyPattern.matches(it) }
+            .map { line ->
+                // Eliminamos la numeración al inicio de cada paso
+                line.replace(leadingNumberPattern, "").trim()
+            }
+            .filter { it.isNotBlank() }
+
+        return cleanSteps
     }
 }

@@ -59,7 +59,10 @@
     <string name="alcoholic_beverages">Alcoholic Beverages</string>
     <string name="fast_food">Fast Food</string>
 
-
+    <string name="retry">Retry</string>
+    <string name="failed_to_load_categories">Failed to load recipe categories</string>
+    <string name="failed_to_load_recipes">Failed to load recipes</string>"
+    
     <!-- Add more strings as needed just for mocking -->
         <!-- Products for each category stock-->
         <string-array name="products_meat">

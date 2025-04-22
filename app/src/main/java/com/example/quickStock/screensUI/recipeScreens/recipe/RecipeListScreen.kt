@@ -12,12 +12,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.quickStock.screensUI.common.goBack.ScreenName
@@ -57,10 +56,10 @@ fun RecipeListScreen(
         } else if (showRetry) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text("Failed to load recipes")
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(stringResource(id = com.example.quickStock.R.string.failed_to_load_recipes))
+                    Spacer(modifier = Modifier.height(spacingMedium))
                     Button(onClick = { viewModel.retryApiCall(recipeType, onClick) }) {
-                        Text("Retry")
+                        Text(stringResource(id = com.example.quickStock.R.string.retry))
                     }
                 }
             }
@@ -99,7 +98,7 @@ fun RecipeListScreen(
                                 )
 
                                 RecipeImage(
-                                    imageUrl = "https://www.themealdb.com/images/media/meals/wai9bw1619788844.jpg", // productButton.image
+                                    imageUrl = productButton.image,
                                     contentDescription = productButton.title,
                                     modifier = Modifier
                                         .size(sizeImageMedium)

@@ -15,9 +15,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.quickStock.R
 import com.example.quickStock.model.recipe.RecipeButtonData
 import com.example.quickStock.screensUI.common.SimpleSearchBar
 import com.example.quickStock.screensUI.common.principal.CustomGrid
@@ -87,11 +88,11 @@ fun GridRecipes(
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                        verticalArrangement = Arrangement.spacedBy(spacingExtraLarge)
                     ) {
-                        Text("No se pudieron cargar las categorías de recetas")
+                        Text(stringResource(id = R.string.failed_to_load_categories))
                         Button(onClick = { viewModel.retryApiCall() }) {
-                            Text("Reintentar")
+                            Text(stringResource(id = R.string.retry))
                         }
                     }
                 }

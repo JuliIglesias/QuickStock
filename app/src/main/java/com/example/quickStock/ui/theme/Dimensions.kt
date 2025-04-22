@@ -17,13 +17,20 @@ val spacingExtraLarge = 16.dp
 
 // Size
 val sizeIcon = 24.dp
+val sizeMediumIcon = 32.dp
 val sizeLargeIcon = 48.dp
+val sizeExtraLargeIcon = 72.dp
+
 val sizeImageMedium = 96.dp
 val sizeImageLarge = 200.dp
+
 val sizeQuantityBadge = 48.dp
 val sizeQuantityCircle = 56.dp
+
 val sizeCircles = 20.dp
 val sizeCircleButton = 36.dp
+
+val sizeCard = 180.dp
 
 // Corner radius
 val radiusExtraSmall = 4.dp
@@ -37,6 +44,7 @@ val textSizeSmall = 11.sp
 val textSizeMedium = 16.sp
 val textSizeLarge = 18.sp
 val textSizeTitle = 22.sp
+val textSizeExtraLarge = 24.sp
 
 // Height
 val heightRow = 32.dp
@@ -56,3 +64,7 @@ val noElevation = 0.dp
 val elevationSmall = 2.dp
 val elevationMedium = 4.dp
 val elevationLarge = 8.dp
+
+// Border
+val borderWidthSmall = 2.dp
+val borderWidth = 4.dp

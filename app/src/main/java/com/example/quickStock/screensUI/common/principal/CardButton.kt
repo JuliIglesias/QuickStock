@@ -12,10 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.quickStock.model.common.ICardButton
 import com.example.quickStock.screensUI.icon.MyIcon
+import com.example.quickStock.ui.theme.*
 
 
 @Composable
@@ -25,8 +24,8 @@ fun CardButton(
 
     Button(
         onClick = buttonData.onClick,
-        shape = RoundedCornerShape(16.dp),
-        modifier = buttonData.modifier.size(180.dp)
+        shape = RoundedCornerShape(radiusLarge),
+        modifier = buttonData.modifier.size(sizeCard)
     ) {
         Column(
             modifier = Modifier,
@@ -36,14 +35,14 @@ fun CardButton(
             MyIcon(
                 icon = buttonData.icon,
                 contentDescription = buttonData.title,
-                modifier = Modifier.size(72.dp)
+                modifier = Modifier.size(sizeExtraLargeIcon)
             )
 
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(spacingSmall))
 
             Text(
                 text = buttonData.title,
-                fontSize = 22.sp,
+                fontSize = textSizeTitle,
                 textAlign = TextAlign.Center
             )
         }

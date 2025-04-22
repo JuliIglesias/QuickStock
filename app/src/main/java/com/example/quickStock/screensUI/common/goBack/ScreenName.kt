@@ -7,16 +7,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Modifier
+import com.example.quickStock.ui.theme.paddingExtraLarge
+import com.example.quickStock.ui.theme.textSizeExtraLarge
 
 @Composable
-fun ScreenName(onGoBack: () -> Unit, title:String) {
+fun ScreenName(onGoBack: () -> Unit, title: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 16.dp),
+            .padding(bottom = paddingExtraLarge),
         verticalAlignment = Alignment.CenterVertically
     ) {
         GoBackButton {
@@ -25,7 +25,7 @@ fun ScreenName(onGoBack: () -> Unit, title:String) {
 
         Text(
             text = title,
-            fontSize = 24.sp,
+            fontSize = textSizeExtraLarge,
             color = MaterialTheme.colorScheme.onSecondary
         )
     }

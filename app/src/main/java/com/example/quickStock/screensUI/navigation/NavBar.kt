@@ -16,7 +16,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.example.quickStock.R
 import com.example.quickStock.screensUI.icon.MyIcon
 import androidx.compose.foundation.border
@@ -29,6 +28,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import com.example.quickStock.model.navigation.NavBarNames
 import com.example.quickStock.screensUI.userConfig.DarkModeConfig
+import com.example.quickStock.ui.theme.*
 
 data class TabBarItem(
     val title: String,
@@ -88,9 +88,9 @@ fun TabView(tabBarItems: List<TabBarItem>, onNavigate: (String) -> Unit) {
 
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.surface,
-        tonalElevation = 8.dp,
+        tonalElevation = elevationLarge,
         modifier = Modifier.border(
-            width = 4.dp, // Grosor del borde
+            width = borderWidth, // Grosor del borde
             brush = gradientBrush, // Degradado aplicado al borde
             shape = RectangleShape // Forma del borde
         )
@@ -138,7 +138,7 @@ fun TabBarIconView(
         MyIcon(
             icon = if (isSelected) {selectedIcon} else {unselectedIcon},
             contentDescription = title,
-            modifier = Modifier.size(32.dp),
+            modifier = Modifier.size(sizeMediumIcon),
             tint = if (isSelected) {MaterialTheme.colorScheme.onSecondary}
             else {MaterialTheme.colorScheme.secondary}
         )

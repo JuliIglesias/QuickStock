@@ -8,24 +8,26 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
 import com.example.quickStock.model.common.ICardButton
+import com.example.quickStock.ui.theme.spacingExtraLarge
 
 @Composable
 fun CustomGrid(
     items: List<ICardButton>,
     modifier: Modifier = Modifier,
     columns: Int = 2,
-    verticalSpacing: Int = 16,
-    horizontalSpacing: Int = 16,
+    verticalSpacing: androidx.compose.ui.unit.Dp = spacingExtraLarge,
+    horizontalSpacing: androidx.compose.ui.unit.Dp = spacingExtraLarge,
     onItemClick: (ICardButton) -> Unit = {}
 ) {
     LazyVerticalGrid(
-        modifier = modifier.fillMaxSize().background(color = androidx.compose.ui.graphics.Color.Transparent),
+        modifier = modifier
+            .fillMaxSize()
+            .background(color = Color.Transparent),
         columns = GridCells.Fixed(columns),
-        verticalArrangement = Arrangement.spacedBy(verticalSpacing.dp),
-        horizontalArrangement = Arrangement.spacedBy(horizontalSpacing.dp),
-
+        verticalArrangement = Arrangement.spacedBy(verticalSpacing),
+        horizontalArrangement = Arrangement.spacedBy(horizontalSpacing),
     ) {
         items(items) { item ->
             CardButton(buttonData = item)

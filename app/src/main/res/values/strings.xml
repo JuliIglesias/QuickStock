@@ -255,4 +255,7 @@
     <string name="save_settings">Save Settings</string>
     <string name="logout">Logout</string>
 
+    <string name="action_go_back">Go Back</string>
+    <string name="search_placeholder">Search</string>
+
 </resources>

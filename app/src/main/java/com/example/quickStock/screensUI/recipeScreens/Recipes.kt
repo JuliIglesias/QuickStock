@@ -13,7 +13,10 @@ fun RecipeScreen(onClick: (String) -> Unit,) {
         Surface(
             modifier = Modifier.fillMaxWidth(),
         ) {
-            GridRecipes()
+            GridRecipes(onNavigateToCategory = { categoryId, categoryName ->
+                // Construct the navigation route correctly
+                onClick("recipe/$categoryId/$categoryName")
+            })
         }
     }
 }

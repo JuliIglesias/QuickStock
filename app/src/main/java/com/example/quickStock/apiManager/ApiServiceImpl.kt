@@ -3,7 +3,10 @@ package com.example.quickStock.apiManager
 import android.content.Context
 import android.widget.Toast
 import com.example.quickStock.R
+import com.example.quickStock.api.Meal
 import com.example.quickStock.api.RecipeType
+import com.example.quickStock.apiManager.responses.MealResponse
+import com.example.quickStock.apiManager.responses.RecipeTypesResponse
 import retrofit.Call
 import retrofit.Callback
 import retrofit.GsonConverterFactory
@@ -13,7 +16,12 @@ import javax.inject.Inject
 
 class ApiServiceImpl @Inject constructor() {
 
-    fun getRecipeTypes(context: Context, onSuccess: (List<RecipeType>) -> Unit, onFail: () -> Unit, loadingFinished: () -> Unit) {
+    fun getRecipeTypes(
+        context: Context,
+        onSuccess: (List<RecipeType>) -> Unit,
+        onFail: () -> Unit,
+        loadingFinished: () -> Unit)
+    {
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(
                 context.getString(R.string.recipes_url)
@@ -40,6 +48,44 @@ class ApiServiceImpl @Inject constructor() {
 
             override fun onFailure(t: Throwable?) {
                 Toast.makeText(context, "Can't get recipe types", Toast.LENGTH_SHORT).show()
+                onFail()
+                loadingFinished()
+            }
+        })
+    }
+
+    fun getMealsByCategory(
+        context: Context,
+        category: String,
+        onSuccess: (List<Meal>) -> Unit,
+        onFail: () -> Unit,
+        loadingFinished: () -> Unit
+    ) {
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl(
+                context.getString(R.string.recipes_url)
+            )
+            .addConverterFactory(
+                GsonConverterFactory.create()
+            )
+            .build()
+
+        val service: ApiService = retrofit.create(ApiService::class.java)
+        val call: Call<MealResponse> = service.getMealsByCategory(category)
+
+        call.enqueue(object : Callback<MealResponse> {
+            override fun onResponse(response: Response<MealResponse>?, retrofit: Retrofit?) {
+                loadingFinished()
+                if(response?.isSuccess == true) {
+                    val meals: List<Meal> = response.body()?.meals ?: emptyList()
+                    onSuccess(meals)
+                } else {
+                    onFailure(Exception("Bad request"))
+                }
+            }
+
+            override fun onFailure(t: Throwable?) {
+                Toast.makeText(context, "Can't get meals for $category", Toast.LENGTH_SHORT).show()
                 onFail()
                 loadingFinished()
             }

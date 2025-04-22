@@ -84,14 +84,20 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
         }
 
         // Recipe navigation
-        RecipeRoutes.entries.forEach { recipe ->
-            composable(recipe.route) {
-                RecipeListScreen(recipeType = recipe.name,
+        composable("recipe/{categoryId}/{categoryName}") { backStackEntry ->
+            val categoryId = backStackEntry.arguments?.getString("categoryId")
+            val categoryName = backStackEntry.arguments?.getString("categoryName")
+
+            // Ahora pasamos el categoryId y categoryName a la lista de recetas
+            if (categoryId != null && categoryName != null) {
+                RecipeListScreen(
+                    categoryId = categoryId.toInt(),
+                    recipeType = categoryName,
                     onGoBack = {
                         navController.popBackStack()
                     },
                     onClick = { recipeId ->
-                        navController.navigate("recipe/${recipe.name.lowercase()}/detail/$recipeId")
+                        navController.navigate("recipe/$categoryId/$categoryName/detail/$recipeId")
                     }
                 )
             }

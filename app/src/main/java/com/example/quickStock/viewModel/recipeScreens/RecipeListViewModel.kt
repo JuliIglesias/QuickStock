@@ -1,15 +1,21 @@
 package com.example.quickStock.viewModel.recipeScreens
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.quickStock.mocking.getRecipesByType
+import com.example.quickStock.apiManager.ApiServiceImpl
 import com.example.quickStock.model.recipe.RecipeListData
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RecipeListViewModel : ViewModel() {
+@HiltViewModel
+class RecipeListViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val apiServiceImpl: ApiServiceImpl
+) : ViewModel() {
 
     // Estado para el título de la pantalla
     private val _screenTitle = MutableStateFlow("")
@@ -19,22 +25,43 @@ class RecipeListViewModel : ViewModel() {
     private val _recipes = MutableStateFlow<List<RecipeListData>>(emptyList())
     val recipes: StateFlow<List<RecipeListData>> = _recipes.asStateFlow()
 
+    // Loading state
+    private val _loading = MutableStateFlow(false)
+    val loading = _loading.asStateFlow()
+
+    // Retry state
+    private val _showRetry = MutableStateFlow(false)
+    val showRetry = _showRetry.asStateFlow()
+
     // Cargar recetas según el tipo
-    fun loadRecipesByType(recipeType: String, onRecipeClick: (String) -> Unit) {
-        viewModelScope.launch {
+    fun loadRecipesByCategory(recipeType: String, onRecipeClick: (String) -> Unit) {
+        _loading.value = true
+        _showRetry.value = false
+        _screenTitle.value = "Recipes of $recipeType"
 
-                _screenTitle.value = "Recipes of $recipeType"
-
-                val recipesList = getRecipesByType(recipeType)
-
-                _recipes.value = recipesList.map { recipe ->
+        apiServiceImpl.getMealsByCategory(
+            context = context,
+            category = recipeType,
+            onSuccess = { meals ->
+                _recipes.value = meals.map { meal ->
                     RecipeListData(
-                        title = recipe.name,
-                        image = recipe.image,
-                        onClick = { onRecipeClick(recipe.id) } // Navegación
+                        idMeal = meal.idMeal,
+                        title = meal.strMeal,
+                        image = meal.strMealThumb,
+                        onClick = { onRecipeClick(meal.idMeal) }
                     )
                 }
-        }
+            },
+            onFail = {
+                _showRetry.value = true
+            },
+            loadingFinished = {
+                _loading.value = false
+            }
+        )
     }
 
+    fun retryApiCall(categoryName: String, onRecipeClick: (String) -> Unit) {
+        loadRecipesByCategory(categoryName, onRecipeClick)
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.quickStock.apiManager
+package com.example.quickStock.apiManager.responses
 
 import com.example.quickStock.api.RecipeType
 

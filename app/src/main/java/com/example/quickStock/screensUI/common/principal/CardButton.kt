@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,12 +18,10 @@ import com.example.quickStock.model.common.ICardButton
 import com.example.quickStock.screensUI.icon.MyIcon
 import com.example.quickStock.ui.theme.*
 
-
 @Composable
 fun CardButton(
     buttonData: ICardButton
 ) {
-
     Button(
         onClick = buttonData.onClick,
         shape = RoundedCornerShape(radiusLarge),
@@ -43,7 +43,8 @@ fun CardButton(
             Text(
                 text = buttonData.title,
                 fontSize = textSizeTitle,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onPrimary
             )
         }
     }

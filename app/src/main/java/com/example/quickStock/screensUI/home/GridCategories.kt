@@ -3,7 +3,7 @@ package com.example.quickStock.screensUI.home
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -13,9 +13,11 @@ import androidx.compose.ui.res.vectorResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.quickStock.R
 import com.example.quickStock.model.home.CategoryButtonData
-import com.example.quickStock.screensUI.common.principal.CustomGrid
 import com.example.quickStock.screensUI.common.SimpleSearchBar
+import com.example.quickStock.screensUI.common.principal.CustomGrid
 import com.example.quickStock.screensUI.icon.getCategoryIcon
+import com.example.quickStock.ui.theme.paddingLarge
+import com.example.quickStock.ui.theme.spacingExtraLarge
 import com.example.quickStock.viewModel.home.GridCategoryViewModel
 
 @Composable
@@ -29,13 +31,13 @@ fun ProductCategoryGrid(
     val filteredCategoryNames by viewModel.filteredCategories.collectAsState()
     val selectedCategoryRoute by viewModel.selectedCategoryRoute.collectAsState()
 
-    // Si se seleccionó una categoría, navega a ella
+    // Navigate to selected category if one is selected
     selectedCategoryRoute?.let { route ->
         onCategoryClick(route)
-        viewModel.resetCategorySelection() // Reinicia el estado después de navegar
+        viewModel.resetCategorySelection()
     }
 
-    // Convertimos los nombres de categorías en objetos CategoryButtonData con íconos
+    // Convert category names to CategoryButtonData objects with icons
     val categoryItems = filteredCategoryNames.map { categoryName ->
         val route = viewModel.getCategoryRoute(categoryName)
 
@@ -52,14 +54,14 @@ fun ProductCategoryGrid(
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxSize(),
+            .fillMaxSize()
+            .padding(horizontal = paddingLarge),
         verticalArrangement = Arrangement.Top,
     ) {
         SimpleSearchBar(
             query = searchQuery,
             onQueryChange = { viewModel.updateSearchQuery(it) },
-            onSearch = { /* La búsqueda ya se maneja en updateSearchQuery */ },
+            onSearch = { /* Search is handled in updateSearchQuery */ },
             searchResults = filteredCategoryNames,
             modifier = Modifier
         )
@@ -68,11 +70,8 @@ fun ProductCategoryGrid(
             items = categoryItems,
             modifier = modifier,
             columns = 2,
-            verticalSpacing = 16,
-            horizontalSpacing = 16
+            verticalSpacing = spacingExtraLarge,
+            horizontalSpacing = spacingExtraLarge
         )
     }
 }
-
-
-

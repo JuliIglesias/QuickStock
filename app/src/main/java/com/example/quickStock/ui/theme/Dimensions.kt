@@ -43,7 +43,7 @@ val radiusRound = 28.dp
 val textSizeSmall = 11.sp
 val textSizeMedium = 16.sp
 val textSizeLarge = 18.sp
-val textSizeTitle = 22.sp
+val textSizeTitle = 20.sp
 val textSizeExtraLarge = 24.sp
 
 // Height

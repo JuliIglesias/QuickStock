@@ -3,21 +3,21 @@ package com.example.quickStock.screensUI.recipeScreens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.quickStock.R
 import com.example.quickStock.model.recipe.RecipeButtonData
-import com.example.quickStock.screensUI.common.principal.CustomGrid
 import com.example.quickStock.screensUI.common.SimpleSearchBar
+import com.example.quickStock.screensUI.common.principal.CustomGrid
 import com.example.quickStock.screensUI.icon.getRecipesTypesIcon
 import com.example.quickStock.screensUI.navigation.categories.RecipeRoutes
+import com.example.quickStock.ui.theme.paddingLarge
+import com.example.quickStock.ui.theme.spacingExtraLarge
 import com.example.quickStock.viewModel.recipeScreens.GridRecipesViewModel
 
 @Composable
@@ -51,8 +51,8 @@ fun GridRecipes(
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxSize(),
+            .fillMaxSize()
+            .padding(horizontal = paddingLarge),
         verticalArrangement = Arrangement.Top,
     ) {
         SimpleSearchBar(
@@ -66,12 +66,13 @@ fun GridRecipes(
             searchResults = searchResults,
             modifier = Modifier
         )
+
         CustomGrid(
             items = filteredRecipes,
             modifier = modifier,
             columns = 2,
-            verticalSpacing = 16,
-            horizontalSpacing = 16
+            verticalSpacing = spacingExtraLarge,
+            horizontalSpacing = spacingExtraLarge
         )
     }
 }

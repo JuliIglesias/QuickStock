@@ -13,7 +13,7 @@ fun RecipeScreen(onClick: (String) -> Unit,) {
         Surface(
             modifier = Modifier.fillMaxWidth(),
         ) {
-            GridRecipes(onRecipeClick = onClick)
+            GridRecipes()
         }
     }
 }

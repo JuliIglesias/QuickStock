@@ -21,7 +21,6 @@ import com.example.quickStock.viewModel.recipeScreens.GridRecipesViewModel
 @Composable
 fun GridRecipes(
     modifier: Modifier = Modifier,
-    onRecipeClick: (String) -> Unit = {}
 ) {
     val viewModel = hiltViewModel<GridRecipesViewModel>()
 

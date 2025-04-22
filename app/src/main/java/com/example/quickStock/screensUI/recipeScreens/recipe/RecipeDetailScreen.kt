@@ -12,8 +12,12 @@ import androidx.compose.material.icons.filled.RestaurantMenu
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.FormatListNumbered
 import androidx.compose.material.icons.filled.Kitchen
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,19 +26,84 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.rememberAsyncImagePainter
 import com.example.quickStock.R
 import com.example.quickStock.model.recipe.RecipeData
 import com.example.quickStock.screensUI.common.goBack.ScreenName
 import com.example.quickStock.ui.theme.*
+import com.example.quickStock.viewModel.recipeScreens.RecipeDetailViewModel
 import com.google.accompanist.web.WebView
 import com.google.accompanist.web.rememberWebViewState
 
 @Composable
 fun RecipeDetailScreen(
-    //recipeId: Int,
-    recipe: RecipeData,
+    recipeId: String?,
     modifier: Modifier = Modifier,
+    onGoBack: () -> Unit
+) {
+    val viewModel = hiltViewModel<RecipeDetailViewModel>()
+
+    val loading by viewModel.loading.collectAsStateWithLifecycle()
+    val showRetry by viewModel.showRetry.collectAsStateWithLifecycle()
+    val recipe by viewModel.recipe.collectAsState()
+
+    LaunchedEffect(recipeId) {
+        viewModel.loadRecipeDetails(recipeId.toString())
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        when {
+            loading -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+            showRetry -> {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.failed_to_load_recipe),
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                    Spacer(modifier = Modifier.height(spacingMedium))
+                    Button(
+                        onClick = { viewModel.retryLoadingRecipe() },
+                        colors = ButtonDefaults.buttonColors(containerColor = PrimaryGreen)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = stringResource(id = R.string.retry)
+                        )
+                        Spacer(modifier = Modifier.width(spacingSmall))
+                        Text(text = stringResource(id = R.string.retry))
+                    }
+                }
+            }
+            recipe != null -> {
+                RecipeDetailContent(
+                    recipe = recipe!!,
+                    onGoBack = onGoBack
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun RecipeDetailContent(
+    recipe: RecipeData,
     onGoBack: () -> Unit
 ) {
     val scrollState = rememberScrollState()

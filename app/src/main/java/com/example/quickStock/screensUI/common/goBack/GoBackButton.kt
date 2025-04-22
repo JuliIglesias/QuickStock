@@ -20,6 +20,6 @@ fun GoBackButton(onGoBack: () -> Unit) {
         modifier = Modifier
             .clickable { onGoBack() }
             .padding(paddingMedium),
-        tint = MaterialTheme.colorScheme.onPrimary
+        tint = MaterialTheme.colorScheme.onSecondary
     )
 }

@@ -62,7 +62,8 @@
     <string name="retry">Retry</string>
     <string name="failed_to_load_categories">Failed to load recipe categories</string>
     <string name="failed_to_load_recipes">Failed to load recipes</string>"
-    
+    <string name="failed_to_load_recipe">Failed to load recipe</string>"
+
     <!-- Add more strings as needed just for mocking -->
         <!-- Products for each category stock-->
         <string-array name="products_meat">

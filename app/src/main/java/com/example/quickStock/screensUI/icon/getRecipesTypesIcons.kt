@@ -1,27 +1,25 @@
 package com.example.quickStock.screensUI.icon
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
+import android.content.Context
 import com.example.quickStock.R
 
-@Composable
-fun getRecipesTypesIcon(recipeTypeName: String): ImageVector {
+fun getRecipesTypesIconId(context: Context, recipeTypeName: String): Int {
     val typeOfRecipesIcons = mapOf(
-        stringResource(R.string.fruits) to ImageVector.vectorResource(R.drawable.ic_fruit),
-        stringResource(R.string.vegetables) to ImageVector.vectorResource(R.drawable.ic_veggie),
-        stringResource(R.string.meat) to ImageVector.vectorResource(R.drawable.ic_meat),
-        stringResource(R.string.seafood) to ImageVector.vectorResource(R.drawable.ic_fish_cat),
-        stringResource(R.string.chicken) to ImageVector.vectorResource(R.drawable.ic_chicken),
-        stringResource(R.string.salads) to ImageVector.vectorResource(R.drawable.ic_salad),
-        stringResource(R.string.desserts) to ImageVector.vectorResource(R.drawable.ic_cookie),
-        stringResource(R.string.alcoholic_beverages) to ImageVector.vectorResource(R.drawable.ic_cocktail),
-        stringResource(R.string.pasta) to ImageVector.vectorResource(R.drawable.ic_pasta),
-        stringResource(R.string.bakery) to ImageVector.vectorResource(R.drawable.ic_cake),
-        stringResource(R.string.breakfast) to ImageVector.vectorResource(R.drawable.ic_egg),
-        stringResource(R.string.fast_food) to ImageVector.vectorResource(R.drawable.ic_hamburger),
+        context.getString(R.string.beef) to R.drawable.ic_meat,
+        context.getString(R.string.chicken) to R.drawable.ic_chicken,
+        context.getString(R.string.dessert) to R.drawable.ic_cake,
+        context.getString(R.string.lamb) to R.drawable.ic_lamb, //
+        context.getString(R.string.miscellaneous) to R.drawable.ic_beans,
+        context.getString(R.string.pasta) to R.drawable.ic_pasta,
+        context.getString(R.string.pork) to R.drawable.ic_pork,
+        context.getString(R.string.seafood) to R.drawable.ic_fish_cat,
+        context.getString(R.string.side) to R.drawable.ic_salad,
+        context.getString(R.string.starter) to R.drawable.ic_bread,
+        context.getString(R.string.vegan) to R.drawable.ic_veggie,
+        context.getString(R.string.vegetarian) to R.drawable.ic_vegetarian,
+        context.getString(R.string.breakfast) to R.drawable.ic_egg,
+        context.getString(R.string.goat) to R.drawable.ic_goat,
+        context.getString(R.string.alcoholic_beverages) to R.drawable.ic_cocktail,
     )
-
-    return typeOfRecipesIcons[recipeTypeName] ?: ImageVector.vectorResource(R.drawable.ic_question_mark)
+    return typeOfRecipesIcons[recipeTypeName] ?: R.drawable.ic_question_mark
 }

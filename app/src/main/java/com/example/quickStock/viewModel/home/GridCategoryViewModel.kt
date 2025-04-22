@@ -3,6 +3,7 @@ package com.example.quickStock.viewModel.home
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.example.quickStock.R
+import com.example.quickStock.apiManager.ApiServiceImpl
 import com.example.quickStock.screensUI.navigation.categories.CategoryRoutes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GridCategoryViewModel @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val apiServiceImpl: ApiServiceImpl,
 ) : ViewModel() {
     // Lista completa de categorías
     private val categories = context.resources.getStringArray(R.array.product_categories)

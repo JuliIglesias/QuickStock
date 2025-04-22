@@ -23,21 +23,6 @@
         <item>Electronics</item>
     </string-array>
 
-    <string-array name="recipe_types">
-        <item>Meat</item>
-        <item>Chicken</item>
-        <item>Seafood</item>
-        <item>Salads</item>
-        <item>Vegetables</item>
-        <item>Fruits</item>
-        <item>Breakfast</item>
-        <item>Pasta</item>
-        <item>Desserts</item>
-        <item>Bakery</item>
-        <item>Alcoholic Beverages</item>
-        <item>Fast Food</item>
-    </string-array>
-
     <string name="refrigerator">Refrigerator</string>
     <string name="dairy_and_eggs">Dairy &amp; Eggs</string>
     <string name="grains_and_pasta">Grains &amp; Pasta</string>
@@ -53,6 +38,7 @@
     <string name="baby">Baby</string>
     <string name="household">Household</string>
     <string name="meat">Meat</string>
+    <string name="beef">Beef</string>
     <string name="chicken">Chicken</string>
     <string name="seafood">Seafood</string>
     <string name="salads">Salads</string>
@@ -60,7 +46,15 @@
     <string name="fruits">Fruits</string>
     <string name="breakfast">Breakfast</string>
     <string name="pasta">Pasta</string>
-    <string name="desserts">Desserts</string>
+    <string name="dessert">Dessert</string>
+    <string name="lamb">Lamb</string>
+    <string name="pork">Pork</string>
+    <string name="vegan">Vegan</string>
+    <string name="vegetarian">Vegetarian</string>
+    <string name="starter">Starter</string>
+    <string name="side">Side</string>
+    <string name="miscellaneous">Miscellaneous</string>
+    <string name="goat">Goat</string>
     <string name="bakery">Bakery</string>
     <string name="alcoholic_beverages">Alcoholic Beverages</string>
     <string name="fast_food">Fast Food</string>

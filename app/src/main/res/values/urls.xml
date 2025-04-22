@@ -1,0 +1,5 @@
+
+<resources>
+    <string name="recipes_url">https://www.themealdb.com/api/json/v1/1/</string>
+
+</resources>

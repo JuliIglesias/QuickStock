@@ -1,13 +1,10 @@
 package com.example.quickStock.screensUI.navigation
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -24,14 +21,14 @@ import com.example.quickStock.screensUI.recipeScreens.RecipeScreen
 import com.example.quickStock.screensUI.recipeScreens.recipe.RecipeDetailScreen
 import com.example.quickStock.screensUI.recipeScreens.recipe.RecipeListScreen
 import com.example.quickStock.screensUI.userConfig.UserSettingsPagePreview
+import com.example.quickStock.ui.theme.paddingLarge
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostController) {
     NavHost(
         navController = navController,
         startDestination = NavBarNames.Home.name,
-        modifier = Modifier.fillMaxSize().padding(innerPadding).padding(20.dp)
+        modifier = Modifier.fillMaxSize().padding(innerPadding).padding(paddingLarge)
     ) {
 
         //NavBar navigation

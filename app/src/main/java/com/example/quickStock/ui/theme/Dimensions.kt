@@ -43,7 +43,7 @@ val radiusRound = 28.dp
 val textSizeSmall = 11.sp
 val textSizeMedium = 16.sp
 val textSizeLarge = 18.sp
-val textSizeTitle = 20.sp
+val textSizeTitle = 22.sp
 val textSizeExtraLarge = 24.sp
 
 // Height
@@ -68,3 +68,10 @@ val elevationLarge = 8.dp
 // Border
 val borderWidthSmall = 2.dp
 val borderWidth = 4.dp
+
+// Offset
+val offsetZero = 0.dp
+val offsetSearchBarX = 0.dp
+val offsetSearchBarY = (-16).dp
+val offsetTopBarY = 8.dp
+val offsetItemsY = 4.dp

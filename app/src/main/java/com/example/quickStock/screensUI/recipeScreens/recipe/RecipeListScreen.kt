@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,18 +17,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.quickStock.R
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.quickStock.screensUI.common.goBack.ScreenName
-import com.example.quickStock.mocking.getRecipesByType
-import com.example.quickStock.model.recipe.RecipeListData
 import com.example.quickStock.ui.theme.*
-import com.example.quickStock.viewModel.recipeScreens.GridRecipesViewModel
 import com.example.quickStock.viewModel.recipeScreens.RecipeListViewModel
 
 @Composable
 fun RecipeListScreen(
+    categoryId: Int,
     recipeType: String,
     modifier: Modifier = Modifier,
     onGoBack: () -> Unit,
@@ -35,60 +35,77 @@ fun RecipeListScreen(
     val viewModel = hiltViewModel<RecipeListViewModel>()
 
     // Recolectar estados del ViewModel
-    val screenTitle by viewModel.screenTitle.collectAsState()
-    val recipes by viewModel.recipes.collectAsState()
+    val recipes by viewModel.recipes.collectAsStateWithLifecycle()
+    val screenTitle by viewModel.screenTitle.collectAsStateWithLifecycle()
+    val loading by viewModel.loading.collectAsStateWithLifecycle()
+    val showRetry by viewModel.showRetry.collectAsStateWithLifecycle()
+
 
     // Cargar recetas cuando se inicia la pantalla
     LaunchedEffect(recipeType) {
-        viewModel.loadRecipesByType(recipeType) { recipeName ->
-            onClick(recipeName) // Navegar al detalle de la receta
-        }
+        viewModel.loadRecipesByCategory(recipeType, onClick)
     }
 
     Column(
         modifier = modifier
             .fillMaxSize()
     ) {
-        ScreenName(
-            title = screenTitle,
-            onGoBack = onGoBack,
-        )
+        if (loading) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
+        } else if (showRetry) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text("Failed to load recipes")
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Button(onClick = { viewModel.retryApiCall(recipeType, onClick) }) {
+                        Text("Retry")
+                    }
+                }
+            }
+        } else {
+            ScreenName(
+                title = screenTitle,
+                onGoBack = onGoBack,
+            )
 
-        Column(
-            modifier = Modifier.padding(paddingExtraLarge)
-        ) {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(spacingMedium)
+            Column(
+                modifier = Modifier.padding(paddingExtraLarge)
             ) {
-                items(recipes) { productButton ->
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(
-                                MaterialTheme.colorScheme.primary,
-                                shape = RoundedCornerShape(radiusSmall)
-                            )
-                            .clickable { productButton.onClick() }
-                            .padding(paddingExtraLarge)
-                    ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(spacingMedium)
+                ) {
+                    items(recipes) { productButton ->
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(
+                                    MaterialTheme.colorScheme.primary,
+                                    shape = RoundedCornerShape(radiusSmall)
+                                )
+                                .clickable { productButton.onClick() }
+                                .padding(paddingExtraLarge)
                         ) {
-                            Text(
-                                text = productButton.title,
-                                fontSize = textSizeLarge,
-                                color = MaterialTheme.colorScheme.onPrimary
-                            )
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = productButton.title,
+                                    fontSize = textSizeLarge,
+                                    color = MaterialTheme.colorScheme.onPrimary
+                                )
 
-                            RecipeImage(
-                                imageUrl = "https://www.themealdb.com/images/media/meals/wai9bw1619788844.jpg", // productButton.image
-                                contentDescription = productButton.title,
-                                modifier = Modifier
-                                    .size(sizeImageMedium)
-                                    .clip(RoundedCornerShape(radiusSmall))
-                            )
+                                RecipeImage(
+                                    imageUrl = "https://www.themealdb.com/images/media/meals/wai9bw1619788844.jpg", // productButton.image
+                                    contentDescription = productButton.title,
+                                    modifier = Modifier
+                                        .size(sizeImageMedium)
+                                        .clip(RoundedCornerShape(radiusSmall))
+                                )
+                            }
                         }
                     }
                 }

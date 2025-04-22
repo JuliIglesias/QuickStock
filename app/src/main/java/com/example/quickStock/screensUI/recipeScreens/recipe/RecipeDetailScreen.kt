@@ -32,6 +32,7 @@ import com.google.accompanist.web.rememberWebViewState
 
 @Composable
 fun RecipeDetailScreen(
+    //recipeId: Int,
     recipe: RecipeData,
     modifier: Modifier = Modifier,
     onGoBack: () -> Unit

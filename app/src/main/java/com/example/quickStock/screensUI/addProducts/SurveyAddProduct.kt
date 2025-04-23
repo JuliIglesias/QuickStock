@@ -23,6 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.quickStock.R
 import com.example.quickStock.model.addProduct.Product
 import com.example.quickStock.screensUI.common.secondary.ButtonIconAndName
+import com.example.quickStock.screensUI.common.secondary.ExpiryDatePicker
 import com.example.quickStock.screensUI.icon.getCategoryIcon
 import com.example.quickStock.ui.theme.LightGray
 import com.example.quickStock.ui.theme.PrimaryGreen
@@ -171,25 +172,9 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                 )
 
                 // Expiry Date Field
-                OutlinedTextField(
-                    value = uiState.productExpiryDate,
-                    onValueChange = { viewModel.updateExpiryDate(it) },
-                    label = { Text(stringResource(id = R.string.product_expiration_date)) },
-                    modifier = Modifier.fillMaxWidth(),
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.CalendarToday,
-                            contentDescription = "Expiry Date",
-                            tint = PrimaryGreen
-                        )
-                    },
-                    placeholder = { Text("2025-04-30") },
-                    singleLine = true,
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = PrimaryGreen,
-                        focusedLabelColor = PrimaryGreen,
-                        cursorColor = PrimaryGreen
-                    )
+                ExpiryDatePicker(
+                    selectedDate = uiState.productExpiryDate,
+                    onDateSelected = { viewModel.updateExpiryDate(it) }
                 )
 
                 // Category Dropdown

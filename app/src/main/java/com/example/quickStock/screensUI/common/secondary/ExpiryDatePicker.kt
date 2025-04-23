@@ -3,6 +3,7 @@ package com.example.quickStock.screensUI.common.secondary
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material3.DatePicker
@@ -25,6 +26,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.example.quickStock.R
 import com.example.quickStock.ui.theme.PrimaryGreen
+import com.example.quickStock.ui.theme.paddingExtraLarge
+import com.example.quickStock.ui.theme.paddingLarge
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -87,7 +90,8 @@ fun ExpiryDatePicker(
         ) {
             DatePicker(
                 state = datePickerState,
-                title = { Text(text = stringResource(id = R.string.product_expiration_date)) }
+                title = null,
+                modifier = Modifier.padding(paddingExtraLarge),
             )
         }
     }

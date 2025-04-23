@@ -36,7 +36,7 @@ fun SimpleSearchBar(
     modifier: Modifier = Modifier
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
-    var expanded by remember { mutableStateOf(false) }
+    var expanded = false
 
     Box(
         modifier = modifier.semantics { isTraversalGroup = true }

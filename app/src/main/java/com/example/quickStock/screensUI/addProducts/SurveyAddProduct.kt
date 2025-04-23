@@ -16,11 +16,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.quickStock.R
 import com.example.quickStock.model.addProduct.Product
+import com.example.quickStock.screensUI.common.secondary.ButtonIconAndName
 import com.example.quickStock.screensUI.icon.getCategoryIcon
 import com.example.quickStock.ui.theme.LightGray
 import com.example.quickStock.ui.theme.PrimaryGreen
@@ -90,7 +92,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
     ) {
         // Header
         Text(
-            text = "Add Product",
+            text = stringResource(id = R.string.add_product),
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
@@ -330,33 +332,15 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
         }
 
         // Add Button
-        Button(
+        ButtonIconAndName(
             onClick = {
-                viewModel.addProduct(onProductAdded)
+                viewModel.addProduct { newProduct ->
+                    onProductAdded(newProduct)
+                }
             },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(heightButton),
-            shape = RoundedCornerShape(radiusRound),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-            ),
-            elevation = ButtonDefaults.buttonElevation(defaultElevation = elevationMedium),
-
-            ) {
-            Icon(
-                Icons.Default.Add,
-                contentDescription = "Add Product",
-                tint = MaterialTheme.colorScheme.onSecondary
-            )
-            Spacer(modifier = Modifier.width(spacingMedium))
-            Text(
-                "Add Product",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSecondary
-            )
-        }
+            text = stringResource(id = R.string.add_product),
+            icon = Icons.Default.Add
+        )
     }
 }
 

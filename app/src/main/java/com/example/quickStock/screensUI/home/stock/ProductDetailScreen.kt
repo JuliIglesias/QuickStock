@@ -9,8 +9,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Category
+import androidx.compose.material.icons.filled.Minimize
+import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Store
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -24,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import com.example.quickStock.R
 import com.example.quickStock.model.addProduct.Product
 import com.example.quickStock.screensUI.common.goBack.ScreenName
+import com.example.quickStock.screensUI.common.secondary.ButtonIconAndName
 import com.example.quickStock.screensUI.icon.getCategoryIcon
 import com.example.quickStock.ui.theme.*
 import java.time.LocalDate
@@ -44,7 +48,9 @@ fun ProductDetailScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .verticalScroll(scrollState)
-    ) {
+            .padding(paddingZero, paddingExtraLarge),
+
+        ) {
         // Header with back button and product name
         ScreenName(
             onGoBack = onGoBack,
@@ -290,6 +296,22 @@ fun ProductDetailScreen(
                         }
                     }
                 }
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background)
+                    .padding(paddingZero, paddingExtraLarge),
+                verticalArrangement = Arrangement.spacedBy(spacingExtraLarge)
+            ) {
+                // reduce Button
+                ButtonIconAndName(
+                    onClick = {
+                        // Handle add product action
+                    },
+                    text = stringResource(id = R.string.reduce_product),
+                    icon = Icons.Default.Remove
+                )
             }
         }
     }

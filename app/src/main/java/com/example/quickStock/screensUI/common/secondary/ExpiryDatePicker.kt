@@ -79,12 +79,12 @@ fun ExpiryDatePicker(
                     }
                     showDatePicker = false
                 }) {
-                    Text("OK")
+                    Text(stringResource(id = R.string.select_date))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDatePicker = false }) {
-                    Text("Cancel")
+                    Text(stringResource(id = R.string.cancel))
                 }
             }
         ) {
@@ -121,7 +121,7 @@ fun ExpiryDatePicker(
         placeholder = {
             if (selectedDate.isEmpty()) {
                 Text(
-                    text = "Tap to select date",
+                    text = stringResource(id =R.string.tap_select_date),
                     style = androidx.compose.ui.text.TextStyle(
                         color = androidx.compose.ui.graphics.Color.Gray
                     )

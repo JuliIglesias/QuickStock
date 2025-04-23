@@ -249,6 +249,9 @@
     <string name="product_category">Category</string>
     <string name="product_brand">Brand</string>
     <string name="product_expiration_date">Expiration Date</string>
+    <string name="select_date">Select Date</string>
+    <string name="cancel">Cancel</string>
+    <string name="tap_select_date">Tap to select date</string>
     <string name="product_quantity">Quantity</string>
 
 

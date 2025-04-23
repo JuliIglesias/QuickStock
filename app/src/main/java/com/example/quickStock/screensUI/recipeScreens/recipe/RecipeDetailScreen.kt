@@ -315,7 +315,7 @@ private fun RecipeDetailContent(
             }
 
             // YouTube Video Card (if available)
-            recipe.youtubeUrl?.let {
+            if (!recipe.youtubeUrl.isNullOrEmpty()) {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     elevation = CardDefaults.cardElevation(defaultElevation = elevationMedium),
@@ -351,7 +351,7 @@ private fun RecipeDetailContent(
 
                         // YouTube WebView
                         val embedUrl = recipe.youtubeUrl.replace("watch?v=", "embed/")
-                        val webViewState = rememberWebViewState(url = embedUrl ?: "")
+                        val webViewState = rememberWebViewState(url = embedUrl)
                         WebView(
                             state = webViewState,
                             modifier = Modifier

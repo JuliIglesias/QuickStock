@@ -79,8 +79,6 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
         "Household" to ImageVector.vectorResource(R.drawable.ic_kitchen_suplies)
     )
 
-
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -113,7 +111,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                 OutlinedTextField(
                     value = uiState.productId,
                     onValueChange = { viewModel.updateProductId(it) },
-                    label = { Text("Product ID") },
+                    label = { Text(stringResource(id = R.string.bar_code)) },
                     modifier = Modifier.fillMaxWidth(),
                     leadingIcon = {
                         Icon(
@@ -134,7 +132,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                 OutlinedTextField(
                     value = uiState.productName,
                     onValueChange = { viewModel.updateProductName(it) },
-                    label = { Text("Product Name") },
+                    label = { Text(stringResource(id = R.string.product_name))},
                     modifier = Modifier.fillMaxWidth(),
                     leadingIcon = {
                         Icon(
@@ -155,7 +153,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                 OutlinedTextField(
                     value = uiState.productBrand,
                     onValueChange = { viewModel.updateProductBrand(it) },
-                    label = { Text("Brand") },
+                    label = { Text(stringResource(id = R.string.product_brand))},
                     modifier = Modifier.fillMaxWidth(),
                     leadingIcon = {
                         Icon(
@@ -176,7 +174,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                 OutlinedTextField(
                     value = uiState.productExpiryDate,
                     onValueChange = { viewModel.updateExpiryDate(it) },
-                    label = { Text("Expiry Date (YYYY-MM-DD)") },
+                    label = { Text(stringResource(id = R.string.product_expiration_date)) },
                     modifier = Modifier.fillMaxWidth(),
                     leadingIcon = {
                         Icon(
@@ -185,7 +183,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                             tint = PrimaryGreen
                         )
                     },
-                    placeholder = { Text("2024-04-30") },
+                    placeholder = { Text("2025-04-30") },
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = PrimaryGreen,
@@ -204,7 +202,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                         onValueChange = {
                             viewModel.updateProductCategory(it)
                         },
-                        label = { Text("Category") },
+                        label = { Text(stringResource(id = R.string.product_category)) },
                         leadingIcon = {
                             Icon(
                                 imageVector = getCategoryIcon(categoryName = uiState.productCategory, Icons.Default.Category),
@@ -271,7 +269,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                             .padding(paddingExtraLarge)
                     ) {
                         Text(
-                            text = "Quantity",
+                            text = stringResource(id = R.string.product_quantity),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Medium
                         )
@@ -293,7 +291,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                             ) {
                                 Icon(
                                     Icons.Default.Remove,
-                                    contentDescription = "Decrease Quantity",
+                                    contentDescription = stringResource(R.string.reduce_product),
                                     tint = MaterialTheme.colorScheme.onSecondary
                                 )
                             }
@@ -321,7 +319,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                             ) {
                                 Icon(
                                     Icons.Default.Add,
-                                    contentDescription = "Increase Quantity",
+                                    contentDescription = stringResource(R.string.add_product),
                                     tint = MaterialTheme.colorScheme.onSecondary
                                 )
                             }

@@ -17,6 +17,10 @@ import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Store
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,6 +32,7 @@ import com.example.quickStock.R
 import com.example.quickStock.model.addProduct.Product
 import com.example.quickStock.screensUI.common.goBack.ScreenName
 import com.example.quickStock.screensUI.common.secondary.ButtonIconAndName
+import com.example.quickStock.screensUI.common.secondary.ReduceProductModal
 import com.example.quickStock.screensUI.icon.getCategoryIcon
 import com.example.quickStock.ui.theme.*
 import java.time.LocalDate
@@ -42,6 +47,10 @@ fun ProductDetailScreen(
     onGoBack: () -> Unit
 ) {
     val scrollState = rememberScrollState()
+
+    // Open ReduceProductModal when pressed on reduce button
+    var showDialog by remember { mutableStateOf(false) }
+
 
     Column(
         modifier = Modifier
@@ -297,6 +306,7 @@ fun ProductDetailScreen(
                     }
                 }
             }
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -307,11 +317,28 @@ fun ProductDetailScreen(
                 // reduce Button
                 ButtonIconAndName(
                     onClick = {
-                        // Handle add product action
+                        showDialog = true
                     },
                     text = stringResource(id = R.string.reduce_product),
                     icon = Icons.Default.Remove
                 )
+
+                // Text input dialog
+                if (showDialog) {
+                    ReduceProductModal(
+                        productName = product.name,
+                        productQuantity = 50,
+                        onDismiss = {
+                            showDialog = false
+                        },
+                        onConfirm = { quantity ->
+                            // Handle the confirm action
+                            // You can call a function to reduce the product quantity here
+                            // For example, update the product in the database or state
+                            showDialog = false
+                        }
+                    )
+                }
             }
         }
     }

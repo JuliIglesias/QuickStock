@@ -255,6 +255,8 @@
     <string name="product_quantity">Quantity</string>
 
 
+    <string name="reduce_quantity_of_product">Reduce quantity of: %s</string>
+
     <string name="user_settings">User Settings</string>
     <string name="username">Username</string>
     <string name="email">Email</string>
@@ -269,5 +271,11 @@
 
     <string name="action_go_back">Go Back</string>
     <string name="search_placeholder">Search</string>
+    <string name="confirm">Confirm\n</string>
+    <string name="select_expiry_date">Select Expiry Date</string>
+    <string name="quantity_to_reduce">Quantity to Reduce</string>
+    <string name="max_available">Max Available: %s</string>
+    <string name="increase_quantity">Increase Quantity</string>
+    <string name="quantity_units">%s (%s units)</string>
 
 </resources>

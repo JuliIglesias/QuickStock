@@ -1,6 +1,5 @@
 package com.example.quickStock.screensUI.common.secondary
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,11 +10,9 @@ import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,20 +28,13 @@ import com.example.quickStock.ui.theme.ErrorRed
 import com.example.quickStock.ui.theme.PrimaryGreen
 import com.example.quickStock.ui.theme.SuccessGreen
 import com.example.quickStock.ui.theme.paddingExtraLarge
-import com.example.quickStock.ui.theme.paddingLarge
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-
-import androidx.compose.foundation.text.BasicText
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.indication
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.material3.ButtonDefaults
+import com.example.quickStock.screensUI.common.principal.ModernTextButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -134,55 +124,16 @@ fun ExpiryDatePicker(
             focusedLabelColor = PrimaryGreen,
             cursorColor = PrimaryGreen
         ),
-        textStyle = androidx.compose.ui.text.TextStyle(textAlign = TextAlign.Start),
+        textStyle = TextStyle(textAlign = TextAlign.Start),
         placeholder = {
             if (selectedDate.isEmpty()) {
                 Text(
                     text = stringResource(id =R.string.tap_select_date),
-                    style = androidx.compose.ui.text.TextStyle(
-                        color = androidx.compose.ui.graphics.Color.Gray
+                    style = TextStyle(
+                        color = Color.Gray
                     )
                 )
             }
         }
     )
-}
-
-
-
-
-@Composable
-fun ModernTextButton(
-    text: String,
-    textColor: Color,
-    onClick: () -> Unit
-) {
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
-
-    TextButton(
-        onClick = onClick,
-        interactionSource = interactionSource,
-        colors = ButtonDefaults.textButtonColors(
-            contentColor = textColor,
-            // Color cuando se presiona - un tono más claro con alfa reducido
-            disabledContentColor = textColor.copy(alpha = 0.5f)
-        ),
-        modifier = Modifier
-            .padding(8.dp)
-            .background(
-                color = if (isPressed) {
-                    textColor.copy(alpha = 0.1f) // Fondo sutil cuando se presiona
-                } else {
-                    Color.Transparent
-                },
-                shape = CircleShape
-            )
-    ) {
-        Text(
-            text = text,
-            color = textColor,
-            style = MaterialTheme.typography.labelLarge
-        )
-    }
 }

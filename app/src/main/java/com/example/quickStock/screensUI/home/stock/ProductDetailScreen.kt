@@ -39,7 +39,6 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ProductDetailScreen(
     product: Product,
@@ -327,15 +326,11 @@ fun ProductDetailScreen(
                 if (showDialog) {
                     ReduceProductModal(
                         productName = product.name,
-                        productQuantity = 50,
-                        onDismiss = {
-                            showDialog = false
-                        },
-                        onConfirm = { quantity ->
-                            // Handle the confirm action
-                            // You can call a function to reduce the product quantity here
-                            // For example, update the product in the database or state
-                            showDialog = false
+                        expiryDates = product.quantityExpirationDate,
+                        onDismiss = { showDialog = false },
+                        onConfirm = { expiryDate, quantity ->
+                            // Implementa aquí la lógica para reducir el producto
+                            // Por ejemplo: viewModel.reduceProductQuantity(product.id, expiryDate, quantity)
                         }
                     )
                 }

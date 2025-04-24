@@ -1,79 +1,264 @@
 package com.example.quickStock.screensUI.common.secondary
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.CalendarToday
+import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
+import com.example.quickStock.R
+import com.example.quickStock.model.addProduct.QuantityExpirationDate
+import com.example.quickStock.screensUI.common.principal.ModernTextButton
 import com.example.quickStock.ui.theme.ErrorRed
+import com.example.quickStock.ui.theme.LightGray
+import com.example.quickStock.ui.theme.PrimaryGreen
+import com.example.quickStock.ui.theme.SuccessGreen
+import com.example.quickStock.ui.theme.heightRow
 import com.example.quickStock.ui.theme.paddingExtraLarge
 import com.example.quickStock.ui.theme.paddingMedium
+import com.example.quickStock.ui.theme.paddingSmall
+import com.example.quickStock.ui.theme.radiusExtraSmall
+import com.example.quickStock.ui.theme.radiusLarge
+import com.example.quickStock.ui.theme.sizeCircleButton
+import com.example.quickStock.ui.theme.spacingExtraLarge
 import com.example.quickStock.ui.theme.spacingLarge
+import com.example.quickStock.ui.theme.spacingMedium
+import com.example.quickStock.ui.theme.spacingSmall
+import com.example.quickStock.ui.theme.widthBoxSurvey
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun ReduceProductModal(
     productName: String,
-    productQuantity: Int,
+    expiryDates: List<QuantityExpirationDate>,
     onDismiss: () -> Unit,
-    onConfirm: (Int) -> Unit
+    onConfirm: (expiryDate: String, quantity: Int) -> Unit
 ) {
-    // Implementation of the modal dialog to reduce product quantity
-    // This would typically include a TextField for input and buttons for confirm and cancel
+    var selectedDateIndex by remember { mutableIntStateOf(0) }
+    var quantityToReduce by remember { mutableIntStateOf(1) }
+
+    val selectedItem = expiryDates.getOrNull(selectedDateIndex)
+    val maxQuantity = selectedItem?.quantity ?: 0
+
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             shape = MaterialTheme.shapes.medium,
-            color = MaterialTheme.colorScheme.surface
+            color = MaterialTheme.colorScheme.surfaceVariant
         ) {
             Column(
-                modifier = Modifier.padding(paddingExtraLarge),
+                modifier = Modifier
+                    .padding(paddingExtraLarge)
+                    .fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(paddingMedium)
             ) {
                 Text(
-                    text = "Reduce Quantity of $productName",
+                    text = stringResource(id = R.string.reduce_quantity_of_product, productName),
                     style = MaterialTheme.typography.titleLarge.copy(
                         fontWeight = FontWeight.Bold
                     )
                 )
 
+                Spacer(modifier = Modifier.height(spacingMedium))
+
+                // Select expiry date
+                Text(
+                    text = stringResource(R.string.select_expiry_date),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+
+                Spacer(modifier = Modifier.height(spacingSmall))
+
+                // Dropdown for expiry dates
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = paddingMedium)
+                ) {
+                    var expanded by remember { mutableStateOf(false) }
+
+                    OutlinedTextField(
+                        value = selectedItem?.expiryDate ?: "",
+                        onValueChange = {},
+                        readOnly = true,
+                        label = { Text(stringResource(R.string.product_expiration_date)) },
+                        modifier = Modifier.fillMaxWidth(),
+                        trailingIcon = {
+                            IconButton(onClick = { expanded = true }) {
+                                Icon(
+                                    imageVector = Icons.Default.CalendarToday,
+                                    contentDescription = stringResource(R.string.select_expiry_date),
+                                    tint = PrimaryGreen
+                                )
+                            }
+                        },
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = PrimaryGreen,
+                            focusedLabelColor = PrimaryGreen
+                        )
+                    )
+
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false },
+                        modifier = Modifier.fillMaxWidth(0.9f)
+                    ) {
+                        expiryDates.forEachIndexed { index, item ->
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        text = stringResource(R.string.quantity_units, item.expiryDate, item.quantity),
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
+                                },
+                                onClick = {
+                                    selectedDateIndex = index
+                                    expanded = false
+                                    // Reset quantity to 1 or max available
+                                    quantityToReduce = 1.coerceAtMost(item.quantity)
+                                }
+                            )
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(spacingSmall))
+
+                // Quantity selector
+                Text(
+                    text = stringResource(R.string.quantity_to_reduce),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+
+                Spacer(modifier = Modifier.height(spacingSmall))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    // Decrease button
+                    IconButton(
+                        onClick = { if (quantityToReduce > 1) quantityToReduce-- },
+                        modifier = Modifier
+                            .size(sizeCircleButton)
+                            .clip(RoundedCornerShape(radiusLarge))
+                            .background(
+                                if (quantityToReduce > 1) MaterialTheme.colorScheme.primary else LightGray.copy(
+                                    alpha = 0.5f
+                                )
+                            )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Remove,
+                            contentDescription = "Decrease Quantity",
+                            tint = MaterialTheme.colorScheme.onSecondary
+                        )
+                    }
+
+                    // Quantity display
+                    Box(
+                        modifier = Modifier
+                            .width(widthBoxSurvey)
+                            .height(heightRow)
+                            .clip(RoundedCornerShape(radiusExtraSmall)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = quantityToReduce.toString(),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+                    // Increase button
+                    IconButton(
+                        onClick = { if (quantityToReduce < maxQuantity) quantityToReduce++ },
+                        modifier = Modifier
+                            .size(sizeCircleButton)
+                            .clip(RoundedCornerShape(radiusLarge))
+                            .background(MaterialTheme.colorScheme.primary)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = stringResource(id = R.string.increase_quantity),
+                            tint = MaterialTheme.colorScheme.onSecondary
+                        )
+                    }
+                }
+
+                // Maximum available
+                Text(
+                    text = stringResource(
+                        id = R.string.max_available,
+                        maxQuantity
+                    ),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.align(Alignment.End)
+                )
+
+                Spacer(modifier = Modifier.height(spacingExtraLarge))
+
+                // Buttons row
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    TextButton(
-                        onClick = onDismiss
-                    ) {
-                        Text("Cancel")
-                    }
+                    // Cancel button with circle effect
+                    ModernTextButton(
+                        text = stringResource(id = R.string.cancel),
+                        textColor = ErrorRed,
+                        onClick = { onDismiss() },
+                    )
 
-                    Spacer(modifier = Modifier.width(spacingLarge))
-
-                    Button(
+                    ModernTextButton(
+                        text = stringResource(id = R.string.confirm),
+                        textColor = SuccessGreen,
                         onClick = {
-                            // Handle the confirm action
-                            onConfirm(productQuantity)
+                            selectedItem?.let {
+                                onConfirm(it.expiryDate, quantityToReduce)
+                            }
                             onDismiss()
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = ErrorRed,
-                        )
-                    ) {
-                        Text("Create")
-                    }
+                        }
+                    )
                 }
             }
         }

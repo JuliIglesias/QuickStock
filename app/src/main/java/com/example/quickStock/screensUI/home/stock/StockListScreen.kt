@@ -38,8 +38,7 @@ fun StockListScreen(
         viewModel.loadProductsByCategory(category, onClick)
     }
 
-    val categoryRoute = CategoryRoutes.entries.find { it.name == category }
-    val formattedCategoryName = categoryRoute?.getFormattedName() ?: category
+    val formattedCategoryName = category.replaceFirstChar { it.uppercase() }
 
     Column(
         modifier = modifier

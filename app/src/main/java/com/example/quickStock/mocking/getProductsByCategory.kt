@@ -5,8 +5,8 @@ import com.example.quickStock.model.addProduct.QuantityExpirationDate
 
 
 fun getProductsByCategory(category: String): List<Product> {
-    return when (category) {
-        "Meat" -> listOf(
+    return when (category.lowercase()) {
+        "meat" -> listOf(
             Product(
                 id = "1",
                 name = "Lamb",
@@ -38,7 +38,7 @@ fun getProductsByCategory(category: String): List<Product> {
                 )
             )
         )
-        "Seafood" -> listOf(
+        "seafood" -> listOf(
             Product(
                 id = "4",
                 name = "Salmon",
@@ -70,7 +70,7 @@ fun getProductsByCategory(category: String): List<Product> {
                 )
             )
         )
-        "Fruits" -> listOf(
+        "fruits" -> listOf(
             Product(
                 id = "7",
                 name = "Apple",
@@ -102,7 +102,7 @@ fun getProductsByCategory(category: String): List<Product> {
                 )
             )
         )
-        "Vegetables" -> listOf(
+        "vegetables" -> listOf(
             Product(
                 id = "10",
                 name = "Carrot",

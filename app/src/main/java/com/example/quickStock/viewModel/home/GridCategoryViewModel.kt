@@ -38,13 +38,8 @@ class GridCategoryViewModel @Inject constructor(
     }
 
     // Función para obtener la ruta de una categoría
-    fun getCategoryRoute(categoryName: String): String? {
-        return CategoryRoutes.entries.find {
-            it.getRouteSlug().equals(
-                categoryName.replace(" ", "_").replace("&", "and").lowercase(),
-                ignoreCase = true
-            )
-        }?.route
+    fun getCategoryRoute(categoryName: String): String {
+        return "category/${categoryName.replace(" ", "_").replace("&", "and").lowercase()}"
     }
 
     // Función para actualizar la consulta de búsqueda

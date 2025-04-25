@@ -40,7 +40,6 @@ import com.google.accompanist.web.rememberWebViewState
 @Composable
 fun RecipeDetailScreen(
     recipeId: String?,
-    modifier: Modifier = Modifier,
     onGoBack: () -> Unit
 ) {
     val viewModel = hiltViewModel<RecipeDetailViewModel>()

@@ -32,6 +32,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.quickStock.R
 import com.example.quickStock.model.recipe.RecipeData
 import com.example.quickStock.screensUI.common.goBack.ScreenName
+import com.example.quickStock.screensUI.common.principal.CollapsibleCard
 import com.example.quickStock.ui.theme.*
 import com.example.quickStock.viewModel.recipeScreens.RecipeDetailViewModel
 import com.google.accompanist.web.WebView
@@ -157,40 +158,15 @@ private fun RecipeDetailContent(
             }
 
             // Ingredients with Measurements Card
-            Card(
+            CollapsibleCard(
+                title = stringResource(R.string.ingredients),
+                icon = Icons.Default.Kitchen,
+                iconTint = PrimaryGreen,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = paddingExtraLarge),
-                elevation = CardDefaults.cardElevation(defaultElevation = elevationMedium),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant
-                )
-            ) {
-                Column(
-                    modifier = Modifier.padding(paddingExtraLarge)
-                ) {
-                    // Header
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(bottom = paddingLarge)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Kitchen,
-                            contentDescription = stringResource(R.string.ingredients),
-                            tint = PrimaryGreen,
-                            modifier = Modifier.size(sizeIcon)
-                        )
-                        Spacer(modifier = Modifier.width(paddingLarge))
-                        Text(
-                            text = stringResource(R.string.ingredients),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
-
-                    val dividerColor = if (isSystemInDarkTheme()) DarkDividerColor else LightDividerColor
-                    HorizontalDivider(color = dividerColor.copy(alpha = 0.3f))
-                    Spacer(modifier = Modifier.height(spacingMedium))
+                initiallyExpanded = true,
+                content = {
 
                     // Ingredients and measurements list
                     recipe.ingredients.forEachIndexed { index, ingredient ->
@@ -245,123 +221,70 @@ private fun RecipeDetailContent(
                         }
                     }
                 }
-            }
+            )
 
             // Steps Card
-            Card(
+            CollapsibleCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = paddingExtraLarge),
-                elevation = CardDefaults.cardElevation(defaultElevation = elevationMedium),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant
-                )
+                title = stringResource(R.string.steps),
+                icon = Icons.Default.FormatListNumbered,
+                iconTint = PrimaryGreen,
+                initiallyExpanded = true,
             ) {
-                Column(
-                    modifier = Modifier.padding(paddingExtraLarge)
-                ) {
-                    // Header
+                // Steps list
+                recipe.steps.forEachIndexed { index, step ->
                     Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(bottom = paddingLarge)
+                        verticalAlignment = Alignment.Top,
+                        modifier = Modifier.padding(vertical = paddingMedium)
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.FormatListNumbered,
-                            contentDescription = stringResource(R.string.steps),
-                            tint = PrimaryGreen,
-                            modifier = Modifier.size(sizeIcon)
-                        )
-                        Spacer(modifier = Modifier.width(paddingLarge))
-                        Text(
-                            text = stringResource(R.string.steps),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
-
-                    val dividerColor = if (isSystemInDarkTheme()) DarkDividerColor else LightDividerColor
-                    HorizontalDivider(color = dividerColor.copy(alpha = 0.3f))
-                    Spacer(modifier = Modifier.height(paddingLarge))
-
-                    // Steps list
-                    recipe.steps.forEachIndexed { index, step ->
-                        Row(
-                            verticalAlignment = Alignment.Top,
-                            modifier = Modifier.padding(vertical = paddingMedium)
+                        Box(
+                            modifier = Modifier
+                                .size(sizeIcon)
+                                .clip(RoundedCornerShape(radiusMedium))
+                                .background(PrimaryGreen),
+                            contentAlignment = Alignment.Center
                         ) {
-                            Box(
-                                modifier = Modifier
-                                    .size(sizeIcon)
-                                    .clip(RoundedCornerShape(radiusMedium))
-                                    .background(PrimaryGreen),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    text = "${index + 1}",
-                                    color = Color.White,
-                                    style = MaterialTheme.typography.labelMedium,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            }
-                            Spacer(modifier = Modifier.width(paddingLarge))
                             Text(
-                                text = step,
-                                style = MaterialTheme.typography.bodyMedium
+                                text = "${index + 1}",
+                                color = Color.White,
+                                style = MaterialTheme.typography.labelMedium,
+                                fontWeight = FontWeight.Bold
                             )
                         }
+                        Spacer(modifier = Modifier.width(paddingLarge))
+                        Text(
+                            text = step,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
                     }
                 }
             }
 
+
             // YouTube Video Card (if available)
             if (!recipe.youtubeUrl.isNullOrEmpty()) {
-                Card(
+                CollapsibleCard(
                     modifier = Modifier.fillMaxWidth(),
-                    elevation = CardDefaults.cardElevation(defaultElevation = elevationMedium),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceVariant
-                    )
+                    title = stringResource(R.string.video_tutorial),
+                    icon = Icons.Default.PlayArrow,
+                    iconTint = PrimaryGreen,
+                    initiallyExpanded = true,
                 ) {
-                    Column(
-                        modifier = Modifier.padding(paddingExtraLarge)
-                    ) {
-                        // Header
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(bottom = paddingLarge)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.PlayArrow,
-                                contentDescription = stringResource(R.string.video_tutorial),
-                                tint = PrimaryGreen,
-                                modifier = Modifier.size(sizeIcon)
-                            )
-                            Spacer(modifier = Modifier.width(paddingLarge))
-                            Text(
-                                text = stringResource(R.string.video_tutorial),
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.SemiBold
-                            )
+                    // YouTube WebView
+                    val embedUrl = recipe.youtubeUrl.replace("watch?v=", "embed/")
+                    val webViewState = rememberWebViewState(url = embedUrl)
+                    WebView(
+                        state = webViewState,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(heightVideo)
+                            .clip(RoundedCornerShape(radiusSmall)),
+                        onCreated = { webView ->
+                            webView.settings.javaScriptEnabled = true
                         }
-
-                        val dividerColor = if (isSystemInDarkTheme()) DarkDividerColor else LightDividerColor
-                        HorizontalDivider(color = dividerColor.copy(alpha = 0.3f))
-                        Spacer(modifier = Modifier.height(paddingLarge))
-
-                        // YouTube WebView
-                        val embedUrl = recipe.youtubeUrl.replace("watch?v=", "embed/")
-                        val webViewState = rememberWebViewState(url = embedUrl)
-                        WebView(
-                            state = webViewState,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(heightVideo)
-                                .clip(RoundedCornerShape(radiusSmall)),
-                            onCreated = { webView ->
-                                webView.settings.javaScriptEnabled = true
-                            }
-                        )
-                    }
+                    )
                 }
             }
         }

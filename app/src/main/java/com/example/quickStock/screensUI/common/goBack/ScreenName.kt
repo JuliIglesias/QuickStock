@@ -15,8 +15,7 @@ import com.example.quickStock.ui.theme.textSizeExtraLarge
 fun ScreenName(onGoBack: () -> Unit, title: String) {
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = paddingExtraLarge),
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         GoBackButton {

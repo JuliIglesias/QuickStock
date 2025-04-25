@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.quickStock.screensUI.common.SimpleSearchBar
 import com.example.quickStock.screensUI.common.goBack.ScreenName
 import com.example.quickStock.ui.theme.*
 import com.example.quickStock.viewModel.recipeScreens.RecipeListViewModel
@@ -40,6 +42,9 @@ fun RecipeListScreen(
     val loading by viewModel.loading.collectAsStateWithLifecycle()
     val showRetry by viewModel.showRetry.collectAsStateWithLifecycle()
 
+    val searchQuery by viewModel.searchQuery.collectAsState()
+    val filteredRecipes by viewModel.filteredRecipes.collectAsState()
+    val searchResults by viewModel.searchResults.collectAsState()
 
     // Cargar recetas cuando se inicia la pantalla
     LaunchedEffect(recipeType) {
@@ -70,13 +75,25 @@ fun RecipeListScreen(
                 onGoBack = onGoBack,
             )
 
+            SimpleSearchBar(
+                query = searchQuery,
+                onQueryChange = { newQuery ->
+                    viewModel.updateSearchQuery(newQuery)
+                },
+                onSearch = {
+                    viewModel.performSearch()
+                },
+                searchResults = searchResults,
+                modifier = Modifier.padding(horizontal = paddingExtraLarge)
+            )
+
             Column(
-                modifier = Modifier.padding(paddingExtraLarge)
+                modifier = Modifier.padding(horizontal = paddingExtraLarge)
             ) {
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(spacingMedium)
                 ) {
-                    items(recipes) { productButton ->
+                    items(filteredRecipes) { productButton ->
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()

@@ -17,6 +17,8 @@ import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Store
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.quickStock.R
 import com.example.quickStock.model.addProduct.Product
 import com.example.quickStock.screensUI.common.goBack.ScreenName
@@ -35,6 +38,7 @@ import com.example.quickStock.screensUI.common.secondary.ButtonIconAndName
 import com.example.quickStock.screensUI.common.secondary.ReduceProductModal
 import com.example.quickStock.screensUI.icon.getCategoryIcon
 import com.example.quickStock.ui.theme.*
+import com.example.quickStock.viewModel.home.stock.ProductDetailViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
@@ -45,6 +49,17 @@ fun ProductDetailScreen(
     modifier: Modifier = Modifier,
     onGoBack: () -> Unit
 ) {
+
+    val viewModel = hiltViewModel<ProductDetailViewModel>()
+    val productState by viewModel.product.collectAsState()
+
+    LaunchedEffect(product) {
+        viewModel.setProduct(product)
+    }
+
+    // Uses the product from the state if available, otherwise uses the passed product
+    val currentProduct = productState ?: product
+
     val scrollState = rememberScrollState()
 
     // Open ReduceProductModal when pressed on reduce button
@@ -62,7 +77,7 @@ fun ProductDetailScreen(
         // Header with back button and product name
         ScreenName(
             onGoBack = onGoBack,
-            title = product.name,
+            title = currentProduct.name,
         )
 
         // Product info cards
@@ -101,7 +116,7 @@ fun ProductDetailScreen(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             Text(
-                                text = product.brand,
+                                text = currentProduct.brand,
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Medium
                             )
@@ -116,7 +131,7 @@ fun ProductDetailScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            imageVector = getCategoryIcon(categoryName = product.category, Icons.Default.Category),
+                            imageVector = getCategoryIcon(categoryName = currentProduct.category, Icons.Default.Category),
                             contentDescription = stringResource(R.string.category),
                             tint = Color.Unspecified,
                             modifier = Modifier.size(sizeIcon)
@@ -129,7 +144,7 @@ fun ProductDetailScreen(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             Text(
-                                text = product.category,
+                                text = currentProduct.category,
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Medium
                             )
@@ -195,11 +210,11 @@ fun ProductDetailScreen(
 
                     // Sort expiration dates if possible
                     val sortedQuantityDates = try {
-                        product.quantityExpirationDate.sortedBy {
+                        currentProduct.quantityExpirationDate.sortedBy {
                             LocalDate.parse(it.expiryDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
                         }
                     } catch (e: DateTimeParseException) {
-                        product.quantityExpirationDate
+                        currentProduct.quantityExpirationDate
                     }
 
                     // List items
@@ -262,7 +277,7 @@ fun ProductDetailScreen(
                             }
                         }
 
-                        if (index < product.quantityExpirationDate.size - 1) {
+                        if (index < currentProduct.quantityExpirationDate.size - 1) {
                             Spacer(modifier = Modifier.height(spacingSmall))
                         }
                     }
@@ -283,7 +298,7 @@ fun ProductDetailScreen(
                             fontWeight = FontWeight.SemiBold
                         )
 
-                        val totalQuantity = product.quantityExpirationDate.sumOf { it.quantity }
+                        val totalQuantity = currentProduct.quantityExpirationDate.sumOf { it.quantity }
                         val quantityCircleColor = if (isSystemInDarkTheme()) DarkQuantityBadgeBackground else LightQuantityBadgeBackground
                         val quantityTextColor = if (isSystemInDarkTheme()) DarkQuantityTextColor else LightQuantityTextColor
 
@@ -325,12 +340,11 @@ fun ProductDetailScreen(
                 // Text input dialog
                 if (showDialog) {
                     ReduceProductModal(
-                        productName = product.name,
-                        expiryDates = product.quantityExpirationDate,
+                        productName = currentProduct.name,
+                        expiryDates = currentProduct.quantityExpirationDate,
                         onDismiss = { showDialog = false },
                         onConfirm = { expiryDate, quantity ->
-                            // Implementa aquí la lógica para reducir el producto
-                            // Por ejemplo: viewModel.reduceProductQuantity(product.id, expiryDate, quantity)
+                            viewModel.reduceProductQuantity(expiryDate, quantity)
                         }
                     )
                 }

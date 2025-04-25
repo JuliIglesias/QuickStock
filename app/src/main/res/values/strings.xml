@@ -271,7 +271,7 @@
 
     <string name="action_go_back">Go Back</string>
     <string name="search_placeholder">Search</string>
-    <string name="confirm">Confirm\n</string>
+    <string name="confirm">Confirm</string>
     <string name="select_expiry_date">Select Expiry Date</string>
     <string name="quantity_to_reduce">Quantity to Reduce</string>
     <string name="max_available">Max Available: %s</string>

@@ -277,5 +277,6 @@
     <string name="max_available">Max Available: %s</string>
     <string name="increase_quantity">Increase Quantity</string>
     <string name="quantity_units">%s (%s units)</string>
+    <string name="no_image_available">Error loading image</string>
 
 </resources>

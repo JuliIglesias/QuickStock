@@ -151,7 +151,7 @@ private fun RecipeDetailContent(
                     Icon(
                         imageVector = Icons.Default.RestaurantMenu,
                         contentDescription = "Recipe",
-                        tint = Color.White,
+                        tint = White,
                         modifier = Modifier.size(sizeLargeIcon)
                     )
                 }
@@ -248,7 +248,7 @@ private fun RecipeDetailContent(
                         ) {
                             Text(
                                 text = "${index + 1}",
-                                color = Color.White,
+                                color = White,
                                 style = MaterialTheme.typography.labelMedium,
                                 fontWeight = FontWeight.Bold
                             )

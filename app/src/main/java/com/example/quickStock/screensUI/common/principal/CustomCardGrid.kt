@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.example.quickStock.model.common.ICardButton
+import com.example.quickStock.ui.theme.Transparent
 import com.example.quickStock.ui.theme.spacingExtraLarge
 
 @Composable
@@ -24,7 +25,7 @@ fun CustomGrid(
     LazyVerticalGrid(
         modifier = modifier
             .fillMaxSize()
-            .background(color = Color.Transparent),
+            .background(color = Transparent),
         columns = GridCells.Fixed(columns),
         verticalArrangement = Arrangement.spacedBy(verticalSpacing),
         horizontalArrangement = Arrangement.spacedBy(horizontalSpacing),

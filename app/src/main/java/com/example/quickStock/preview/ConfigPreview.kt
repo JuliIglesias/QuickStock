@@ -190,10 +190,10 @@ fun UserSettingsPreviewContent() {
                         checked = notificationsEnabled,
                         onCheckedChange = { },
                         colors = SwitchDefaults.colors(
-                            checkedThumbColor = Color.White,
+                            checkedThumbColor = White,
                             checkedTrackColor = PrimaryGreen,
                             checkedBorderColor = PrimaryGreen,
-                            uncheckedThumbColor = Color.White,
+                            uncheckedThumbColor = White,
                             uncheckedTrackColor = LightGray.copy(alpha = 0.5f),
                             uncheckedBorderColor = LightGray.copy(alpha = 0.5f)
                         )
@@ -228,10 +228,10 @@ fun UserSettingsPreviewContent() {
                         checked = darkModeEnabled,
                         onCheckedChange = { },
                         colors = SwitchDefaults.colors(
-                            checkedThumbColor = Color.White,
+                            checkedThumbColor = White,
                             checkedTrackColor = PrimaryGreen,
                             checkedBorderColor = PrimaryGreen,
-                            uncheckedThumbColor = Color.White,
+                            uncheckedThumbColor = White,
                             uncheckedTrackColor = LightGray.copy(alpha = 0.5f),
                             uncheckedBorderColor = LightGray.copy(alpha = 0.5f)
                         )
@@ -295,14 +295,14 @@ fun UserSettingsPreviewContent() {
                     Icon(
                         Icons.AutoMirrored.Filled.Logout,
                         contentDescription = "Cerrar Sesión",
-                        tint = Color.White
+                        tint = White
                     )
                     Spacer(modifier = Modifier.width(spacingSmall))
                     Text(
                         "Cerrar Sesión",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = White
                     )
                 }
             }

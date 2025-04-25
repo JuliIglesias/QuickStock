@@ -133,7 +133,7 @@ fun ProductDetailScreen(
                         Icon(
                             imageVector = getCategoryIcon(categoryName = currentProduct.category, Icons.Default.Category),
                             contentDescription = stringResource(R.string.category),
-                            tint = Color.Unspecified,
+                            tint = Unspecified,
                             modifier = Modifier.size(sizeIcon)
                         )
                         Spacer(modifier = Modifier.width(paddingLarge))

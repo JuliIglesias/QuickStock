@@ -13,6 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.SubcomposeAsyncImage
+import com.example.quickStock.R
+import com.example.quickStock.ui.theme.DarkGray
+import com.example.quickStock.ui.theme.LightGray
 
 
 @Composable
@@ -24,13 +27,13 @@ fun RecipeImage(
     if (imageUrl.isNullOrEmpty()) {
         // Placeholder cuando no hay imagen
         Box(
-            modifier = modifier.background(Color.LightGray),
+            modifier = modifier.background(LightGray),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = Icons.Default.Image,
                 contentDescription = "No image available",
-                tint = Color.DarkGray
+                tint = DarkGray
             )
         }
     } else {
@@ -49,13 +52,13 @@ fun RecipeImage(
             },
             error = {
                 Box(
-                    modifier = Modifier.fillMaxSize().background(Color.LightGray),
+                    modifier = Modifier.fillMaxSize().background(LightGray),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.Image,
-                        contentDescription = "Error loading image",
-                        tint = Color.DarkGray
+                        contentDescription = R.string.no_image_available.toString(),
+                        tint = DarkGray
                     )
                 }
             }

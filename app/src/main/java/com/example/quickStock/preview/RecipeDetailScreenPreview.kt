@@ -75,7 +75,7 @@ fun RecipeDetailPreviewContent() {
                 ) {
                     Text(
                         text = "Imagen de la receta",
-                        color = Color.White
+                        color = White
                     )
                 }
             }
@@ -219,7 +219,7 @@ fun RecipeDetailPreviewContent() {
                             ) {
                                 Text(
                                     text = "${index + 1}",
-                                    color = Color.White,
+                                    color = White,
                                     style = MaterialTheme.typography.labelMedium,
                                     fontWeight = FontWeight.Bold
                                 )

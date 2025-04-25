@@ -200,10 +200,10 @@ fun UserSettingsPage() {
                         checked = uiState.notificationsEnabled,
                         onCheckedChange = { viewModel.toggleNotifications() },
                         colors = SwitchDefaults.colors(
-                            checkedThumbColor = Color.White,
+                            checkedThumbColor = White,
                             checkedTrackColor = PrimaryGreen,
                             checkedBorderColor = PrimaryGreen,
-                            uncheckedThumbColor = Color.White,
+                            uncheckedThumbColor = White,
                             uncheckedTrackColor = LightGray.copy(alpha = 0.5f),
                             uncheckedBorderColor = LightGray.copy(alpha = 0.5f)
                         )
@@ -238,10 +238,10 @@ fun UserSettingsPage() {
                         checked = uiState.darkModeEnabled,
                         onCheckedChange = { viewModel.toggleDarkMode() },
                         colors = SwitchDefaults.colors(
-                            checkedThumbColor = Color.White,
+                            checkedThumbColor = White,
                             checkedTrackColor = PrimaryGreen,
                             checkedBorderColor = PrimaryGreen,
-                            uncheckedThumbColor = Color.White,
+                            uncheckedThumbColor = White,
                             uncheckedTrackColor = LightGray.copy(alpha = 0.5f),
                             uncheckedBorderColor = LightGray.copy(alpha = 0.5f)
                         )
@@ -305,14 +305,14 @@ fun UserSettingsPage() {
                     Icon(
                         Icons.Default.Logout,
                         contentDescription = stringResource(R.string.logout),
-                        tint = Color.White
+                        tint = White
                     )
                     Spacer(modifier = Modifier.width(spacingSmall))
                     Text(
                         stringResource(R.string.logout),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = White
                     )
                 }
             }

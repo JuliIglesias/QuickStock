@@ -28,6 +28,7 @@ import com.example.quickStock.screensUI.common.secondary.ExpiryDatePicker
 import com.example.quickStock.screensUI.icon.getCategoryIcon
 import com.example.quickStock.ui.theme.LightGray
 import com.example.quickStock.ui.theme.PrimaryGreen
+import com.example.quickStock.ui.theme.Unspecified
 import com.example.quickStock.ui.theme.elevationMedium
 import com.example.quickStock.ui.theme.elevationSmall
 import com.example.quickStock.ui.theme.heightButton
@@ -194,7 +195,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                                 imageVector = getCategoryIcon(categoryName = uiState.productCategory, Icons.Default.Category),
                                 contentDescription = "Category",
                                 modifier = Modifier.size(sizeIcon),
-                                tint = if (uiState.productCategory.isEmpty() || isDropdownExpanded) PrimaryGreen else { Color.Unspecified }
+                                tint = if (uiState.productCategory.isEmpty() || isDropdownExpanded) PrimaryGreen else { Unspecified }
                             )
                         },
                         modifier = Modifier
@@ -230,7 +231,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                                         imageVector = categoryIcons[category] ?: Icons.Default.Category,
                                         contentDescription = category,
                                         modifier = Modifier.size(sizeIcon),
-                                        tint = Color.Unspecified
+                                        tint = Unspecified
                                     )
                                 }
                             )

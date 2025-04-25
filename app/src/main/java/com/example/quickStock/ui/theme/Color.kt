@@ -1,5 +1,6 @@
 package com.example.quickStock.ui.theme
 
+import android.health.connect.datatypes.ExerciseCompletionGoal.UnspecifiedGoal
 import androidx.compose.ui.graphics.Color
 
 //Dark theme colors
@@ -10,7 +11,6 @@ val DarkGreen3 = Color(0xFF51A644)
 val DarkLightText = Color(0xFFCFF3CE)
 val DarkDarkText = Color(0xFF262626)
 
-// New dark theme colors
 val DarkCardBackground = Color(0xFF363636) // Slightly lighter than the dark background
 val DarkDetailBackground = Color(0xFF303030) // New color for detail screens
 val DarkExpiringBadge = Color(0xFFE6DD63)
@@ -25,7 +25,6 @@ val LightGreen2 = Color(0xFFB0EB8B)
 val LightGreen3 = Color(0xFF98D996)
 val LightDarkText = Color(0xFF262626)
 
-// New light theme colors
 val LightCardBackground = Color(0xFFF5FAF5) // White with a subtle green tint
 val LightDetailBackground = Color(0xFFF8FFF8) // New color for detail screens - whiter green tint
 val LightExpiringBadge = Color(0xFFFFF9C4)
@@ -44,3 +43,8 @@ val DarkGray = Color(0xFF616161)
 val ErrorRed = Color(0xFFD32F2F)
 val SuccessGreen = Color(0xFF388E3C)
 val WarningOrange = Color(0xFFF57C00)
+
+val Unspecified = Color.Unspecified
+val Transparent = Color.Transparent
+val White = Color.White
+

@@ -35,6 +35,7 @@ import java.util.Locale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import com.example.quickStock.screensUI.common.principal.ModernTextButton
+import com.example.quickStock.ui.theme.DarkGray
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -130,7 +131,7 @@ fun ExpiryDatePicker(
                 Text(
                     text = stringResource(id =R.string.tap_select_date),
                     style = TextStyle(
-                        color = Color.Gray
+                        color = DarkGray
                     )
                 )
             }

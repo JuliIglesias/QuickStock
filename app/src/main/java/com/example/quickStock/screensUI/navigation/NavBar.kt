@@ -119,7 +119,7 @@ fun TabView(tabBarItems: List<TabBarItem>, onNavigate: (String) -> Unit) {
                 colors = androidx.compose.material3.NavigationBarItemDefaults.colors(
                     selectedTextColor = MaterialTheme.colorScheme.onSecondary,
                     unselectedTextColor = MaterialTheme.colorScheme.secondary,
-                    indicatorColor = Color.Transparent // Color del indicador redondeado
+                    indicatorColor = Transparent // Color del indicador redondeado
                 ),
             )
         }

@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.quickStock.ui.theme.Transparent
 
 @Composable
 fun ModernTextButton(
@@ -39,7 +40,7 @@ fun ModernTextButton(
                 color = if (isPressed) {
                     textColor.copy(alpha = 0.1f) // Fondo sutil cuando se presiona
                 } else {
-                    Color.Transparent
+                    Transparent
                 },
                 shape = CircleShape
             )

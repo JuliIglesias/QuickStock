@@ -27,6 +27,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -39,6 +40,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.quickStock.R
 import com.example.quickStock.model.addProduct.QuantityExpirationDate
 import com.example.quickStock.screensUI.common.principal.ModernTextButton
@@ -58,6 +60,7 @@ import com.example.quickStock.ui.theme.spacingLarge
 import com.example.quickStock.ui.theme.spacingMedium
 import com.example.quickStock.ui.theme.spacingSmall
 import com.example.quickStock.ui.theme.widthBoxSurvey
+import com.example.quickStock.viewModel.common.secondary.ReduceProductViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -69,8 +72,10 @@ fun ReduceProductModal(
     onDismiss: () -> Unit,
     onConfirm: (expiryDate: String, quantity: Int) -> Unit
 ) {
-    var selectedDateIndex by remember { mutableIntStateOf(0) }
-    var quantityToReduce by remember { mutableIntStateOf(1) }
+    val viewModel = hiltViewModel<ReduceProductViewModel>()
+
+    val selectedDateIndex by viewModel.selectedDateIndex.collectAsState()
+    val quantityToReduce by viewModel.quantityToReduce.collectAsState()
 
     val selectedItem = expiryDates.getOrNull(selectedDateIndex)
     val maxQuantity = selectedItem?.quantity ?: 0
@@ -147,10 +152,8 @@ fun ReduceProductModal(
                                     )
                                 },
                                 onClick = {
-                                    selectedDateIndex = index
+                                    viewModel.updateSelectedDateIndex(index, item.quantity)
                                     expanded = false
-                                    // Reset quantity to 1 or max available
-                                    quantityToReduce = 1.coerceAtMost(item.quantity)
                                 }
                             )
                         }
@@ -175,7 +178,7 @@ fun ReduceProductModal(
                 ) {
                     // Decrease button
                     IconButton(
-                        onClick = { if (quantityToReduce > 1) quantityToReduce-- },
+                        onClick = { viewModel.decrementQuantity()},
                         modifier = Modifier
                             .size(sizeCircleButton)
                             .clip(RoundedCornerShape(radiusLarge))
@@ -209,11 +212,15 @@ fun ReduceProductModal(
 
                     // Increase button
                     IconButton(
-                        onClick = { if (quantityToReduce < maxQuantity) quantityToReduce++ },
+                        onClick = { viewModel.incrementQuantity(maxQuantity)  },
                         modifier = Modifier
                             .size(sizeCircleButton)
                             .clip(RoundedCornerShape(radiusLarge))
-                            .background(MaterialTheme.colorScheme.primary)
+                            .background(
+                                if (quantityToReduce < maxQuantity) MaterialTheme.colorScheme.primary else LightGray.copy(
+                                    alpha = 0.5f
+                                )
+                            )
                     ) {
                         Icon(
                             imageVector = Icons.Default.Add,

@@ -1,5 +1,6 @@
 package com.example.quickStock.screensUI.navigation
 
+import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -55,24 +56,24 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
         }
 
         // Category navigation
-        CategoryRoutes.entries.forEach { category ->
-            composable(category.route) {
+        composable("category/{categoryType}") { backStackEntry ->
+            val categoryType = backStackEntry.arguments?.getString("categoryType")
 
-                StockListScreen(category = category.name,
-                    onGoBack = {
-                        navController.popBackStack()
-                    },
-                    onClick = { productId ->
-                        navController.navigate("${category.route}/product/$productId")
-                    }
-                )
-            }
+            StockListScreen(category = categoryType?.replaceFirstChar { it.uppercase() } ?: "",
+                onGoBack = {
+                    navController.popBackStack()
+                },
+                onClick = { productId ->
+                    navController.navigate("category/$categoryType/detail/product/$productId")
+                }
+            )
         }
 
-        composable("category/{categoryType}/product/{productId}") { backStackEntry ->
+        composable("category/{categoryType}/detail/product/{productId}") { backStackEntry ->
             val productId = backStackEntry.arguments?.getString("productId")
             val categoryType = backStackEntry.arguments?.getString("categoryType")
             val product = getProductsByCategory(categoryType?.replaceFirstChar { it.uppercase() } ?: "").find { it.id == productId }
+            Log.d("ProductDetailScreen", "Product: $product")
             if (product != null) {
                 ProductDetailScreen(
                     product = product,

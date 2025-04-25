@@ -33,4 +33,9 @@ class ReduceProductViewModel @Inject constructor(
             _quantityToReduce.value--
         }
     }
+
+    fun resetState() {
+        _quantityToReduce.value = 1
+        _selectedDateIndex.value = 0
+    }
 }

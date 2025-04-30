@@ -15,10 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.example.quickStock.R
 import com.example.quickStock.model.recipe.RecipeData
 import com.example.quickStock.screensUI.common.goBack.ScreenName
 import com.example.quickStock.ui.theme.*
@@ -69,12 +70,12 @@ fun RecipeDetailPreviewContent() {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(200.dp)
+                        .height(heightCard)
                         .background(LightGray),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Imagen de la receta",
+                        text = stringResource(R.string.imagen_de_la_receta),
                         color = White
                     )
                 }
@@ -100,13 +101,13 @@ fun RecipeDetailPreviewContent() {
                     ) {
                         Icon(
                             imageVector = Icons.Default.Kitchen,
-                            contentDescription = "Ingredientes",
+                            contentDescription = stringResource(R.string.ingredients),
                             tint = PrimaryGreen,
                             modifier = Modifier.size(sizeIcon)
                         )
                         Spacer(modifier = Modifier.width(paddingLarge))
                         Text(
-                            text = "Ingredientes",
+                            text = stringResource(R.string.ingredients),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.SemiBold
                         )

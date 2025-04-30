@@ -14,8 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.quickStock.R
+import com.example.quickStock.model.userConfig.UserSettingsState
 import com.example.quickStock.ui.theme.*
 
 @Preview(showBackground = true)
@@ -29,11 +32,7 @@ fun UserSettingsPagePreview() {
 @Composable
 fun UserSettingsPreviewContent() {
     // Datos estáticos para el preview
-    val username = "Usuario de Ejemplo"
-    val email = "usuario@ejemplo.com"
-    val language = "Español"
-    val notificationsEnabled = true
-    val darkModeEnabled = false
+    val userSettingsState = UserSettingsState()
 
     val scrollState = rememberScrollState()
 
@@ -51,7 +50,7 @@ fun UserSettingsPreviewContent() {
     ) {
         // Encabezado
         Text(
-            text = "Configuración de Usuario",
+            text = stringResource(id = R.string.user_settings),
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground
@@ -72,14 +71,14 @@ fun UserSettingsPreviewContent() {
             ) {
                 // Campo de Nombre de Usuario
                 OutlinedTextField(
-                    value = username,
+                    value = userSettingsState.username,
                     onValueChange = { },
-                    label = { Text("Nombre de Usuario") },
+                    label = { Text(stringResource(id = R.string.username)) },
                     modifier = Modifier.fillMaxWidth(),
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Person,
-                            contentDescription = "Nombre de Usuario",
+                            contentDescription = stringResource(id = R.string.username),
                             tint = PrimaryGreen
                         )
                     },
@@ -93,14 +92,14 @@ fun UserSettingsPreviewContent() {
 
                 // Campo de Correo Electrónico
                 OutlinedTextField(
-                    value = email,
+                    value = userSettingsState.email,
                     onValueChange = { },
-                    label = { Text("Correo Electrónico") },
+                    label = { Text(stringResource(id = R.string.email)) },
                     modifier = Modifier.fillMaxWidth(),
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Email,
-                            contentDescription = "Correo Electrónico",
+                            contentDescription = stringResource(id = R.string.email),
                             tint = PrimaryGreen
                         )
                     },
@@ -128,7 +127,7 @@ fun UserSettingsPreviewContent() {
                 verticalArrangement = Arrangement.spacedBy(spacingExtraLarge)
             ) {
                 Text(
-                    text = "Preferencias",
+                    text = stringResource(id = R.string.preferences),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -136,14 +135,14 @@ fun UserSettingsPreviewContent() {
 
                 // Selector de Idioma
                 OutlinedTextField(
-                    value = language,
+                    value = userSettingsState.language,
                     onValueChange = {},
                     readOnly = true,
-                    label = { Text("Idioma") },
+                    label = { Text(stringResource(id = R.string.language)) },
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Language,
-                            contentDescription = "Idioma",
+                            contentDescription = stringResource(id = R.string.language),
                             tint = PrimaryGreen
                         )
                     },
@@ -151,7 +150,7 @@ fun UserSettingsPreviewContent() {
                     trailingIcon = {
                         Icon(
                             Icons.Default.ArrowDropDown,
-                            contentDescription = "Expandir menú",
+                            contentDescription = stringResource(id = R.string.language),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     },
@@ -178,16 +177,16 @@ fun UserSettingsPreviewContent() {
                     ) {
                         Icon(
                             imageVector = Icons.Default.Notifications,
-                            contentDescription = "Notificaciones",
+                            contentDescription = stringResource(id = R.string.notifications),
                             tint = PrimaryGreen
                         )
                         Text(
-                            text = "Activar Notificaciones",
+                            text = stringResource(id = R.string.enable_notifications),
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                     Switch(
-                        checked = notificationsEnabled,
+                        checked = userSettingsState.notificationsEnabled,
                         onCheckedChange = { },
                         colors = SwitchDefaults.colors(
                             checkedThumbColor = White,
@@ -216,16 +215,16 @@ fun UserSettingsPreviewContent() {
                     ) {
                         Icon(
                             imageVector = Icons.Default.DarkMode,
-                            contentDescription = "Modo Oscuro",
+                            contentDescription = stringResource(id = R.string.dark_mode),
                             tint = PrimaryGreen
                         )
                         Text(
-                            text = "Modo Oscuro",
+                            text = stringResource(id = R.string.dark_mode),
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                     Switch(
-                        checked = darkModeEnabled,
+                        checked = userSettingsState.darkModeEnabled,
                         onCheckedChange = { },
                         colors = SwitchDefaults.colors(
                             checkedThumbColor = White,
@@ -254,7 +253,7 @@ fun UserSettingsPreviewContent() {
                 verticalArrangement = Arrangement.spacedBy(spacingExtraLarge)
             ) {
                 Text(
-                    text = "Cuenta",
+                    text = stringResource(id = R.string.account),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -271,12 +270,12 @@ fun UserSettingsPreviewContent() {
                 ) {
                     Icon(
                         Icons.Default.Save,
-                        contentDescription = "Guardar Configuración",
+                        contentDescription = stringResource(id = R.string.save_settings),
                         tint = MaterialTheme.colorScheme.onPrimary
                     )
                     Spacer(modifier = Modifier.width(spacingSmall))
                     Text(
-                        "Guardar Configuración",
+                        stringResource(id = R.string.save_settings),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onPrimary
@@ -294,12 +293,12 @@ fun UserSettingsPreviewContent() {
                 ) {
                     Icon(
                         Icons.AutoMirrored.Filled.Logout,
-                        contentDescription = "Cerrar Sesión",
+                        contentDescription = stringResource(id = R.string.logout),
                         tint = White
                     )
                     Spacer(modifier = Modifier.width(spacingSmall))
                     Text(
-                        "Cerrar Sesión",
+                        stringResource(id = R.string.logout),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = White

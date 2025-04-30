@@ -14,8 +14,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import com.example.quickStock.ui.theme.Transparent
+import com.example.quickStock.ui.theme.paddingMedium
 
 @Composable
 fun ModernTextButton(
@@ -35,7 +35,7 @@ fun ModernTextButton(
             disabledContentColor = textColor.copy(alpha = 0.5f)
         ),
         modifier = Modifier
-            .padding(8.dp)
+            .padding(paddingMedium)
             .background(
                 color = if (isPressed) {
                     textColor.copy(alpha = 0.1f) // Fondo sutil cuando se presiona

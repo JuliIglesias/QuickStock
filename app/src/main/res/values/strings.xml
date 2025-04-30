@@ -278,5 +278,10 @@
     <string name="increase_quantity">Increase Quantity</string>
     <string name="quantity_units">%s (%s units)</string>
     <string name="no_image_available">Error loading image</string>
+    <string name="imagen_de_la_receta">Imagen de la receta</string>
+    <string name="bad_request">Bad request</string>
+    <string name="can_t_get_recipe_types">Can\'t get recipe types</string>
+    <string name="can_t_get_meals_for">Can\'t get meals for %1$s</string>
+    <string name="can_t_get_meal_details_for_id">Can\'t get meal details for ID: %1$s</string>
 
 </resources>

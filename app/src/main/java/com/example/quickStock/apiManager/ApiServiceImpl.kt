@@ -44,12 +44,13 @@ class ApiServiceImpl @Inject constructor() {
                     val recipeTypes: List<RecipeType> = response.body()?.categories ?: emptyList()
                     onSuccess(recipeTypes)
                 } else {
-                    onFailure(Exception("Bad request"))
+                    onFailure(Exception(context.getString(R.string.bad_request)))
                 }
             }
 
             override fun onFailure(t: Throwable?) {
-                Toast.makeText(context, "Can't get recipe types", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,
+                    context.getString(R.string.can_t_get_recipe_types), Toast.LENGTH_SHORT).show()
                 onFail()
                 loadingFinished()
             }
@@ -82,12 +83,13 @@ class ApiServiceImpl @Inject constructor() {
                     val meals: List<Meal> = response.body()?.meals ?: emptyList()
                     onSuccess(meals)
                 } else {
-                    onFailure(Exception("Bad request"))
+                    onFailure(Exception(context.getString(R.string.bad_request)))
                 }
             }
 
             override fun onFailure(t: Throwable?) {
-                Toast.makeText(context, "Can't get meals for $category", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,
+                    context.getString(R.string.can_t_get_meals_for, category), Toast.LENGTH_SHORT).show()
                 onFail()
                 loadingFinished()
             }
@@ -121,12 +123,13 @@ class ApiServiceImpl @Inject constructor() {
                     val mealDetail = response.body()?.meals?.firstOrNull()
                     onSuccess(mealDetail)
                 } else {
-                    onFailure(Exception("Bad request"))
+                    onFailure(Exception(context.getString(R.string.bad_request)))
                 }
             }
 
             override fun onFailure(t: Throwable?) {
-                Toast.makeText(context, "Can't get meal details for ID: $mealId", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,
+                    context.getString(R.string.can_t_get_meal_details_for_id, mealId), Toast.LENGTH_SHORT).show()
                 onFail()
                 loadingFinished()
             }

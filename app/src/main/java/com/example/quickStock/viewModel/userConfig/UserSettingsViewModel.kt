@@ -1,31 +1,44 @@
 package com.example.quickStock.viewModel.userConfig
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.quickStock.model.userConfig.UserSettingsState
-import com.example.quickStock.screensUI.userConfig.DarkModeConfig
+import com.example.quickStock.storage.PreferencesKeys
+import com.example.quickStock.storage.getFromDataStore
+import com.example.quickStock.storage.saveToDataStore
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UserSettingsViewModel : ViewModel() {
-
+@HiltViewModel
+class UserSettingsViewModel @Inject constructor(
+    @ApplicationContext private val context: Context
+) : ViewModel() {
     private val _uiState = MutableStateFlow(UserSettingsState())
     val uiState: StateFlow<UserSettingsState> = _uiState.asStateFlow()
 
     val languages = listOf("English", "Spanish", "French", "German")
 
     init {
-        // Inicializa el dark mode desde las preferencias guardadas
-        val systemDarkTheme = false // Obtendrías esto del contexto en una implementación real
-        _uiState.update { currentState ->
-            currentState.copy(
-                darkModeEnabled = DarkModeConfig.darkModeEnabled ?: systemDarkTheme
-            )
+        viewModelScope.launch {
+            val darkMode = getFromDataStore(context, PreferencesKeys.DARK_MODE_KEY).first() ?: false
+            val notifications = getFromDataStore(context, PreferencesKeys.NOTIFICATIONS_KEY).first() ?: true
+            val username = getFromDataStore(context, PreferencesKeys.USER_NAME_KEY).first() ?: "John Doe"
+            _uiState.update { currentState ->
+                currentState.copy(
+                    darkModeEnabled = darkMode,
+                    notificationsEnabled = notifications,
+                    username = username
+                )
+            }
         }
-
     }
 
     fun updateUsername(newUsername: String) {
@@ -41,11 +54,9 @@ class UserSettingsViewModel : ViewModel() {
     }
 
     fun toggleDarkMode() {
-        val newDarkModeState = !_uiState.value.darkModeEnabled
         _uiState.update { currentState ->
-            currentState.copy(darkModeEnabled = newDarkModeState)
+            currentState.copy(darkModeEnabled = !currentState.darkModeEnabled)
         }
-        DarkModeConfig.saveSettings(newDarkModeState)
     }
 
     fun setLanguage(language: String) {
@@ -71,7 +82,6 @@ class UserSettingsViewModel : ViewModel() {
     fun logout() {
         viewModelScope.launch {
             // Implementa la lógica de cierre de sesión
-            // Por ejemplo: authRepository.logout()
         }
     }
 
@@ -80,4 +90,13 @@ class UserSettingsViewModel : ViewModel() {
             currentState.copy(email = newEmail)
         }
     }
+
+    fun saveSettings() {
+        viewModelScope.launch {
+            saveToDataStore(context, _uiState.value.darkModeEnabled, PreferencesKeys.DARK_MODE_KEY)
+            saveToDataStore(context, _uiState.value.notificationsEnabled, PreferencesKeys.NOTIFICATIONS_KEY)
+            saveToDataStore(context, _uiState.value.username, PreferencesKeys.USER_NAME_KEY)
+        }
+    }
 }
+

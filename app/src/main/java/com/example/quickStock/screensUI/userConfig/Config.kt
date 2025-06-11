@@ -272,7 +272,7 @@ fun UserSettingsPage() {
 
                 // Save Settings Button
                 Button(
-                    onClick = { /* Handle save */ },
+                    onClick = { viewModel.saveSettings() },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(heightButton),
@@ -324,3 +324,4 @@ fun UserSettingsPage() {
 fun UserSettingsPagePreview(onClick: (String) -> Unit) {
     UserSettingsPage()
 }
+

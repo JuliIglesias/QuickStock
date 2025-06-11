@@ -12,7 +12,7 @@ android {
     defaultConfig {
         applicationId = "com.example.quickStock"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -42,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
     packaging {
         resources {
@@ -78,14 +78,14 @@ dependencies {
     implementation(libs.material.icons.extended)
     implementation(libs.androidx.navigation.compose)
 
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
-    implementation("com.google.dagger:hilt-android:2.49")
-    kapt("com.google.dagger:hilt-android-compiler:2.49")
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation(libs.coil.compose)
 
-    implementation("com.google.accompanist:accompanist-webview:0.30.1")
+    implementation(libs.accompanist.webview)
 
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit:converter-gson:2.0.0-beta2")
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 }

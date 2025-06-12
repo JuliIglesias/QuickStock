@@ -13,7 +13,7 @@ val DarkDarkText = Color(0xFF262626)
 
 val DarkCardBackground = Color(0xFF363636) // Slightly lighter than the dark background
 val DarkDetailBackground = Color(0xFF303030) // New color for detail screens
-val DarkExpiringBadge = Color(0xFFE6DD63)
+val DarkExpiringBadge = Color(0xFF7E7B4D)
 val DarkQuantityBadgeBackground = Color(0xFF51A644) // Primary green
 val DarkQuantityTextColor = Color(0xFFFFFFFF)
 val DarkDividerColor = Color(0xFF51A644)
@@ -27,7 +27,7 @@ val LightDarkText = Color(0xFF262626)
 
 val LightCardBackground = Color(0xFFF5FAF5) // White with a subtle green tint
 val LightDetailBackground = Color(0xFFF8FFF8) // New color for detail screens - whiter green tint
-val LightExpiringBadge = Color(0xFFFFF9C4)
+val LightExpiringBadge = Color(0xFFFCF9E2)
 val LightQuantityBadgeBackground = Color(0xFF4CAF50) // Primary green
 val LightQuantityTextColor = Color(0xFFFFFFFF)
 val LightDividerColor = Color(0xFF4CAF50)
@@ -43,6 +43,9 @@ val DarkGray = Color(0xFF616161)
 val ErrorRed = Color(0xFFD32F2F)
 val SuccessGreen = Color(0xFF388E3C)
 val WarningOrange = Color(0xFFF57C00)
+
+val CategoryEmptyGrayLight = Color(0xFFE0E0E0) // gris claro para lightmode
+val CategoryEmptyGrayDark = Color(0xFF424242) // gris oscuro para darkmode
 
 val Unspecified = Color.Unspecified
 val Transparent = Color.Transparent

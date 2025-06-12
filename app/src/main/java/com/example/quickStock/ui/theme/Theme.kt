@@ -26,7 +26,10 @@ private val DarkColorScheme = darkColorScheme(
     onSurfaceVariant = DarkLightText,
 
     // New colors
-    outlineVariant = DarkDetailBackground
+    outlineVariant = DarkDetailBackground,
+    surfaceTint = CategoryEmptyGrayDark,
+    // Additional colors
+    onSurface = DarkExpiringBadge,
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -43,7 +46,10 @@ private val LightColorScheme = lightColorScheme(
     onSurfaceVariant = LightDarkText,
 
     // New colors
-    outlineVariant = LightDetailBackground
+    outlineVariant = LightDetailBackground,
+    surfaceTint = CategoryEmptyGrayLight,
+    // Additional colors
+    onSurface = LightExpiringBadge,
 )
 
 @Composable
@@ -65,3 +71,4 @@ fun QuickStockTheme(
         content = content
     )
 }
+

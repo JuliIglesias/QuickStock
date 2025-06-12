@@ -29,7 +29,6 @@ private val DarkColorScheme = darkColorScheme(
     outlineVariant = DarkDetailBackground,
     surfaceTint = CategoryEmptyGrayDark,
     // Additional colors
-    onSurface = DarkExpiringBadge,
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -49,7 +48,6 @@ private val LightColorScheme = lightColorScheme(
     outlineVariant = LightDetailBackground,
     surfaceTint = CategoryEmptyGrayLight,
     // Additional colors
-    onSurface = LightExpiringBadge,
 )
 
 @Composable

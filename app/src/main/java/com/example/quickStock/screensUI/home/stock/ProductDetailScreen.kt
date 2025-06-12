@@ -230,13 +230,11 @@ fun ProductDetailScreen(
                             false
                         }
 
-                        val expiringBadgeColor = MaterialTheme.colorScheme.onSurface
 
                         val rowBackground = if (isExpiringSoon) {
                             Modifier
                                 .fillMaxWidth()
                                 .clip(RoundedCornerShape(radiusMedium))
-                                .background(expiringBadgeColor)
                                 .padding(paddingMedium)
                         } else {
                             Modifier

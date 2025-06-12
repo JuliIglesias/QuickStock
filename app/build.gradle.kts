@@ -96,5 +96,7 @@ dependencies {
 
     implementation("androidx.datastore:datastore-preferences:1.1.7")
 
+    implementation("androidx.biometric:biometric:1.2.0-alpha05")
+
 
 }

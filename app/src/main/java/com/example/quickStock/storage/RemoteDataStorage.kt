@@ -6,11 +6,16 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.quickStock.data.Product
 import com.example.quickStock.data.ProductDao
+import com.example.quickStock.data.Category
+import com.example.quickStock.data.CategoryDao
+import com.example.quickStock.data.QuantityExpirationDate
+import com.example.quickStock.data.QuantityExpirationDateDao
 
-
-@Database(entities = [Product::class], version = 1)
+@Database(entities = [Product::class, Category::class, QuantityExpirationDate::class], version = 1)
 abstract class QuickStockDatabase : RoomDatabase() {
     abstract fun productDao(): ProductDao
+    abstract fun categoryDao(): CategoryDao
+    abstract fun quantityExpirationDateDao(): QuantityExpirationDateDao
 
     companion object {
         @Volatile
@@ -29,3 +34,4 @@ abstract class QuickStockDatabase : RoomDatabase() {
         }
     }
 }
+

@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.material3.MaterialTheme
 import com.example.quickStock.R
 import com.example.quickStock.model.home.CategoryButtonData
 import com.example.quickStock.screensUI.common.SimpleSearchBar
@@ -28,29 +29,35 @@ fun ProductCategoryGrid(
     val viewModel = hiltViewModel<GridCategoryViewModel>()
 
     val searchQuery by viewModel.searchQuery.collectAsState()
-    val filteredCategoryNames by viewModel.filteredCategories.collectAsState()
+    val categoriesWithProducts by viewModel.categoriesWithProducts.collectAsState()
+    val categoriesWithoutProducts by viewModel.categoriesWithoutProducts.collectAsState()
     val selectedCategoryRoute by viewModel.selectedCategoryRoute.collectAsState()
 
-    // Navigate to selected category if one is selected
+    // Navegación
     selectedCategoryRoute?.let { route ->
         onCategoryClick(route)
         viewModel.resetCategorySelection()
     }
 
-    // Convert category names to CategoryButtonData objects with icons
-    val categoryItems = filteredCategoryNames.map { categoryName ->
+    // Helper para crear CategoryButtonData
+    @Composable
+    fun categoryButtonData(categoryName: String, hasProducts: Boolean): CategoryButtonData {
         val route = viewModel.getCategoryRoute(categoryName)
-
-        CategoryButtonData(
+        return CategoryButtonData(
             title = categoryName,
             icon = getCategoryIcon(categoryName, ImageVector.vectorResource(R.drawable.ic_question_mark)),
             onClick = {
                 if (route != null) {
                     viewModel.onCategorySelected(route)
                 }
-            }
+            },
+            containerColor = if (!hasProducts) MaterialTheme.colorScheme.surfaceTint else null // El theme elige el color correcto
         )
     }
+
+    val categoryItems =
+        categoriesWithProducts.map { categoryButtonData(it, true) } +
+        categoriesWithoutProducts.map { categoryButtonData(it, false) }
 
     Column(
         modifier = Modifier
@@ -62,7 +69,7 @@ fun ProductCategoryGrid(
             query = searchQuery,
             onQueryChange = { viewModel.updateSearchQuery(it) },
             onSearch = { /* Search is handled in updateSearchQuery */ },
-            searchResults = filteredCategoryNames,
+            searchResults = categoriesWithProducts + categoriesWithoutProducts,
             modifier = Modifier
         )
 
@@ -75,3 +82,4 @@ fun ProductCategoryGrid(
         )
     }
 }
+

@@ -7,6 +7,7 @@ import com.example.quickStock.model.userConfig.UserSettingsState
 import com.example.quickStock.storage.PreferencesKeys
 import com.example.quickStock.storage.getFromDataStore
 import com.example.quickStock.storage.saveToDataStore
+import com.example.quickStock.screensUI.userConfig.DarkModeConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,6 +30,7 @@ class UserSettingsViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val darkMode = getFromDataStore(context, PreferencesKeys.DARK_MODE_KEY).first() ?: false
+            DarkModeConfig.saveSettings(darkMode) // Sincroniza al iniciar
             val notifications = getFromDataStore(context, PreferencesKeys.NOTIFICATIONS_KEY).first() ?: true
             val username = getFromDataStore(context, PreferencesKeys.USER_NAME_KEY).first() ?: "John Doe"
             _uiState.update { currentState ->
@@ -55,7 +57,9 @@ class UserSettingsViewModel @Inject constructor(
 
     fun toggleDarkMode() {
         _uiState.update { currentState ->
-            currentState.copy(darkModeEnabled = !currentState.darkModeEnabled)
+            val newValue = !currentState.darkModeEnabled
+            DarkModeConfig.saveSettings(newValue) // Sincroniza al cambiar
+            currentState.copy(darkModeEnabled = newValue)
         }
     }
 
@@ -94,6 +98,7 @@ class UserSettingsViewModel @Inject constructor(
     fun saveSettings() {
         viewModelScope.launch {
             saveToDataStore(context, _uiState.value.darkModeEnabled, PreferencesKeys.DARK_MODE_KEY)
+            DarkModeConfig.saveSettings(_uiState.value.darkModeEnabled) // Sincroniza al guardar
             saveToDataStore(context, _uiState.value.notificationsEnabled, PreferencesKeys.NOTIFICATIONS_KEY)
             saveToDataStore(context, _uiState.value.username, PreferencesKeys.USER_NAME_KEY)
         }

@@ -22,10 +22,13 @@ import com.example.quickStock.ui.theme.*
 fun CardButton(
     buttonData: ICardButton
 ) {
+    val color = (buttonData as? com.example.quickStock.model.home.CategoryButtonData)?.containerColor
+        ?: MaterialTheme.colorScheme.primary
     Button(
         onClick = buttonData.onClick,
         shape = RoundedCornerShape(radiusLarge),
-        modifier = buttonData.modifier.size(sizeCard)
+        modifier = buttonData.modifier.size(sizeCard),
+        colors = ButtonDefaults.buttonColors(containerColor = color)
     ) {
         Column(
             modifier = Modifier,
@@ -49,3 +52,4 @@ fun CardButton(
         }
     }
 }
+

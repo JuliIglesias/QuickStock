@@ -45,26 +45,30 @@ import java.time.format.DateTimeParseException
 
 @Composable
 fun ProductDetailScreen(
-    product: Product,
+    productId: String,
     modifier: Modifier = Modifier,
     onGoBack: () -> Unit
 ) {
-
     val viewModel = hiltViewModel<ProductDetailViewModel>()
     val productState by viewModel.product.collectAsState()
 
-    LaunchedEffect(product) {
-        viewModel.setProduct(product)
+    LaunchedEffect(productId) {
+        viewModel.setProductById(productId)
     }
 
-    // Uses the product from the state if available, otherwise uses the passed product
-    val currentProduct = productState ?: product
-
+    val currentProduct = productState
     val scrollState = rememberScrollState()
-
-    // Open ReduceProductModal when pressed on reduce button
     var showDialog by remember { mutableStateOf(false) }
 
+    if (currentProduct == null || currentProduct.name.isBlank()) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+        return
+    }
 
     Column(
         modifier = Modifier
@@ -72,8 +76,7 @@ fun ProductDetailScreen(
             .background(MaterialTheme.colorScheme.background)
             .verticalScroll(scrollState)
             .padding(paddingZero, paddingExtraLarge),
-
-        ) {
+    ) {
         // Header with back button and product name
         ScreenName(
             onGoBack = onGoBack,
@@ -227,7 +230,7 @@ fun ProductDetailScreen(
                             false
                         }
 
-                        val expiringBadgeColor = if (isSystemInDarkTheme()) DarkExpiringBadge else LightExpiringBadge
+                        val expiringBadgeColor = MaterialTheme.colorScheme.onSurface
 
                         val rowBackground = if (isExpiringSoon) {
                             Modifier
@@ -352,3 +355,4 @@ fun ProductDetailScreen(
         }
     }
 }
+

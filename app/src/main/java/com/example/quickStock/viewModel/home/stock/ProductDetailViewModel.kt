@@ -1,47 +1,99 @@
 package com.example.quickStock.viewModel.home.stock
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.quickStock.data.ProductDao
+import com.example.quickStock.data.QuantityExpirationDateDao
+import com.example.quickStock.data.CategoryDao
 import com.example.quickStock.model.addProduct.Product
+import com.example.quickStock.model.addProduct.QuantityExpirationDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProductDetailViewModel @Inject constructor(
-    // Aquí inyecta el repositorio si tienes uno
-    // private val productRepository: ProductRepository
+    private val productDao: ProductDao,
+    private val quantityExpirationDateDao: QuantityExpirationDateDao,
+    private val categoryDao: CategoryDao
 ) : ViewModel() {
 
     private val _product = MutableStateFlow<Product?>(null)
-    val product = _product.asStateFlow()
+    val product: StateFlow<Product?> = _product.asStateFlow()
 
     fun setProduct(product: Product) {
-        _product.value = product
+        viewModelScope.launch {
+            val productEntity = productDao.getAllProducts().find { it.id == product.id }
+            if (productEntity != null) {
+                val category = categoryDao.getCategoryById(productEntity.categoryId)?.name ?: ""
+                val quantities = quantityExpirationDateDao.getByProductId(product.id)
+                _product.value = Product(
+                    id = productEntity.id,
+                    name = productEntity.name,
+                    brand = productEntity.brand,
+                    category = category,
+                    quantityExpirationDate = quantities.map { QuantityExpirationDate(it.quantity, it.expiryDate) }
+                )
+            } else {
+                _product.value = product
+            }
+        }
+    }
+
+    suspend fun getProductById(productId: String): Product? {
+        val productEntity = productDao.getAllProducts().find { it.id == productId }
+        return if (productEntity != null) {
+            val category = categoryDao.getCategoryById(productEntity.categoryId)?.name ?: ""
+            val quantities = quantityExpirationDateDao.getByProductId(productId)
+            Product(
+                id = productEntity.id,
+                name = productEntity.name,
+                brand = productEntity.brand,
+                category = category,
+                quantityExpirationDate = quantities.map { QuantityExpirationDate(it.quantity, it.expiryDate) }
+            )
+        } else {
+            null
+        }
+    }
+
+    fun setProductById(productId: String) {
+        viewModelScope.launch {
+            _product.value = getProductById(productId)
+        }
     }
 
     fun reduceProductQuantity(expiryDate: String, quantity: Int) {
         val currentProduct = _product.value ?: return
-
-        // Buscar y actualizar la cantidad del producto con la fecha de caducidad especificada
-        val updatedQuantityList = currentProduct.quantityExpirationDate.map { item ->
-            if (item.expiryDate == expiryDate) {
-                // Asegúrate de no poner una cantidad negativa
-                val newQuantity = (item.quantity - quantity).coerceAtLeast(0)
-                if (newQuantity > 0) {
-                    item.copy(quantity = newQuantity)
+        viewModelScope.launch {
+            val quantities = quantityExpirationDateDao.getByProductId(currentProduct.id) ?: emptyList()
+            val updatedQuantities = quantities.mapNotNull { item ->
+                if (item.expiryDate == expiryDate) {
+                    val newQuantity = (item.quantity - quantity).coerceAtLeast(0)
+                    if (newQuantity > 0) {
+                        item.copy(quantity = newQuantity)
+                    } else {
+                        null
+                    }
                 } else {
-                    null // Si la cantidad llega a 0, eliminaremos este item
+                    item
                 }
-            } else {
-                item
             }
-        }.filterNotNull() // Eliminar los items con cantidad 0
-
-        // Actualizar el producto con la nueva lista de cantidades
-        _product.value = currentProduct.copy(
-            quantityExpirationDate = updatedQuantityList
-        )
-
+            for (item in quantities) {
+                if (item.expiryDate == expiryDate) {
+                    val newQuantity = (item.quantity - quantity).coerceAtLeast(0)
+                    if (newQuantity > 0) {
+                        quantityExpirationDateDao.update(item.copy(quantity = newQuantity))
+                    } else {
+                        quantityExpirationDateDao.delete(item)
+                    }
+                }
+            }
+            setProduct(currentProduct)
+        }
     }
 }
+

@@ -70,15 +70,10 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
 
         composable("category/{categoryType}/detail/product/{productId}") { backStackEntry ->
             val productId = backStackEntry.arguments?.getString("productId")
-            val categoryType = backStackEntry.arguments?.getString("categoryType")
-            val product = getProductsByCategory(categoryType?.replaceFirstChar { it.uppercase() } ?: "").find { it.id == productId }
-            Log.d("ProductDetailScreen", "Product: $product")
-            if (product != null) {
-                ProductDetailScreen(
-                    product = product,
-                    onGoBack = { navController.popBackStack() }
-                )
-            }
+            ProductDetailScreen(
+                productId = productId ?: "",
+                onGoBack = { navController.popBackStack() }
+            )
         }
 
         // Recipe navigation
@@ -113,3 +108,4 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
         }
     }
 }
+

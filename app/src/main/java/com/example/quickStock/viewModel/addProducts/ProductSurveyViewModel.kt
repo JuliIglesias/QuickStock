@@ -93,16 +93,20 @@ class ProductSurveyViewModel @Inject constructor(
                 category = Category(id = categoryId, name = currentState.productCategory)
             }
 
-            // Crear y guardar el producto
-            val productEntity = ProductEntity(
-                id = currentState.productId,
-                name = currentState.productName,
-                brand = currentState.productBrand,
-                categoryId = category.id
-            )
-            productDao.insert(productEntity)
+            // Verificar si el producto ya existe
+            val existingProduct = productDao.getProductById(currentState.productId)
+            if (existingProduct == null) {
+                // Crear y guardar el producto si no existe
+                val productEntity = ProductEntity(
+                    id = currentState.productId,
+                    name = currentState.productName,
+                    brand = currentState.productBrand,
+                    categoryId = category.id
+                )
+                productDao.insert(productEntity)
+            }
 
-            // Guardar la cantidad y fecha de vencimiento
+            // Guardar la cantidad y fecha de vencimiento (si ya existe, solo agrega otro registro)
             val quantityEntity = QuantityExpirationDateEntity(
                 productId = currentState.productId,
                 quantity = currentState.productQuantity,

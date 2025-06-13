@@ -128,6 +128,26 @@ class ProductSurveyViewModel @Inject constructor(
         }
     }
 
+    fun fillProductFieldsFromBarcode(barcode: String) {
+        viewModelScope.launch {
+            val product = productDao.getProductById(barcode)
+            if (product != null) {
+                val category = categoryDao.getCategoryById(product.categoryId)
+                val quantityExp = quantityExpirationDateDao.getByProductId(barcode).firstOrNull()
+                _uiState.update {
+                    it.copy(
+                        productId = product.id,
+                        productName = product.name,
+                        productBrand = product.brand,
+                        productCategory = category?.name ?: "",
+                        productQuantity = quantityExp?.quantity ?: 1,
+                        productExpiryDate = quantityExp?.expiryDate ?: ""
+                    )
+                }
+            }
+        }
+    }
+
     private fun resetForm() {
         _uiState.value = ProductFormState()
     }

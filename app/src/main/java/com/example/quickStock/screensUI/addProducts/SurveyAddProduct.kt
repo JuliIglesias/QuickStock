@@ -1,6 +1,9 @@
 package com.example.quickStock.screensUI.addProducts
 
-import android.util.Log
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -16,10 +19,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.quickStock.R
 import com.example.quickStock.model.addProduct.Product
@@ -30,17 +35,14 @@ import com.example.quickStock.ui.theme.LightGray
 import com.example.quickStock.ui.theme.PrimaryGreen
 import com.example.quickStock.ui.theme.Unspecified
 import com.example.quickStock.ui.theme.elevationMedium
-import com.example.quickStock.ui.theme.elevationSmall
 import com.example.quickStock.ui.theme.heightButton
 import com.example.quickStock.ui.theme.heightRow
 import com.example.quickStock.ui.theme.noElevation
 import com.example.quickStock.ui.theme.paddingExtraLarge
 import com.example.quickStock.ui.theme.radiusExtraSmall
 import com.example.quickStock.ui.theme.radiusLarge
-import com.example.quickStock.ui.theme.radiusRound
 import com.example.quickStock.ui.theme.radiusSmall
 import com.example.quickStock.ui.theme.sizeCircleButton
-import com.example.quickStock.ui.theme.sizeCircles
 import com.example.quickStock.ui.theme.sizeIcon
 import com.example.quickStock.ui.theme.spacingExtraLarge
 import com.example.quickStock.ui.theme.spacingMedium
@@ -57,6 +59,21 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
     val uiState by viewModel.uiState.collectAsState()
     val isDropdownExpanded by viewModel.isDropdownExpanded.collectAsState()
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+    var showScanner by remember { mutableStateOf(false) }
+    var cameraPermissionRequested by remember { mutableStateOf(false) }
+    val cameraPermissionGranted = remember {
+        ContextCompat.checkSelfPermission(
+            context, Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+    val requestPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = { granted ->
+            cameraPermissionRequested = true
+            if (granted) showScanner = true
+        }
+    )
     val categories = context.resources.getStringArray(R.array.product_categories)
     val scrollState = rememberScrollState()
 
@@ -110,26 +127,55 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                 modifier = Modifier.padding(paddingExtraLarge),
                 verticalArrangement = Arrangement.spacedBy(spacingExtraLarge)
             ) {
-                // Product ID Field
-                OutlinedTextField(
-                    value = uiState.productId,
-                    onValueChange = { viewModel.updateProductId(it) },
-                    label = { Text(stringResource(id = R.string.bar_code)) },
-                    modifier = Modifier.fillMaxWidth(),
-                    leadingIcon = {
+                // Product ID Field + Scan Button
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    OutlinedTextField(
+                        value = uiState.productId,
+                        onValueChange = { viewModel.updateProductId(it) },
+                        label = { Text(stringResource(id = R.string.bar_code)) },
+                        modifier = Modifier.weight(1f),
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.QrCodeScanner,
+                                contentDescription = "Product ID",
+                                tint = PrimaryGreen
+                            )
+                        },
+                        singleLine = true,
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = PrimaryGreen,
+                            focusedLabelColor = PrimaryGreen,
+                            cursorColor = PrimaryGreen
+                        )
+                    )
+                    Spacer(modifier = Modifier.width(spacingMedium))
+                    IconButton(onClick = {
+                        if (cameraPermissionGranted) {
+                            showScanner = true
+                        } else {
+                            requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+                        }
+                    }) {
                         Icon(
-                            imageVector = Icons.Default.QrCodeScanner,
-                            contentDescription = "Product ID",
+                            imageVector = Icons.Default.CameraAlt,
+                            contentDescription = "Escanear código de barras",
                             tint = PrimaryGreen
                         )
-                    },
-                    singleLine = true,
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = PrimaryGreen,
-                        focusedLabelColor = PrimaryGreen,
-                        cursorColor = PrimaryGreen
+                    }
+                }
+                if (showScanner) {
+                    BarcodeScannerScreen(
+                        onBarcodeScanned = { barcode ->
+                            showScanner = false
+                            if (barcode != null) {
+                                viewModel.updateProductId(barcode)
+                                // Buscar producto en base de datos y autocompletar
+                                viewModel.fillProductFieldsFromBarcode(barcode)
+                            }
+                        },
+                        onClose = { showScanner = false }
                     )
-                )
+                }
 
                 // Product Name Field
                 OutlinedTextField(
@@ -343,8 +389,6 @@ fun AddProductSurvey(onClick: (String) -> Unit) {
 //        }
 //    }
 
-    ProductSurvey(onProductAdded = {
-        Log.d("ProductSurvey", "Product added: $it")
-    })
+    ProductSurvey(onProductAdded = {})
 }
 

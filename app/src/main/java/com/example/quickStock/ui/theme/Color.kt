@@ -1,6 +1,5 @@
 package com.example.quickStock.ui.theme
 
-import android.health.connect.datatypes.ExerciseCompletionGoal.UnspecifiedGoal
 import androidx.compose.ui.graphics.Color
 
 //Dark theme colors

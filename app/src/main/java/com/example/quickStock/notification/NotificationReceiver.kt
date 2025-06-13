@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
+import androidx.compose.ui.graphics.Color
 import com.example.quickStock.MainActivity
 import com.example.quickStock.R
 import kotlin.random.Random
@@ -57,6 +58,8 @@ class NotificationReceiver : BroadcastReceiver() {
             .setContentText(text)
             .setSmallIcon(R.drawable.ic_home_fill) // Icono válido obligatorio
             .setPriority(NotificationManager.IMPORTANCE_HIGH)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(text))
+            .setColor(0xFF51A644.toInt())
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
             .build()

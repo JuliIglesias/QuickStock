@@ -7,7 +7,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -309,7 +311,7 @@ fun UserSettingsPage() {
                     colors = ButtonDefaults.buttonColors(containerColor = ErrorRed)
                 ) {
                     Icon(
-                        Icons.Default.Logout,
+                        Icons.AutoMirrored.Filled.Logout,
                         contentDescription = stringResource(R.string.logout),
                         tint = White
                     )

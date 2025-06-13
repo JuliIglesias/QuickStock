@@ -36,11 +36,13 @@ class UserSettingsViewModel @Inject constructor(
                 DarkModeConfig.saveSettings(darkModePref)
                 val notifications = getFromDataStore(context, PreferencesKeys.NOTIFICATIONS_KEY).first() != false
                 val username = getFromDataStore(context, PreferencesKeys.USER_NAME_KEY).first() ?: "John Doe"
+                val email = getFromDataStore(context, PreferencesKeys.EMAIL_KEY).first() ?: "geda@gedi.com"
                 _uiState.update { currentState ->
                     currentState.copy(
                         darkModeEnabled = darkModePref,
                         notificationsEnabled = notifications,
-                        username = username
+                        username = username,
+                        email = email,
                     )
                 }
             }
@@ -130,7 +132,8 @@ class UserSettingsViewModel @Inject constructor(
             saveToDataStore(context, _uiState.value.darkModeEnabled, PreferencesKeys.DARK_MODE_KEY)
             DarkModeConfig.saveSettings(_uiState.value.darkModeEnabled) // Sincroniza al guardar
             saveToDataStore(context, _uiState.value.notificationsEnabled, PreferencesKeys.NOTIFICATIONS_KEY)
-            saveToDataStore(context, _uiState.value.username, PreferencesKeys.USER_NAME_KEY)
+            saveToDataStore(context, _uiState.value.username.toString(), PreferencesKeys.USER_NAME_KEY)
+            saveToDataStore(context, _uiState.value.email.toString(), PreferencesKeys.EMAIL_KEY)
         }
     }
 }

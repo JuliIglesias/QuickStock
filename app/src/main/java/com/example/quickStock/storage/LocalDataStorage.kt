@@ -15,6 +15,7 @@ object PreferencesKeys {
     val USER_NAME_KEY = stringPreferencesKey("user_name_key")
     val DARK_MODE_KEY = booleanPreferencesKey("dark_mode_key")
     val NOTIFICATIONS_KEY = booleanPreferencesKey("notifications_key")
+    val EMAIL_KEY = stringPreferencesKey("email_key")
 }
 
 suspend fun <T> saveToDataStore(context: Context, value: T, key: Preferences.Key<T>) {

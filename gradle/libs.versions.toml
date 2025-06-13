@@ -1,4 +1,5 @@
 [versions]
+accompanistPermissions = "0.31.1-alpha"
 accompanistWebview = "0.30.1"
 agp = "8.10.1"
 coilCompose = "2.4.0"
@@ -31,6 +32,7 @@ googleServicesVersion = "4.4.2"
 firebaseAuthKtx = "23.2.0"
 
 [libraries]
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
 accompanist-webview = { module = "com.google.accompanist:accompanist-webview", version.ref = "accompanistWebview" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }

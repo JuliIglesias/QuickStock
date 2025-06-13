@@ -283,5 +283,7 @@
     <string name="can_t_get_recipe_types">Can\'t get recipe types</string>
     <string name="can_t_get_meals_for">Can\'t get meals for %1$s</string>
     <string name="can_t_get_meal_details_for_id">Can\'t get meal details for ID: %1$s</string>
+    <string name="no_authorized">No authorized</string>
+    <string name="something_went_wrong">Something went wrong</string>
 
 </resources>

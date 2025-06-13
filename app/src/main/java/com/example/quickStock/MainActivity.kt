@@ -38,7 +38,8 @@ class MainActivity : FragmentActivity() {
                 this,
                 onError = {
                     runOnUiThread {
-                        android.widget.Toast.makeText(this, "geda gedi registrate", android.widget.Toast.LENGTH_LONG).show()
+                        android.widget.Toast.makeText(this,
+                            getString(R.string.no_authorized), android.widget.Toast.LENGTH_LONG).show()
                         finish()
                     }
                 },
@@ -61,7 +62,8 @@ class MainActivity : FragmentActivity() {
                 },
                 onFail = {
                     runOnUiThread {
-                        android.widget.Toast.makeText(this, "geda gedi registrate", android.widget.Toast.LENGTH_LONG).show()
+                        android.widget.Toast.makeText(this,
+                            getString(R.string.something_went_wrong), android.widget.Toast.LENGTH_LONG).show()
                         finish()
                     }
                 }

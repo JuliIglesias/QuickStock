@@ -14,6 +14,7 @@ import com.example.quickStock.ui.theme.QuickStockTheme
 import com.example.quickStock.security.BiometricAuthManager
 import com.example.quickStock.auth.AuthManager
 import com.example.quickStock.viewModel.userConfig.UserSettingsViewModel
+import com.example.quickStock.viewModel.notification.NotificationSchedulerViewModel
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -28,6 +29,7 @@ class MainActivity : FragmentActivity() {
     @Inject
     lateinit var authManager: AuthManager
     private val userSettingsViewModel: UserSettingsViewModel by viewModels()
+    private val notificationSchedulerViewModel: NotificationSchedulerViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         FirebaseApp.initializeApp(this)
@@ -59,6 +61,7 @@ class MainActivity : FragmentActivity() {
                                         userSettingsViewModel.updateUsername(name)
                                         userSettingsViewModel.updateEmail(email)
                                         userSettingsViewModel.saveSettings()
+                                        notificationSchedulerViewModel.scheduleAllProductExpiryNotifications()
                                         showMainContent()
                                     },
                                     onError = { errorMsg ->
@@ -73,6 +76,7 @@ class MainActivity : FragmentActivity() {
                             userSettingsViewModel.updateUsername(currentUser.displayName ?: "")
                             userSettingsViewModel.updateEmail(currentUser.email ?: "")
                             userSettingsViewModel.saveSettings()
+                            notificationSchedulerViewModel.scheduleAllProductExpiryNotifications()
                             showMainContent()
                         }
                     }
@@ -86,6 +90,7 @@ class MainActivity : FragmentActivity() {
                 }
             )
         } else {
+            notificationSchedulerViewModel.scheduleAllProductExpiryNotifications()
             showMainContent()
         }
     }

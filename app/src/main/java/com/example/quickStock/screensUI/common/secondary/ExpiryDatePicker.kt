@@ -80,8 +80,11 @@ fun ExpiryDatePicker(
                     textColor = SuccessGreen,
                     onClick = {
                         datePickerState.selectedDateMillis?.let { timestamp ->
-                            val formattedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                                .format(Date(timestamp))
+                            // Convertir a LocalDate en UTC y luego a zona local para evitar desfase
+                            val localDate = java.time.Instant.ofEpochMilli(timestamp)
+                                .atZone(java.time.ZoneOffset.UTC)
+                                .toLocalDate()
+                            val formattedDate = localDate.format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"))
                             onDateSelected(formattedDate)
                         }
                         showDatePicker = false
@@ -138,3 +141,4 @@ fun ExpiryDatePicker(
         }
     )
 }
+

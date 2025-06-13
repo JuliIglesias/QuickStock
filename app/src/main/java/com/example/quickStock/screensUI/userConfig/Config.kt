@@ -1,5 +1,6 @@
 package com.example.quickStock.screensUI.userConfig
 
+import android.Manifest
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
@@ -22,14 +23,19 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.quickStock.R
 import com.example.quickStock.ui.theme.*
 import com.example.quickStock.viewModel.userConfig.UserSettingsViewModel
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.isGranted
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
 fun UserSettingsPage() {
     val viewModel = hiltViewModel<UserSettingsViewModel>()
-
     val uiState by viewModel.uiState.collectAsState()
     val scrollState = rememberScrollState()
+
+    // Solicitar permiso de notificaciones solo cuando el usuario activa el toggle
+    val postNotificationPermission = rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
 
     // Inicializar dark mode si es necesario (solo la primera vez)
     val systemDarkMode = isSystemInDarkTheme()
@@ -205,8 +211,21 @@ fun UserSettingsPage() {
                         )
                     }
                     Switch(
-                        checked = uiState.notificationsEnabled,
-                        onCheckedChange = { viewModel.toggleNotifications() },
+                        checked = uiState.notificationsEnabled && postNotificationPermission.status.isGranted,
+                        onCheckedChange = { checked ->
+                            if (checked) {
+                                postNotificationPermission.launchPermissionRequest()
+                                // Si el usuario acepta, activar notificaciones
+                                if (postNotificationPermission.status.isGranted) {
+                                    viewModel.toggleNotifications()
+                                }
+                            } else {
+                                // Si desactiva, desactivar notificaciones
+                                if (uiState.notificationsEnabled) {
+                                    viewModel.toggleNotifications()
+                                }
+                            }
+                        },
                         colors = SwitchDefaults.colors(
                             checkedThumbColor = White,
                             checkedTrackColor = PrimaryGreen,

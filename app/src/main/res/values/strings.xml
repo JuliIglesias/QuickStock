@@ -285,5 +285,18 @@
     <string name="can_t_get_meal_details_for_id">Can\'t get meal details for ID: %1$s</string>
     <string name="no_authorized">No authorized</string>
     <string name="something_went_wrong">Something went wrong</string>
+    <string name="quick_stock_notification_channel">quick_stock_notification_channel</string>
+    <string name="expiry_date">expiry_date</string>
+    <string name="producto">Producto</string>
+    <string name="days_before">days_before</string>
+    <string name="vencimiento_7_dias">El producto \'%1$s\' vence en 7 días (%2$s)</string>
+    <string name="vencimiento_3_dias">El producto \'%1$s\' vence en 3 días (%2$s)</string>
+    <string name="vencimiento_0_dias_HOY">El producto \'%1$s\' vence hoy (%2$s)</string>
+    <string name="atencion">¡Atención!</string>
+    <string name="vence_hoy">¡Vence hoy!</string>
+    <string name="producto_por_vencer">Producto por vencer</string>
+    <string name="producto_proximo_a_vencer">El producto \'%1$s\' está próximo a vencer (%2$s)</string>
+    <string name="yyyy_mm_dd">yyyy-MM-dd</string>
+    <string name="mmm_dd_yyyy">MMM dd, yyyy</string>
 
 </resources>

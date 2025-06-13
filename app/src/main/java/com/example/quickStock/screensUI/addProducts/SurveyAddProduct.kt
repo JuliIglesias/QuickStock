@@ -45,14 +45,14 @@ import com.example.quickStock.ui.theme.sizeIcon
 import com.example.quickStock.ui.theme.spacingExtraLarge
 import com.example.quickStock.ui.theme.spacingMedium
 import com.example.quickStock.ui.theme.widthBoxSurvey
-import com.example.quickStock.ui.theme.widthText
 import com.example.quickStock.viewModel.addProducts.ProductSurveyViewModel
-
+import com.example.quickStock.viewModel.notification.NotificationSchedulerViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductSurvey(onProductAdded: (Product) -> Unit) {
     val viewModel = hiltViewModel<ProductSurveyViewModel>()
+    val notificationSchedulerViewModel = hiltViewModel<NotificationSchedulerViewModel>()
 
     val uiState by viewModel.uiState.collectAsState()
     val isDropdownExpanded by viewModel.isDropdownExpanded.collectAsState()
@@ -320,6 +320,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
         ButtonIconAndName(
             onClick = {
                 viewModel.addProduct { newProduct ->
+                    notificationSchedulerViewModel.scheduleAllProductExpiryNotifications()
                     onProductAdded(newProduct)
                 }
             },
@@ -346,3 +347,4 @@ fun AddProductSurvey(onClick: (String) -> Unit) {
         Log.d("ProductSurvey", "Product added: $it")
     })
 }
+

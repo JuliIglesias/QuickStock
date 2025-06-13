@@ -1,10 +1,15 @@
 package com.example.quickStock.screensUI.navigation
 
-import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -13,7 +18,6 @@ import com.example.quickStock.screensUI.addProducts.AddProductSurvey
 import com.example.quickStock.screensUI.home.HomeScreen
 import com.example.quickStock.screensUI.home.stock.ProductDetailScreen
 import com.example.quickStock.screensUI.home.stock.StockListScreen
-import com.example.quickStock.mocking.getProductsByCategory
 import com.example.quickStock.model.navigation.NavBarNames
 import com.example.quickStock.screensUI.recipeScreens.RecipeScreen
 import com.example.quickStock.screensUI.recipeScreens.recipe.RecipeDetailScreen
@@ -22,10 +26,27 @@ import com.example.quickStock.screensUI.userConfig.UserSettingsPagePreview
 import com.example.quickStock.ui.theme.paddingLarge
 
 @Composable
-fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostController) {
+fun NavHostComposable(
+    innerPadding: PaddingValues,
+    navController: NavHostController,
+    startDestinationProductId: String? = null,
+    startDestinationCategoryType: String? = null
+) {
+    val startDestination = NavBarNames.Home.name
+    var navigatedToProduct by remember { mutableStateOf(false) }
+
+    // Navegación directa si vienen ambos parámetros desde la notificación
+    if (startDestinationProductId != null && startDestinationCategoryType != null && !navigatedToProduct) {
+        LaunchedEffect(startDestinationProductId, startDestinationCategoryType) {
+            navController.navigate("category/${startDestinationCategoryType}/detail/product/$startDestinationProductId") {
+                popUpTo(0)
+            }
+            navigatedToProduct = true
+        }
+    }
     NavHost(
         navController = navController,
-        startDestination = NavBarNames.Home.name,
+        startDestination = startDestination,
         modifier = Modifier.fillMaxSize().padding(innerPadding).padding(paddingLarge)
     ) {
 

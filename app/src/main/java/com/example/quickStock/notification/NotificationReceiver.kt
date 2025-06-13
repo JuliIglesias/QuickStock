@@ -18,16 +18,18 @@ class NotificationReceiver : BroadcastReceiver() {
     // Method called when the broadcast is received
     override fun onReceive(context: Context, intent: Intent) {
 
+        val productName = intent.getStringExtra(context.getString(R.string.product_name)) ?: context.getString(R.string.producto)
+        val expiryDate = intent.getStringExtra(context.getString(R.string.expiry_date)) ?: ""
+        val daysBefore = intent.getIntExtra(context.getString(R.string.days_before), -1)
+        val productId = intent.getStringExtra("product_id")
+
         val openAppIntent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            if (productId != null) putExtra("product_id", productId)
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, openAppIntent, PendingIntent.FLAG_IMMUTABLE)
 
         val notificationManager = context.getSystemService(NotificationManager::class.java)
-
-        val productName = intent.getStringExtra(context.getString(R.string.product_name)) ?: context.getString(R.string.producto)
-        val expiryDate = intent.getStringExtra(context.getString(R.string.expiry_date)) ?: ""
-        val daysBefore = intent.getIntExtra(context.getString(R.string.days_before), -1)
 
         val (title, text) = when (daysBefore) {
             7 -> context.getString(R.string.atencion) to context.getString(
@@ -64,4 +66,5 @@ class NotificationReceiver : BroadcastReceiver() {
         notificationManager.notify(Random.nextInt(), notification)
     }
 }
+
 

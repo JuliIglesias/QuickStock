@@ -18,8 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.quickStock.R
 import com.example.quickStock.screensUI.common.goBack.ScreenName
-import com.example.quickStock.mocking.getProductsByCategory
-import com.example.quickStock.screensUI.navigation.categories.CategoryRoutes
 import com.example.quickStock.ui.theme.*
 import com.example.quickStock.viewModel.home.stock.StockListViewModel
 

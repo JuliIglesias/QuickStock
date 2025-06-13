@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.quickStock.R
 import com.example.quickStock.data.ProductDao
 import com.example.quickStock.data.QuantityExpirationDateDao
+import com.example.quickStock.data.CategoryDao
 import com.example.quickStock.notification.NotificationReceiver
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -21,7 +22,8 @@ import javax.inject.Inject
 class NotificationSchedulerViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val productDao: ProductDao,
-    private val quantityExpirationDateDao: QuantityExpirationDateDao
+    private val quantityExpirationDateDao: QuantityExpirationDateDao,
+    private val categoryDao: CategoryDao
 ) : ViewModel() {
 
     fun scheduleAllProductExpiryNotifications() {
@@ -29,6 +31,9 @@ class NotificationSchedulerViewModel @Inject constructor(
             val products = productDao.getAllProducts()
             val formatter = DateTimeFormatter.ofPattern(context.getString(R.string.yyyy_mm_dd))
             for (product in products) {
+                // Obtener el nombre de la categoría a partir del categoryId
+                val category = categoryDao.getCategoryById(product.categoryId)
+                val categoryType = category?.name ?: "unknown"
                 val expiries = quantityExpirationDateDao.getByProductId(product.id)
                 for (qed in expiries) {
                     val expiryDate = try {
@@ -45,7 +50,9 @@ class NotificationSchedulerViewModel @Inject constructor(
                             productName = product.name,
                             expiryDate = expiryDate.toString(),
                             daysBefore = daysBefore,
-                            triggerDate = notifyDate
+                            triggerDate = notifyDate,
+                            productId = product.id,
+                            categoryType = categoryType
                         )
                     }
                 }
@@ -53,11 +60,13 @@ class NotificationSchedulerViewModel @Inject constructor(
         }
     }
 
-    private fun scheduleNotification(productName: String, expiryDate: String, daysBefore: Int, triggerDate: LocalDate) {
+    private fun scheduleNotification(productName: String, expiryDate: String, daysBefore: Int, triggerDate: LocalDate, productId: String, categoryType: String) {
         val intent = Intent(context, NotificationReceiver::class.java).apply {
             putExtra(context.getString(R.string.product_name), productName)
             putExtra(context.getString(R.string.expiry_date), expiryDate)
             putExtra(context.getString(R.string.days_before), daysBefore)
+            putExtra("product_id", productId)
+            putExtra("category_type", categoryType)
         }
         val requestCode = (productName + expiryDate + daysBefore).hashCode()
         val pendingIntent = PendingIntent.getBroadcast(

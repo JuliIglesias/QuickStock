@@ -21,6 +21,10 @@ import javax.inject.Inject
 import com.google.firebase.FirebaseApp
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
+import com.example.quickStock.notification.notificationChannelID
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity() {
@@ -35,6 +39,7 @@ class MainActivity : FragmentActivity() {
         FirebaseApp.initializeApp(this)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        createNotificationChannel()
         val biometricManager = androidx.biometric.BiometricManager.from(this)
         val canAuthenticate = biometricManager.canAuthenticate(
             androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG or
@@ -93,6 +98,17 @@ class MainActivity : FragmentActivity() {
             notificationSchedulerViewModel.scheduleAllProductExpiryNotifications()
             showMainContent()
         }
+    }
+
+    private fun createNotificationChannel() {
+        val channelName = getString(R.string.channel_name)
+        val channelDescription = getString(R.string.channel_description)
+        val importance = NotificationManager.IMPORTANCE_HIGH
+        val channel = NotificationChannel(notificationChannelID, channelName, importance).apply {
+            description = channelDescription
+        }
+        val notificationManager: NotificationManager = getSystemService(NotificationManager::class.java)
+        notificationManager.createNotificationChannel(channel)
     }
 
     private fun showMainContent() {

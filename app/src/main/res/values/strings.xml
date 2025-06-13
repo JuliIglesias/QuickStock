@@ -298,5 +298,7 @@
     <string name="producto_proximo_a_vencer">El producto \'%1$s\' está próximo a vencer (%2$s)</string>
     <string name="yyyy_mm_dd">yyyy-MM-dd</string>
     <string name="mmm_dd_yyyy">MMM dd, yyyy</string>
+    <string name="channel_name">Notificaciones de QuickStock</string>
+    <string name="channel_description">Avisos de productos por vencer</string>
 
 </resources>

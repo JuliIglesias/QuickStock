@@ -14,6 +14,7 @@ import com.example.quickStock.ui.theme.QuickStockTheme
 import com.example.quickStock.security.BiometricAuthManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import com.google.firebase.FirebaseApp
 
 
 @AndroidEntryPoint
@@ -22,6 +23,9 @@ class MainActivity : FragmentActivity() {
     lateinit var biometricAuthManager: BiometricAuthManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        FirebaseApp.initializeApp(this)
+
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val biometricManager = androidx.biometric.BiometricManager.from(this)

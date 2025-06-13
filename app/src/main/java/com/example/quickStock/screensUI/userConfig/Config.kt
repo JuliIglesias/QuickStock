@@ -10,13 +10,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -31,16 +30,35 @@ import com.google.accompanist.permissions.isGranted
 @Composable
 fun UserSettingsPage() {
     val viewModel = hiltViewModel<UserSettingsViewModel>()
-    val uiState by viewModel.uiState.collectAsState()
     val scrollState = rememberScrollState()
+    val context = LocalContext.current
+
+    // Estados locales para los campos, inicializados desde DataStore
+    var username by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var notificationsEnabled by remember { mutableStateOf(true) }
+    var darkModeEnabled by remember { mutableStateOf(false) }
+    var language by remember { mutableStateOf("English") }
+    var expandedLanguage by remember { mutableStateOf(false) }
 
     // Solicitar permiso de notificaciones solo cuando el usuario activa el toggle
     val postNotificationPermission = rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
 
-    // Inicializar dark mode si es necesario (solo la primera vez)
-    val systemDarkMode = isSystemInDarkTheme()
+    val systemDarkMode = !isSystemInDarkTheme()
+
+    // Cargar datos desde DataStore al entrar a la pantalla
     LaunchedEffect(Unit) {
-        viewModel.initDarkModeIfNeeded(!systemDarkMode)
+        username = viewModel.getUsername()
+        email = viewModel.getEmail()
+        notificationsEnabled = viewModel.getNotificationsEnabled()
+        darkModeEnabled = viewModel.getDarkModeEnabled()
+        language = viewModel.getLanguage()
+        expandedLanguage = viewModel.getExpandedLanguage()
+        viewModel.initDarkModeIfNeeded(systemDarkMode)
+        viewModel.updateUserFromAuthManager()
+        // Refrescar por si updateUserFromAuthManager cambia algo
+        username = viewModel.getUsername()
+        email = viewModel.getEmail()
     }
 
     // Use MaterialTheme colors directly
@@ -78,8 +96,11 @@ fun UserSettingsPage() {
             ) {
                 // Username Field
                 OutlinedTextField(
-                    value = uiState.username,
-                    onValueChange = { viewModel.updateUsername(it) },
+                    value = username,
+                    onValueChange = {
+                        username = it
+                        viewModel.updateUsername(it)
+                    },
                     label = { Text(stringResource(R.string.username)) },
                     modifier = Modifier.fillMaxWidth(),
                     leadingIcon = {
@@ -99,8 +120,11 @@ fun UserSettingsPage() {
 
                 // Email Field
                 OutlinedTextField(
-                    value = uiState.email,
-                    onValueChange = { viewModel.updateEmail(it) },
+                    value = email,
+                    onValueChange = {
+                        email = it
+                        viewModel.updateEmail(it)
+                    },
                     label = { Text(stringResource(R.string.email)) },
                     modifier = Modifier.fillMaxWidth(),
                     leadingIcon = {
@@ -142,11 +166,14 @@ fun UserSettingsPage() {
 
                 // Language Selector
                 ExposedDropdownMenuBox(
-                    expanded = uiState.expandedLanguage,
-                    onExpandedChange = { viewModel.toggleLanguageDropdown() }
+                    expanded = expandedLanguage,
+                    onExpandedChange = {
+                        expandedLanguage = !expandedLanguage
+                        viewModel.toggleLanguageDropdown()
+                    }
                 ) {
                     OutlinedTextField(
-                        value = uiState.language,
+                        value = language,
                         onValueChange = {},
                         readOnly = true,
                         label = { Text(stringResource(R.string.language)) },
@@ -161,7 +188,7 @@ fun UserSettingsPage() {
                             .fillMaxWidth()
                             .menuAnchor(),
                         trailingIcon = {
-                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = uiState.expandedLanguage)
+                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedLanguage)
                         },
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = PrimaryGreen,
@@ -171,14 +198,19 @@ fun UserSettingsPage() {
                     )
 
                     ExposedDropdownMenu(
-                        expanded = uiState.expandedLanguage,
-                        onDismissRequest = { viewModel.dismissLanguageDropdown() }
+                        expanded = expandedLanguage,
+                        onDismissRequest = {
+                            expandedLanguage = false
+                            viewModel.dismissLanguageDropdown()
+                        }
                     ) {
                         viewModel.languages.forEach { option ->
                             DropdownMenuItem(
                                 text = { Text(option) },
                                 onClick = {
+                                    language = option
                                     viewModel.setLanguage(option)
+                                    expandedLanguage = false
                                     viewModel.dismissLanguageDropdown()
                                 }
                             )
@@ -211,19 +243,16 @@ fun UserSettingsPage() {
                         )
                     }
                     Switch(
-                        checked = uiState.notificationsEnabled && postNotificationPermission.status.isGranted,
+                        checked = notificationsEnabled && postNotificationPermission.status.isGranted,
                         onCheckedChange = { checked ->
+                            notificationsEnabled = checked
                             if (checked) {
                                 postNotificationPermission.launchPermissionRequest()
-                                // Si el usuario acepta, activar notificaciones
                                 if (postNotificationPermission.status.isGranted) {
                                     viewModel.toggleNotifications()
                                 }
                             } else {
-                                // Si desactiva, desactivar notificaciones
-                                if (uiState.notificationsEnabled) {
-                                    viewModel.toggleNotifications()
-                                }
+                                viewModel.toggleNotifications()
                             }
                         },
                         colors = SwitchDefaults.colors(
@@ -262,8 +291,11 @@ fun UserSettingsPage() {
                         )
                     }
                     Switch(
-                        checked = uiState.darkModeEnabled,
-                        onCheckedChange = { viewModel.toggleDarkMode() },
+                        checked = darkModeEnabled,
+                        onCheckedChange = {
+                            darkModeEnabled = it
+                            viewModel.toggleDarkMode()
+                        },
                         colors = SwitchDefaults.colors(
                             checkedThumbColor = White,
                             checkedTrackColor = PrimaryGreen,
@@ -321,8 +353,13 @@ fun UserSettingsPage() {
                 }
 
                 // Logout Button
+                val activity = LocalContext.current as? android.app.Activity
                 Button(
-                    onClick = { viewModel.logout() },
+                    onClick = {
+                        viewModel.logout {
+                            activity?.finishAffinity()
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(heightButton),

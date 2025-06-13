@@ -16,9 +16,17 @@ object PreferencesKeys {
     val DARK_MODE_KEY = booleanPreferencesKey("dark_mode_key")
     val NOTIFICATIONS_KEY = booleanPreferencesKey("notifications_key")
     val EMAIL_KEY = stringPreferencesKey("email_key")
+    val LANGUAGE_KEY = stringPreferencesKey("language_key")
+    val EXPANDED_LANGUAGE_KEY = booleanPreferencesKey("expanded_language_key")
 }
 
 suspend fun <T> saveToDataStore(context: Context, value: T, key: Preferences.Key<T>) {
+    context.dataStore.edit { preferences ->
+        preferences[key] = value
+    }
+}
+
+suspend fun <T> removeToDataStore(context: Context, value: T, key: Preferences.Key<T>) {
     context.dataStore.edit { preferences ->
         preferences[key] = value
     }

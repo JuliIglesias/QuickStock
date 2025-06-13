@@ -3,7 +3,6 @@ package com.example.quickStock.viewModel.userConfig
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.quickStock.model.userConfig.UserSettingsState
 import com.example.quickStock.storage.PreferencesKeys
 import com.example.quickStock.storage.getFromDataStore
 import com.example.quickStock.storage.saveToDataStore
@@ -11,11 +10,7 @@ import com.example.quickStock.screensUI.userConfig.DarkModeConfig
 import com.example.quickStock.auth.AuthManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,117 +19,112 @@ class UserSettingsViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val authManager: AuthManager
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(UserSettingsState())
-    val uiState: StateFlow<UserSettingsState> = _uiState.asStateFlow()
-
     val languages = listOf("English", "Spanish", "French", "German")
 
-    init {
-        viewModelScope.launch {
-            val darkModePref = getFromDataStore(context, PreferencesKeys.DARK_MODE_KEY).first()
-            if (darkModePref != null) {
-                DarkModeConfig.saveSettings(darkModePref)
-                val notifications = getFromDataStore(context, PreferencesKeys.NOTIFICATIONS_KEY).first() != false
-                val username = getFromDataStore(context, PreferencesKeys.USER_NAME_KEY).first() ?: "John Doe"
-                val email = getFromDataStore(context, PreferencesKeys.EMAIL_KEY).first() ?: "geda@gedi.com"
-                _uiState.update { currentState ->
-                    currentState.copy(
-                        darkModeEnabled = darkModePref,
-                        notificationsEnabled = notifications,
-                        username = username,
-                        email = email,
-                    )
-                }
-            }
-        }
+    suspend fun getUsername(): String {
+        return getFromDataStore(context, PreferencesKeys.USER_NAME_KEY).first() ?: ""
     }
 
-    fun initDarkModeIfNeeded(systemDarkMode: Boolean) {
-        viewModelScope.launch {
-            val darkModePref = getFromDataStore(context, PreferencesKeys.DARK_MODE_KEY).first()
-            if (darkModePref == null) {
-                saveToDataStore(context, systemDarkMode, PreferencesKeys.DARK_MODE_KEY)
-                DarkModeConfig.saveSettings(systemDarkMode)
-                val notifications = getFromDataStore(context, PreferencesKeys.NOTIFICATIONS_KEY).first() != false
-                val username = getFromDataStore(context, PreferencesKeys.USER_NAME_KEY).first() ?: "John Doe"
-                _uiState.update { currentState ->
-                    currentState.copy(
-                        darkModeEnabled = systemDarkMode,
-                        notificationsEnabled = notifications,
-                        username = username
-                    )
-                }
-            }
-        }
+    suspend fun getEmail(): String {
+        return getFromDataStore(context, PreferencesKeys.EMAIL_KEY).first() ?: ""
+    }
+
+    suspend fun getNotificationsEnabled(): Boolean {
+        return getFromDataStore(context, PreferencesKeys.NOTIFICATIONS_KEY).first() ?: true
+    }
+
+    suspend fun getDarkModeEnabled(): Boolean {
+        return getFromDataStore(context, PreferencesKeys.DARK_MODE_KEY).first() ?: false
+    }
+
+    suspend fun getLanguage(): String {
+        return getFromDataStore(context, PreferencesKeys.LANGUAGE_KEY).first() ?: "English"
+    }
+
+    suspend fun getExpandedLanguage(): Boolean {
+        return getFromDataStore(context, PreferencesKeys.EXPANDED_LANGUAGE_KEY).first() ?: false
     }
 
     fun updateUsername(newUsername: String) {
-        _uiState.update { currentState ->
-            currentState.copy(username = newUsername)
+        viewModelScope.launch {
+            saveToDataStore(context, newUsername, PreferencesKeys.USER_NAME_KEY)
+        }
+    }
+
+    fun updateEmail(newEmail: String) {
+        viewModelScope.launch {
+            saveToDataStore(context, newEmail, PreferencesKeys.EMAIL_KEY)
         }
     }
 
     fun toggleNotifications() {
-        _uiState.update { currentState ->
-            currentState.copy(notificationsEnabled = !currentState.notificationsEnabled)
+        viewModelScope.launch {
+            val current = getNotificationsEnabled()
+            saveToDataStore(context, !current, PreferencesKeys.NOTIFICATIONS_KEY)
         }
     }
 
     fun toggleDarkMode() {
-        _uiState.update { currentState ->
-            val newValue = !currentState.darkModeEnabled
-            DarkModeConfig.saveSettings(newValue) // Sincroniza al cambiar
-            currentState.copy(darkModeEnabled = newValue)
+        viewModelScope.launch {
+            val current = getDarkModeEnabled()
+            saveToDataStore(context, !current, PreferencesKeys.DARK_MODE_KEY)
+            DarkModeConfig.saveSettings(!current)
         }
     }
 
     fun setLanguage(language: String) {
         if (languages.contains(language)) {
-            _uiState.update { currentState ->
-                currentState.copy(language = language)
+            viewModelScope.launch {
+                saveToDataStore(context, language, PreferencesKeys.LANGUAGE_KEY)
             }
         }
     }
 
     fun toggleLanguageDropdown() {
-        _uiState.update { currentState ->
-            currentState.copy(expandedLanguage = !currentState.expandedLanguage)
+        viewModelScope.launch {
+            val current = getExpandedLanguage()
+            saveToDataStore(context, !current, PreferencesKeys.EXPANDED_LANGUAGE_KEY)
         }
     }
 
     fun dismissLanguageDropdown() {
-        _uiState.update { currentState ->
-            currentState.copy(expandedLanguage = false)
+        viewModelScope.launch {
+            saveToDataStore(context, false, PreferencesKeys.EXPANDED_LANGUAGE_KEY)
         }
     }
 
-    fun logout() {
+    fun clearUserDataFromLocalStorage() {
+        viewModelScope.launch {
+            saveToDataStore(context, "", PreferencesKeys.USER_NAME_KEY)
+            saveToDataStore(context, "", PreferencesKeys.EMAIL_KEY)
+        }
+    }
+
+    fun logout(onLogout: (() -> Unit)? = null) {
         viewModelScope.launch {
             authManager.signOut()
-            _uiState.update { currentState ->
-                currentState.copy(
-                    username = "",
-                    email = "",
-                    // Puedes limpiar otros campos si lo deseas
-                )
-            }
+            clearUserDataFromLocalStorage()
+            onLogout?.invoke()
         }
     }
 
-    fun updateEmail(newEmail: String) {
-        _uiState.update { currentState ->
-            currentState.copy(email = newEmail)
-        }
+    fun updateUserFromAuthManager() {
+        val (name, email) = authManager.getCurrentUserInfo()
+        updateUsername(name)
+        updateEmail(email)
     }
 
     fun saveSettings() {
+        // Ya se guardan los settings en cada setter
+    }
+
+    fun initDarkModeIfNeeded(systemDarkMode: Boolean) {
         viewModelScope.launch {
-            saveToDataStore(context, _uiState.value.darkModeEnabled, PreferencesKeys.DARK_MODE_KEY)
-            DarkModeConfig.saveSettings(_uiState.value.darkModeEnabled) // Sincroniza al guardar
-            saveToDataStore(context, _uiState.value.notificationsEnabled, PreferencesKeys.NOTIFICATIONS_KEY)
-            saveToDataStore(context, _uiState.value.username.toString(), PreferencesKeys.USER_NAME_KEY)
-            saveToDataStore(context, _uiState.value.email.toString(), PreferencesKeys.EMAIL_KEY)
+            val darkModePref = getDarkModeEnabled()
+            if (!darkModePref) {
+                saveToDataStore(context, systemDarkMode, PreferencesKeys.DARK_MODE_KEY)
+                DarkModeConfig.saveSettings(systemDarkMode)
+            }
         }
     }
 }
-

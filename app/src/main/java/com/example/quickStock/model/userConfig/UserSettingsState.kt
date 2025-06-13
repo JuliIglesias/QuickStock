@@ -8,3 +8,4 @@ data class UserSettingsState(
     val language: String = "English",
     val expandedLanguage: Boolean = false
 )
+

@@ -73,10 +73,18 @@ class AuthManager @Inject constructor(
                     val name = user?.displayName ?: ""
                     val email = user?.email ?: ""
                     onSuccess(name, email)
+
                 } else {
                     onError(task.exception?.message ?: "Error de autenticación")
                 }
             }
+    }
+
+    fun getCurrentUserInfo(): Pair<String, String> {
+        val user = firebaseAuth.currentUser
+        val name = user?.displayName ?: ""
+        val email = user?.email ?: ""
+        return Pair(name, email)
     }
 
     suspend fun signOut(onComplete: (() -> Unit)? = null) {

@@ -31,16 +31,37 @@ class UserSettingsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val darkMode = getFromDataStore(context, PreferencesKeys.DARK_MODE_KEY).first() ?: false
-            DarkModeConfig.saveSettings(darkMode) // Sincroniza al iniciar
-            val notifications = getFromDataStore(context, PreferencesKeys.NOTIFICATIONS_KEY).first() ?: true
-            val username = getFromDataStore(context, PreferencesKeys.USER_NAME_KEY).first() ?: "John Doe"
-            _uiState.update { currentState ->
-                currentState.copy(
-                    darkModeEnabled = darkMode,
-                    notificationsEnabled = notifications,
-                    username = username
-                )
+            val darkModePref = getFromDataStore(context, PreferencesKeys.DARK_MODE_KEY).first()
+            if (darkModePref != null) {
+                DarkModeConfig.saveSettings(darkModePref)
+                val notifications = getFromDataStore(context, PreferencesKeys.NOTIFICATIONS_KEY).first() != false
+                val username = getFromDataStore(context, PreferencesKeys.USER_NAME_KEY).first() ?: "John Doe"
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        darkModeEnabled = darkModePref,
+                        notificationsEnabled = notifications,
+                        username = username
+                    )
+                }
+            }
+        }
+    }
+
+    fun initDarkModeIfNeeded(systemDarkMode: Boolean) {
+        viewModelScope.launch {
+            val darkModePref = getFromDataStore(context, PreferencesKeys.DARK_MODE_KEY).first()
+            if (darkModePref == null) {
+                saveToDataStore(context, systemDarkMode, PreferencesKeys.DARK_MODE_KEY)
+                DarkModeConfig.saveSettings(systemDarkMode)
+                val notifications = getFromDataStore(context, PreferencesKeys.NOTIFICATIONS_KEY).first() != false
+                val username = getFromDataStore(context, PreferencesKeys.USER_NAME_KEY).first() ?: "John Doe"
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        darkModeEnabled = systemDarkMode,
+                        notificationsEnabled = notifications,
+                        username = username
+                    )
+                }
             }
         }
     }

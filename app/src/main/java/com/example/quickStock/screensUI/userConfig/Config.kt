@@ -29,6 +29,12 @@ fun UserSettingsPage() {
     val uiState by viewModel.uiState.collectAsState()
     val scrollState = rememberScrollState()
 
+    // Inicializar dark mode si es necesario (solo la primera vez)
+    val systemDarkMode = isSystemInDarkTheme()
+    LaunchedEffect(Unit) {
+        viewModel.initDarkModeIfNeeded(!systemDarkMode)
+    }
+
     // Use MaterialTheme colors directly
     val cardBackground = MaterialTheme.colorScheme.surfaceVariant
     val detailBackground = MaterialTheme.colorScheme.outlineVariant

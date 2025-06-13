@@ -8,6 +8,7 @@ import com.example.quickStock.storage.PreferencesKeys
 import com.example.quickStock.storage.getFromDataStore
 import com.example.quickStock.storage.saveToDataStore
 import com.example.quickStock.screensUI.userConfig.DarkModeConfig
+import com.example.quickStock.auth.AuthManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +21,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserSettingsViewModel @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val authManager: AuthManager
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(UserSettingsState())
     val uiState: StateFlow<UserSettingsState> = _uiState.asStateFlow()
@@ -85,7 +87,14 @@ class UserSettingsViewModel @Inject constructor(
 
     fun logout() {
         viewModelScope.launch {
-            // Implementa la lógica de cierre de sesión
+            authManager.signOut()
+            _uiState.update { currentState ->
+                currentState.copy(
+                    username = "",
+                    email = "",
+                    // Puedes limpiar otros campos si lo deseas
+                )
+            }
         }
     }
 

@@ -12,20 +12,25 @@ import com.example.quickStock.screensUI.navigation.NavBar
 import com.example.quickStock.screensUI.navigation.NavHostComposable
 import com.example.quickStock.ui.theme.QuickStockTheme
 import com.example.quickStock.security.BiometricAuthManager
+import com.example.quickStock.auth.AuthManager
+import com.example.quickStock.viewModel.userConfig.UserSettingsViewModel
+import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import com.google.firebase.FirebaseApp
-
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity() {
     @Inject
     lateinit var biometricAuthManager: BiometricAuthManager
+    @Inject
+    lateinit var authManager: AuthManager
+    private val userSettingsViewModel: UserSettingsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         FirebaseApp.initializeApp(this)
-
-
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val biometricManager = androidx.biometric.BiometricManager.from(this)
@@ -45,18 +50,30 @@ class MainActivity : FragmentActivity() {
                 },
                 onSuccess = {
                     runOnUiThread {
-                        setContent {
-                            val navController = rememberNavController()
-                            QuickStockTheme {
-                                Scaffold(
-                                    modifier = Modifier.fillMaxSize(),
-                                    bottomBar = {
-                                        NavBar(navController::navigate)
+                        val currentUser = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser
+                        if (currentUser == null) {
+                            // Lanzar Credential Manager para Google Sign-In
+                            lifecycleScope.launch {
+                                authManager.launchCredentialManager(
+                                    onSuccess = { name, email ->
+                                        userSettingsViewModel.updateUsername(name)
+                                        userSettingsViewModel.updateEmail(email)
+                                        userSettingsViewModel.saveSettings()
+                                        showMainContent()
+                                    },
+                                    onError = { errorMsg ->
+                                        runOnUiThread {
+                                            android.widget.Toast.makeText(this@MainActivity, errorMsg, android.widget.Toast.LENGTH_LONG).show()
+                                            finish()
+                                        }
                                     }
-                                ) { innerPadding ->
-                                    NavHostComposable(innerPadding, navController)
-                                }
+                                )
                             }
+                        } else {
+                            userSettingsViewModel.updateUsername(currentUser.displayName ?: "")
+                            userSettingsViewModel.updateEmail(currentUser.email ?: "")
+                            userSettingsViewModel.saveSettings()
+                            showMainContent()
                         }
                     }
                 },
@@ -69,18 +86,21 @@ class MainActivity : FragmentActivity() {
                 }
             )
         } else {
-            // Si no hay biométrico, deja pasar y muestra la app normalmente
-            setContent {
-                val navController = rememberNavController()
-                QuickStockTheme {
-                    Scaffold(
-                        modifier = Modifier.fillMaxSize(),
-                        bottomBar = {
-                            NavBar(navController::navigate)
-                        }
-                    ) { innerPadding ->
-                        NavHostComposable(innerPadding, navController)
+            showMainContent()
+        }
+    }
+
+    private fun showMainContent() {
+        setContent {
+            val navController = rememberNavController()
+            QuickStockTheme {
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = {
+                        NavBar(navController::navigate)
                     }
+                ) { innerPadding ->
+                    NavHostComposable(innerPadding, navController)
                 }
             }
         }

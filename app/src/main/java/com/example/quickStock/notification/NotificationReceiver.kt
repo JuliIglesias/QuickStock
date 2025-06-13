@@ -6,8 +6,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
-import com.austral.learning_android.MainActivity
-import com.austral.learning_android.R
+import com.example.quickStock.MainActivity
+import com.example.quickStock.R
 import kotlin.random.Random
 
 const val notificationChannelID = "learning_android_notification_channel"
@@ -28,7 +28,7 @@ class NotificationReceiver : BroadcastReceiver() {
         val notification = NotificationCompat.Builder(context, notificationChannelID)
             .setContentTitle("Don't slack off now")
             .setContentText("Remember to learn a little Android development today")
-            .setSmallIcon(R.drawable.dead)
+//            .setSmallIcon(R.drawable.dead)
             .setPriority(NotificationManager.IMPORTANCE_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)

@@ -53,7 +53,7 @@ class RecipeListViewModel @Inject constructor(
         _loading.value = true
         _showRetry.value = false
         _screenTitle.value = context.getString(
-            R.string.recipes_of
+            R.string.recipes_of, recipeType
         )
 
         apiServiceImpl.getMealsByCategory(

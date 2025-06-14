@@ -233,7 +233,7 @@ fun RecipeDetailPreviewContent() {
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    text = stringResource(R.string.numeration),
+                                    text = stringResource(R.string.numeration, index + 1),
                                     color = White,
                                     style = MaterialTheme.typography.labelMedium,
                                     fontWeight = FontWeight.Bold

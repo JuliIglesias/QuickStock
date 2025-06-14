@@ -50,7 +50,7 @@ fun UserSettingsPage() {
     // Solicitar permiso de notificaciones solo cuando el usuario activa el toggle
     val postNotificationPermission = rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
 
-    val systemDarkMode = isSystemInDarkTheme()
+    val systemDarkMode = !isSystemInDarkTheme()
 
     // Cargar datos desde DataStore al entrar a la pantalla
     LaunchedEffect(Unit) {

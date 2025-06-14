@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
@@ -31,6 +30,7 @@ import androidx.camera.view.PreviewView
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.ui.res.stringResource
 import com.example.quickStock.R
+import com.example.quickStock.ui.theme.paddingExtraLarge
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 
@@ -65,7 +65,7 @@ fun BarcodeScannerScreen(
             onClick = { onClose() },
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .padding(16.dp)
+                .padding(paddingExtraLarge)
         ) {
             Icon(
                 imageVector = androidx.compose.material.icons.Icons.Default.Close,
@@ -81,7 +81,7 @@ fun BarcodeScannerScreen(
             )
             Button(onClick = { scanning = true }, modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(16.dp)) {
+                .padding(paddingExtraLarge)) {
                 Text(stringResource(R.string.reintentar))
             }
         }

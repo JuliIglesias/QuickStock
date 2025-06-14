@@ -43,6 +43,7 @@ fun ExpiryDatePicker(
     selectedDate: String,
     onDateSelected: (String) -> Unit
 ) {
+    val context = androidx.compose.ui.platform.LocalContext.current
     var showDatePicker by remember { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
@@ -61,7 +62,9 @@ fun ExpiryDatePicker(
     val datePickerState = rememberDatePickerState(
         initialSelectedDateMillis = if (selectedDate.isNotEmpty()) {
             try {
-                SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(selectedDate)?.time
+                SimpleDateFormat(context.getString(
+                    R.string.yyyy_mm_dd
+                ), Locale.getDefault()).parse(selectedDate)?.time
             } catch (e: Exception) {
                 calendar.timeInMillis
             }

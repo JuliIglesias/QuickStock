@@ -10,6 +10,6 @@ data class CategoryButtonData(
     override val icon: ImageVector,
     override val onClick: () -> Unit,
     override val modifier: Modifier = Modifier,
-    val containerColor: Color? = null // Nuevo: color de fondo opcional
+    val containerColor: Color? = null
 ) : ICardButton
 

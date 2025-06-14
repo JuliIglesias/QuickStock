@@ -1,7 +1,9 @@
 package com.example.quickStock.viewModel.addProducts
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.quickStock.R
 import com.example.quickStock.data.CategoryDao
 import com.example.quickStock.data.ProductDao
 import com.example.quickStock.data.QuantityExpirationDateDao
@@ -12,6 +14,7 @@ import com.example.quickStock.model.addProduct.Product
 import com.example.quickStock.model.addProduct.ProductFormState
 import com.example.quickStock.model.addProduct.QuantityExpirationDate
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,6 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductSurveyViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val productDao: ProductDao,
     private val categoryDao: CategoryDao,
     private val quantityExpirationDateDao: QuantityExpirationDateDao
@@ -143,9 +147,13 @@ class ProductSurveyViewModel @Inject constructor(
                         productId = product.id,
                         productName = product.name,
                         productBrand = product.brand,
-                        productCategory = category?.name ?: "",
+                        productCategory = category?.name ?: context.getString(
+                            R.string.nothing_String
+                        ),
                         productQuantity = quantityExp?.quantity ?: 1,
-                        productExpiryDate = quantityExp?.expiryDate ?: ""
+                        productExpiryDate = quantityExp?.expiryDate ?: context.getString(
+                            R.string.nothing_String
+                        )
                     )
                 }
             }

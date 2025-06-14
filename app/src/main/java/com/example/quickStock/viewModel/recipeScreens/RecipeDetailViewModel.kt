@@ -2,6 +2,7 @@ package com.example.quickStock.viewModel.recipeScreens
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import com.example.quickStock.R
 import com.example.quickStock.apiManager.ApiServiceImpl
 import com.example.quickStock.apiManager.responses.MealDetail
 import com.example.quickStock.model.recipe.RecipeData
@@ -31,7 +32,9 @@ class RecipeDetailViewModel @Inject constructor(
     val showRetry: StateFlow<Boolean> = _showRetry.asStateFlow()
 
     // Manejar el ID actual para reintentos
-    private var currentMealId: String = ""
+    private var currentMealId: String = context.getString(
+        R.string.nothing_String
+    )
 
     // Cargar detalles de la receta
     fun loadRecipeDetails(mealId: String) {
@@ -97,7 +100,9 @@ class RecipeDetailViewModel @Inject constructor(
             .filter { !it.isBlank() && !numberOnlyPattern.matches(it) }
             .map { line ->
                 // Eliminamos la numeración al inicio de cada paso
-                line.replace(leadingNumberPattern, "").trim()
+                line.replace(leadingNumberPattern, context.getString(
+                    R.string.nothing_String
+                )).trim()
             }
             .filter { it.isNotBlank() }
 

@@ -1,13 +1,16 @@
 package com.example.quickStock.viewModel.home.stock
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.quickStock.R
 import com.example.quickStock.data.ProductDao
 import com.example.quickStock.data.QuantityExpirationDateDao
 import com.example.quickStock.data.CategoryDao
 import com.example.quickStock.model.addProduct.Product
 import com.example.quickStock.model.addProduct.QuantityExpirationDate
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,6 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductDetailViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val productDao: ProductDao,
     private val quantityExpirationDateDao: QuantityExpirationDateDao,
     private val categoryDao: CategoryDao
@@ -28,7 +32,9 @@ class ProductDetailViewModel @Inject constructor(
         viewModelScope.launch {
             val productEntity = productDao.getAllProducts().find { it.id == product.id }
             if (productEntity != null) {
-                val category = categoryDao.getCategoryById(productEntity.categoryId)?.name ?: ""
+                val category = categoryDao.getCategoryById(productEntity.categoryId)?.name ?: context.getString(
+                    R.string.nothing_String
+                )
                 val quantities = quantityExpirationDateDao.getByProductId(product.id)
                 _product.value = Product(
                     id = productEntity.id,
@@ -46,7 +52,9 @@ class ProductDetailViewModel @Inject constructor(
     suspend fun getProductById(productId: String): Product? {
         val productEntity = productDao.getAllProducts().find { it.id == productId }
         return if (productEntity != null) {
-            val category = categoryDao.getCategoryById(productEntity.categoryId)?.name ?: ""
+            val category = categoryDao.getCategoryById(productEntity.categoryId)?.name ?: context.getString(
+                R.string.nothing_String
+            )
             val quantities = quantityExpirationDateDao.getByProductId(productId)
             Product(
                 id = productEntity.id,

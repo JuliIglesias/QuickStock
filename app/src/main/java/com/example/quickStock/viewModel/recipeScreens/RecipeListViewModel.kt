@@ -2,6 +2,7 @@ package com.example.quickStock.viewModel.recipeScreens
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import com.example.quickStock.R
 import com.example.quickStock.apiManager.ApiServiceImpl
 import com.example.quickStock.model.recipe.RecipeListData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,9 @@ class RecipeListViewModel @Inject constructor(
 ) : ViewModel() {
 
     // Estados para la búsqueda
-    private val _searchQuery = MutableStateFlow("")
+    private val _searchQuery = MutableStateFlow(context.getString(
+        R.string.nothing_String
+    ))
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
 
     private val _filteredRecipes = MutableStateFlow<List<RecipeListData>>(emptyList())
@@ -28,7 +31,9 @@ class RecipeListViewModel @Inject constructor(
     val searchResults: StateFlow<List<String>> = _searchResults.asStateFlow()
 
     // Estado para el título de la pantalla
-    private val _screenTitle = MutableStateFlow("")
+    private val _screenTitle = MutableStateFlow(context.getString(
+        R.string.nothing_String
+    ))
     val screenTitle: StateFlow<String> = _screenTitle.asStateFlow()
 
     // Estado para la lista de recetas
@@ -47,7 +52,9 @@ class RecipeListViewModel @Inject constructor(
     fun loadRecipesByCategory(recipeType: String, onRecipeClick: (String) -> Unit) {
         _loading.value = true
         _showRetry.value = false
-        _screenTitle.value = "Recipes of $recipeType"
+        _screenTitle.value = context.getString(
+            R.string.recipes_of
+        )
 
         apiServiceImpl.getMealsByCategory(
             context = context,

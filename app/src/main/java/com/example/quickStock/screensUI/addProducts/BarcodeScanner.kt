@@ -29,6 +29,8 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.ui.res.stringResource
+import com.example.quickStock.R
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 
@@ -43,7 +45,9 @@ fun BarcodeScannerScreen(
     var scanning by remember { mutableStateOf(true) }
     val coroutineScope = rememberCoroutineScope()
 
-    Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.Black)) {
         if (scanning) {
             CameraPreview(
                 onBarcodeDetected = { code ->
@@ -59,22 +63,26 @@ fun BarcodeScannerScreen(
         }
         IconButton(
             onClick = { onClose() },
-            modifier = Modifier.align(Alignment.TopEnd).padding(16.dp)
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(16.dp)
         ) {
             Icon(
                 imageVector = androidx.compose.material.icons.Icons.Default.Close,
-                contentDescription = "Cerrar escáner",
+                contentDescription = stringResource(R.string.cerrar_esc_ner),
                 tint = Color.White
             )
         }
         if (!scanning && scannedBarcode == null) {
             Text(
-                text = "No se detectó ningún código de barras.",
+                text = stringResource(R.string.no_se_detect_ning_n_c_digo_de_barras),
                 color = Color.White,
                 modifier = Modifier.align(Alignment.Center)
             )
-            Button(onClick = { scanning = true }, modifier = Modifier.align(Alignment.BottomCenter).padding(16.dp)) {
-                Text("Reintentar")
+            Button(onClick = { scanning = true }, modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(16.dp)) {
+                Text(stringResource(R.string.reintentar))
             }
         }
     }

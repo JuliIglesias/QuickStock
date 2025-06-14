@@ -27,7 +27,7 @@ class NotificationReceiver : BroadcastReceiver() {
         val notificationManager = context.getSystemService(NotificationManager::class.java)
 
         val productName = intent.getStringExtra(context.getString(R.string.product_name)) ?: context.getString(R.string.producto)
-        val expiryDate = intent.getStringExtra(context.getString(R.string.expiry_date)) ?: ""
+        val expiryDate = intent.getStringExtra(context.getString(R.string.expiry_date)) ?: context.getString(R.string.nothing_String)
         val daysBefore = intent.getIntExtra(context.getString(R.string.days_before), -1)
 
         val (title, text) = when (daysBefore) {

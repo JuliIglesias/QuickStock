@@ -24,6 +24,7 @@ fun RecipeImage(
     contentDescription: String,
     modifier: Modifier = Modifier
 ) {
+    val context = androidx.compose.ui.platform.LocalContext.current
     if (imageUrl.isNullOrEmpty()) {
         // Placeholder cuando no hay imagen
         Box(
@@ -32,7 +33,9 @@ fun RecipeImage(
         ) {
             Icon(
                 imageVector = Icons.Default.Image,
-                contentDescription = "No image available",
+                contentDescription = context.getString(
+                    R.string.no_image_available
+                ),
                 tint = DarkGray
             )
         }

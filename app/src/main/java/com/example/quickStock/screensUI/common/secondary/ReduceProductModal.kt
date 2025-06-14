@@ -37,6 +37,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -75,6 +76,7 @@ fun ReduceProductModal(
 ) {
     val viewModel = hiltViewModel<ReduceProductViewModel>()
 
+    val context = LocalContext.current
     val selectedDateIndex by viewModel.selectedDateIndex.collectAsState()
     val quantityToReduce by viewModel.quantityToReduce.collectAsState()
 
@@ -123,7 +125,9 @@ fun ReduceProductModal(
                     var expanded by remember { mutableStateOf(false) }
 
                     OutlinedTextField(
-                        value = selectedItem?.expiryDate ?: "",
+                        value = selectedItem?.expiryDate ?: context.getString(
+                            R.string.nothing_String
+                        ),
                         onValueChange = {},
                         readOnly = true,
                         label = { Text(stringResource(R.string.product_expiration_date)) },
@@ -195,7 +199,7 @@ fun ReduceProductModal(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Remove,
-                            contentDescription = "Decrease Quantity",
+                            contentDescription = stringResource(R.string.decrease_quantity),
                             tint = MaterialTheme.colorScheme.onSecondary
                         )
                     }

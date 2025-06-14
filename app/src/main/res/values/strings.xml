@@ -300,5 +300,42 @@
     <string name="mmm_dd_yyyy">MMM dd, yyyy</string>
     <string name="channel_name">Notificaciones de QuickStock</string>
     <string name="channel_description">Avisos de productos por vencer</string>
+    <string name="english">English</string>
+    <string name="spanish">Spanish</string>
+    <string name="french">French</string>
+    <string name="german">German</string>
+    <string name="nothing_String" /><string name="enter">x</string>
+    <string name="biometric_authentication">Biometric Authentication</string>
+    <string name="log_in_using_your_biometric_credentials">Log in using your biometric credentials</string>
+    <string name="recipe">Recipe</string>
+    <string name="dot">•</string>
+    <string name="numeration">%1$s</string>
+    <string name="decrease_quantity">Decrease Quantity</string>
+    <string name="colapsar">Colapsar</string>
+    <string name="expandir">Expandir</string>
+    <string name="product_id">Product ID</string>
+    <string name="escanear_c_digo_de_barras">Escanear código de barras</string>
+    <string name="cerrar_esc_ner">Cerrar escáner</string>
+    <string name="no_se_detect_ning_n_c_digo_de_barras">No se detectó ningún código de barras.</string>
+    <string name="reintentar">Reintentar</string>
+    <string name="comidas">Comidas</string>
+    <string name="bebidas">Bebidas</string>
+    <string name="productos">Productos</string>
+
+    <string name="grilled_steak">Grilled Steak</string>
+    <string name="steak">Steak</string>
+    <string name="salt">Salt</string>
+    <string name="pepper">Pepper</string>
+    <string name="olive_oil">Olive Oil</string>
+    <string name="one_lb">1 lb</string>
+    <string name="to_taste">to taste</string>
+    <string name="two_tbsp">2 tbsp</string>
+    <string name="season_the_steak">Season the steak</string>
+    <string name="heat_the_grill">Heat the grill</string>
+    <string name="cook_the_steak">Cook the steak for 7 minutes per side</string>
+    <string name="steps_title">Pasos</string>
+    <string name="no_se_pudo_obtener_las_credenciales">No se pudo obtener las credenciales: %1$s</string>
+    <string name="la_credencial_no_es_de_tipo_google_id">La credencial no es de tipo Google ID</string>
+    <string name="error_de_autenticaci_n">Error de autenticación</string>
 
 </resources>

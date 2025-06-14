@@ -26,7 +26,9 @@ class GridCategoryViewModel @Inject constructor(
     private val categories = context.resources.getStringArray(R.array.product_categories).toList()
 
     // Estado para la consulta de búsqueda
-    private val _searchQuery = MutableStateFlow("")
+    private val _searchQuery = MutableStateFlow(context.getString(
+        R.string.nothing_String
+    ))
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
 
     // Estado para las categorías con/sin productos
@@ -40,7 +42,9 @@ class GridCategoryViewModel @Inject constructor(
     val selectedCategoryRoute: StateFlow<String?> = _selectedCategoryRoute.asStateFlow()
 
     init {
-        updateCategoryLists("")
+        updateCategoryLists(context.getString(
+            R.string.nothing_String
+        ))
     }
 
     fun getCategoryRoute(categoryName: String): String {

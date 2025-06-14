@@ -34,17 +34,23 @@ fun UserSettingsPage() {
     val context = LocalContext.current
 
     // Estados locales para los campos, inicializados desde DataStore
-    var username by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
+    var username by remember { mutableStateOf(context.getString(
+        R.string.nothing_String
+    )) }
+    var email by remember { mutableStateOf(context.getString(
+        R.string.nothing_String
+    )) }
     var notificationsEnabled by remember { mutableStateOf(true) }
     var darkModeEnabled by remember { mutableStateOf(false) }
-    var language by remember { mutableStateOf("English") }
+    var language by remember { mutableStateOf(context.getString(
+        R.string.english
+    )) }
     var expandedLanguage by remember { mutableStateOf(false) }
 
     // Solicitar permiso de notificaciones solo cuando el usuario activa el toggle
     val postNotificationPermission = rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
 
-    val systemDarkMode = !isSystemInDarkTheme()
+    val systemDarkMode = isSystemInDarkTheme()
 
     // Cargar datos desde DataStore al entrar a la pantalla
     LaunchedEffect(Unit) {

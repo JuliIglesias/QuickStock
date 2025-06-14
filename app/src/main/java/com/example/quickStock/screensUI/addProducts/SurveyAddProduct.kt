@@ -137,7 +137,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Default.QrCodeScanner,
-                                contentDescription = "Product ID",
+                                contentDescription = stringResource(R.string.product_id),
                                 tint = PrimaryGreen
                             )
                         },
@@ -158,7 +158,7 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                     }) {
                         Icon(
                             imageVector = Icons.Default.CameraAlt,
-                            contentDescription = "Escanear código de barras",
+                            contentDescription = stringResource(R.string.escanear_c_digo_de_barras),
                             tint = PrimaryGreen
                         )
                     }
@@ -186,7 +186,9 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.ShoppingBag,
-                            contentDescription = "Product Name",
+                            contentDescription = context.getString(
+                                R.string.nothing_String
+                            ),
                             tint = PrimaryGreen
                         )
                     },
@@ -207,7 +209,9 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Store,
-                            contentDescription = "Brand",
+                            contentDescription = context.getString(
+                                R.string.brand
+                            ),
                             tint = PrimaryGreen
                         )
                     },
@@ -239,7 +243,9 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
                         leadingIcon = {
                             Icon(
                                 imageVector = getCategoryIcon(categoryName = uiState.productCategory, Icons.Default.Category),
-                                contentDescription = "Category",
+                                contentDescription = context.getString(
+                                    R.string.category
+                                ),
                                 modifier = Modifier.size(sizeIcon),
                                 tint = if (uiState.productCategory.isEmpty() || isDropdownExpanded) PrimaryGreen else { Unspecified }
                             )
@@ -378,17 +384,6 @@ fun ProductSurvey(onProductAdded: (Product) -> Unit) {
 
 @Composable
 fun AddProductSurvey(onClick: (String) -> Unit) {
-//    BarcodeScannerScreen { capturedImageUri ->
-//        // Handle the captured image URI here
-//        if (capturedImageUri != null) {
-//            Log.d("BarcodeScanner", "Image captured: $capturedImageUri")
-//            // You can now pass this URI to a barcode scanning library
-//            //or display the image to the user.
-//        } else {
-//            Log.e("BarcodeScanner", "Failed to capture image.")
-//        }
-//    }
-
     ProductSurvey(onProductAdded = {})
 }
 

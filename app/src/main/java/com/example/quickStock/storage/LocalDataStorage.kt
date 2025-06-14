@@ -26,12 +26,6 @@ suspend fun <T> saveToDataStore(context: Context, value: T, key: Preferences.Key
     }
 }
 
-suspend fun <T> removeToDataStore(context: Context, value: T, key: Preferences.Key<T>) {
-    context.dataStore.edit { preferences ->
-        preferences[key] = value
-    }
-}
-
 fun <T> getFromDataStore(context: Context, key: Preferences.Key<T>): Flow<T?> {
     return context.dataStore.data
         .map { preferences ->

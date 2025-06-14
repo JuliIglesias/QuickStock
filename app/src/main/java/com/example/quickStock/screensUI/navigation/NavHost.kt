@@ -13,7 +13,6 @@ import com.example.quickStock.screensUI.addProducts.AddProductSurvey
 import com.example.quickStock.screensUI.home.HomeScreen
 import com.example.quickStock.screensUI.home.stock.ProductDetailScreen
 import com.example.quickStock.screensUI.home.stock.StockListScreen
-import com.example.quickStock.mocking.getProductsByCategory
 import com.example.quickStock.model.navigation.NavBarNames
 import com.example.quickStock.screensUI.recipeScreens.RecipeScreen
 import com.example.quickStock.screensUI.recipeScreens.recipe.RecipeDetailScreen

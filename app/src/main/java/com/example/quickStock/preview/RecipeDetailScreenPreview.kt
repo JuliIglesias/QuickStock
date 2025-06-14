@@ -37,10 +37,24 @@ fun RecipeDetailPreviewContent() {
     // Datos de ejemplo para el preview
     val sampleRecipe = RecipeData(
         id = "1",
-        name = "Grilled Steak",
-        ingredients = listOf("Steak", "Salt", "Pepper", "Olive Oil"),
-        measurements = listOf("1 lb", "to taste", "to taste", "2 tbsp"),
-        steps = listOf("Season the steak", "Heat the grill", "Cook the steak for 7 minutes per side")
+        name = stringResource(R.string.grilled_steak),
+        ingredients = listOf(
+            stringResource(R.string.steak),
+            stringResource(R.string.salt),
+            stringResource(R.string.pepper),
+            stringResource(R.string.olive_oil)
+        ),
+        measurements = listOf(
+            stringResource(R.string.one_lb),
+            stringResource(R.string.to_taste),
+            stringResource(R.string.to_taste),
+            stringResource(R.string.two_tbsp)
+        ),
+        steps = listOf(
+            stringResource(R.string.season_the_steak),
+            stringResource(R.string.heat_the_grill),
+            stringResource(R.string.cook_the_steak)
+        )
     )
 
     Column(
@@ -119,7 +133,7 @@ fun RecipeDetailPreviewContent() {
                     // Lista de ingredientes y medidas
                     sampleRecipe.ingredients.forEachIndexed { index, ingredient ->
                         val measurement = if (index < sampleRecipe.measurements.size)
-                            sampleRecipe.measurements[index] else ""
+                            sampleRecipe.measurements[index] else stringResource(R.string.nothing_String)
 
                         Row(
                             modifier = Modifier
@@ -140,7 +154,7 @@ fun RecipeDetailPreviewContent() {
                                     contentAlignment = Alignment.TopCenter
                                 ) {
                                     Text(
-                                        text = "•",
+                                        text = stringResource(R.string.dot),
                                         color = PrimaryGreen,
                                         fontWeight = FontWeight.Bold,
                                     )
@@ -190,13 +204,13 @@ fun RecipeDetailPreviewContent() {
                     ) {
                         Icon(
                             imageVector = Icons.Default.FormatListNumbered,
-                            contentDescription = "Pasos",
+                            contentDescription = stringResource(R.string.steps_title),
                             tint = PrimaryGreen,
                             modifier = Modifier.size(sizeIcon)
                         )
                         Spacer(modifier = Modifier.width(paddingLarge))
                         Text(
-                            text = "Pasos",
+                            text = stringResource(R.string.steps_title),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.SemiBold
                         )
@@ -219,7 +233,7 @@ fun RecipeDetailPreviewContent() {
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    text = "${index + 1}",
+                                    text = stringResource(R.string.numeration),
                                     color = White,
                                     style = MaterialTheme.typography.labelMedium,
                                     fontWeight = FontWeight.Bold
@@ -237,3 +251,4 @@ fun RecipeDetailPreviewContent() {
         }
     }
 }
+

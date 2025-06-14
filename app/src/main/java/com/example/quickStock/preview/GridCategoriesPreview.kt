@@ -15,7 +15,9 @@ import androidx.compose.material.icons.filled.Liquor
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.quickStock.R
 import com.example.quickStock.model.home.CategoryButtonData
 import com.example.quickStock.screensUI.common.SimpleSearchBar
 import com.example.quickStock.screensUI.common.principal.CustomGrid
@@ -38,22 +40,22 @@ fun ProductCategoryGridPreviewContent() {
     // Lista estática de categorías para el preview
     val categoryItems = listOf(
         CategoryButtonData(
-            title = "Comidas",
+            title = stringResource(R.string.comidas),
             icon = Icons.Default.Restaurant,
             onClick = {}
         ),
         CategoryButtonData(
-            title = "Bebidas",
+            title = stringResource(R.string.bebidas),
             icon = Icons.Default.Liquor,
             onClick = {}
         ),
         CategoryButtonData(
-            title = "Snacks",
+            title = stringResource(R.string.snacks),
             icon = Icons.Default.Fastfood,
             onClick = {}
         ),
         CategoryButtonData(
-            title = "Productos",
+            title = stringResource(R.string.productos),
             icon = Icons.Default.ShoppingCart,
             onClick = {}
         )
@@ -70,10 +72,20 @@ fun ProductCategoryGridPreviewContent() {
                 verticalArrangement = Arrangement.Top,
             ) {
                 SimpleSearchBar(
-                    query = "",
+                    query = stringResource(
+                        R.string.nothing_String
+                    ),
                     onQueryChange = {},
                     onSearch = { },
-                    searchResults = listOf("Comidas", "Bebidas", "Snacks", "Productos"),
+                    searchResults = listOf(stringResource(
+                        R.string.comidas
+                    ), stringResource(
+                        R.string.bebidas
+                    ), stringResource(
+                        R.string.snacks
+                    ), stringResource(
+                        R.string.productos
+                    )),
                     modifier = Modifier
                 )
 

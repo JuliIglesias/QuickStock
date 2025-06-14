@@ -107,6 +107,7 @@ private fun RecipeDetailContent(
     onGoBack: () -> Unit
 ) {
     val scrollState = rememberScrollState()
+    val context = androidx.compose.ui.platform.LocalContext.current
 
     Column(
         modifier = Modifier
@@ -150,7 +151,7 @@ private fun RecipeDetailContent(
                 ) {
                     Icon(
                         imageVector = Icons.Default.RestaurantMenu,
-                        contentDescription = "Recipe",
+                        contentDescription = stringResource(R.string.recipe),
                         tint = White,
                         modifier = Modifier.size(sizeLargeIcon)
                     )
@@ -170,7 +171,9 @@ private fun RecipeDetailContent(
 
                     // Ingredients and measurements list
                     recipe.ingredients.forEachIndexed { index, ingredient ->
-                        val measurement = if (index < recipe.measurements.size) recipe.measurements[index] else ""
+                        val measurement = if (index < recipe.measurements.size) recipe.measurements[index] else context.getString(
+                            R.string.nothing_String
+                        )
 
                         Row(
                             modifier = Modifier
@@ -191,7 +194,7 @@ private fun RecipeDetailContent(
                                     contentAlignment = Alignment.TopCenter
                                 ) {
                                     Text(
-                                        text = "•",
+                                        text = stringResource(R.string.dot),
                                         color = PrimaryGreen,
                                         fontWeight = FontWeight.Bold,
                                     )
@@ -247,7 +250,7 @@ private fun RecipeDetailContent(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = "${index + 1}",
+                                text = stringResource(R.string.numeration, index + 1),
                                 color = White,
                                 style = MaterialTheme.typography.labelMedium,
                                 fontWeight = FontWeight.Bold

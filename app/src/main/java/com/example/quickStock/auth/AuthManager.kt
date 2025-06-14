@@ -43,7 +43,11 @@ class AuthManager @Inject constructor(
             )
             handleSignIn(result.credential, onSuccess, onError)
         } catch (e: GetCredentialException) {
-            onError("No se pudo obtener las credenciales: ${e.localizedMessage}")
+            onError(
+                context.getString(
+                    R.string.no_se_pudo_obtener_las_credenciales,
+                    e.localizedMessage
+                ))
         }
     }
 
@@ -56,7 +60,7 @@ class AuthManager @Inject constructor(
             val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
             firebaseAuthWithGoogle(googleIdTokenCredential.idToken, onSuccess, onError)
         } else {
-            onError("La credencial no es de tipo Google ID")
+            onError(context.getString(R.string.la_credencial_no_es_de_tipo_google_id))
         }
     }
 
@@ -70,20 +74,20 @@ class AuthManager @Inject constructor(
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val user = firebaseAuth.currentUser
-                    val name = user?.displayName ?: ""
-                    val email = user?.email ?: ""
+                    val name = user?.displayName ?: context.getString(R.string.nothing_String)
+                    val email = user?.email ?: context.getString(R.string.nothing_String)
                     onSuccess(name, email)
 
                 } else {
-                    onError(task.exception?.message ?: "Error de autenticación")
+                    onError(task.exception?.message ?: context.getString(R.string.error_de_autenticaci_n))
                 }
             }
     }
 
     fun getCurrentUserInfo(): Pair<String, String> {
         val user = firebaseAuth.currentUser
-        val name = user?.displayName ?: ""
-        val email = user?.email ?: ""
+        val name = user?.displayName ?: context.getString(R.string.nothing_String)
+        val email = user?.email ?: context.getString(R.string.nothing_String)
         return Pair(name, email)
     }
 

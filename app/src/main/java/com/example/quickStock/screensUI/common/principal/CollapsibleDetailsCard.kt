@@ -18,7 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import com.example.quickStock.R
 import com.example.quickStock.ui.theme.*
 
 @Composable
@@ -72,7 +74,9 @@ fun CollapsibleCard(
 
                 Icon(
                     imageVector = Icons.Default.ExpandMore,
-                    contentDescription = if (expanded) "Colapsar" else "Expandir",
+                    contentDescription = if (expanded) stringResource(R.string.colapsar) else stringResource(
+                        R.string.expandir
+                    ),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.rotate(rotationState)
                 )

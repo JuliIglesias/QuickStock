@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 import android.content.Context
+import com.example.quickStock.R
 import com.example.quickStock.model.recipe.RecipeButtonIdData
 import com.example.quickStock.screensUI.icon.getRecipesTypesIconId
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -19,7 +20,9 @@ class GridRecipesViewModel @Inject constructor(
 ): ViewModel() {
 
     // Estado para la búsqueda
-    private val _searchQuery = MutableStateFlow("")
+    private val _searchQuery = MutableStateFlow(context.getString(
+        R.string.nothing_String
+    ))
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
 
     // Lista completa de recetas

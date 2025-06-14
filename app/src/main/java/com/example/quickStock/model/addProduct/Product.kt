@@ -1,7 +1,7 @@
 package com.example.quickStock.model.addProduct
 
 data class Product(
-    val id: String, //en un futuro se cambiara a lo que escanee con el barcode scanner y la camara del celular
+    val id: String,
     val name: String,
     val brand: String,
     val category: String,

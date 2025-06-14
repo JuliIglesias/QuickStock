@@ -3,6 +3,7 @@ package com.example.quickStock.viewModel.userConfig
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.quickStock.R
 import com.example.quickStock.storage.PreferencesKeys
 import com.example.quickStock.storage.getFromDataStore
 import com.example.quickStock.storage.saveToDataStore
@@ -19,30 +20,39 @@ class UserSettingsViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val authManager: AuthManager
 ) : ViewModel() {
-    val languages = listOf("English", "Spanish", "French", "German")
+    val languages = listOf(context.getString(R.string.english),
+        context.getString(R.string.spanish),
+        context.getString(R.string.french),
+        context.getString(R.string.german))
 
     suspend fun getUsername(): String {
-        return getFromDataStore(context, PreferencesKeys.USER_NAME_KEY).first() ?: ""
+        return getFromDataStore(context, PreferencesKeys.USER_NAME_KEY).first() ?: context.getString(
+            R.string.nothing_String
+        )
     }
 
     suspend fun getEmail(): String {
-        return getFromDataStore(context, PreferencesKeys.EMAIL_KEY).first() ?: ""
+        return getFromDataStore(context, PreferencesKeys.EMAIL_KEY).first() ?: context.getString(
+            R.string.nothing_String
+        )
     }
 
     suspend fun getNotificationsEnabled(): Boolean {
-        return getFromDataStore(context, PreferencesKeys.NOTIFICATIONS_KEY).first() ?: true
+        return getFromDataStore(context, PreferencesKeys.NOTIFICATIONS_KEY).first() != false
     }
 
     suspend fun getDarkModeEnabled(): Boolean {
-        return getFromDataStore(context, PreferencesKeys.DARK_MODE_KEY).first() ?: false
+        return getFromDataStore(context, PreferencesKeys.DARK_MODE_KEY).first() == true
     }
 
     suspend fun getLanguage(): String {
-        return getFromDataStore(context, PreferencesKeys.LANGUAGE_KEY).first() ?: "English"
+        return getFromDataStore(context, PreferencesKeys.LANGUAGE_KEY).first() ?: context.getString(
+            R.string.english
+        )
     }
 
     suspend fun getExpandedLanguage(): Boolean {
-        return getFromDataStore(context, PreferencesKeys.EXPANDED_LANGUAGE_KEY).first() ?: false
+        return getFromDataStore(context, PreferencesKeys.EXPANDED_LANGUAGE_KEY).first() == true
     }
 
     fun updateUsername(newUsername: String) {
@@ -95,8 +105,12 @@ class UserSettingsViewModel @Inject constructor(
 
     fun clearUserDataFromLocalStorage() {
         viewModelScope.launch {
-            saveToDataStore(context, "", PreferencesKeys.USER_NAME_KEY)
-            saveToDataStore(context, "", PreferencesKeys.EMAIL_KEY)
+            saveToDataStore(context, context.getString(
+                R.string.nothing_String
+            ), PreferencesKeys.USER_NAME_KEY)
+            saveToDataStore(context, context.getString(
+                R.string.nothing_String
+            ), PreferencesKeys.EMAIL_KEY)
         }
     }
 

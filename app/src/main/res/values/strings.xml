@@ -278,7 +278,7 @@
     <string name="increase_quantity">Increase Quantity</string>
     <string name="quantity_units">%s (%s units)</string>
     <string name="no_image_available">Error loading image</string>
-    <string name="imagen_de_la_receta">Imagen de la receta</string>
+    <string name="imagen_de_la_receta">Recipe image</string>
     <string name="bad_request">Bad request</string>
     <string name="can_t_get_recipe_types">Can\'t get recipe types</string>
     <string name="can_t_get_meals_for">Can\'t get meals for %1$s</string>
@@ -287,15 +287,15 @@
     <string name="something_went_wrong">Something went wrong</string>
     <string name="quick_stock_notification_channel">quick_stock_notification_channel</string>
     <string name="expiry_date">expiry_date</string>
-    <string name="producto">Producto</string>
+    <string name="producto">Product</string>
     <string name="days_before">days_before</string>
-    <string name="vencimiento_7_dias">El producto \'%1$s\' vence en 7 días (%2$s)</string>
-    <string name="vencimiento_3_dias">El producto \'%1$s\' vence en 3 días (%2$s)</string>
-    <string name="vencimiento_0_dias_HOY">El producto \'%1$s\' vence hoy (%2$s)</string>
-    <string name="atencion">¡Atención!</string>
-    <string name="vence_hoy">¡Vence hoy!</string>
-    <string name="producto_por_vencer">Producto por vencer</string>
-    <string name="producto_proximo_a_vencer">El producto \'%1$s\' está próximo a vencer (%2$s)</string>
+    <string name="vencimiento_7_dias">The product \'%1$s\' expires in 7 days (%2$s)</string>
+    <string name="vencimiento_3_dias">The product \'%1$s\' expires in 3 days (%2$s)</string>
+    <string name="vencimiento_0_dias_HOY">The product \'%1$s\' expires today (%2$s)</string>
+    <string name="atencion">Attention!</string>
+    <string name="vence_hoy">Expires today!</string>
+    <string name="producto_por_vencer">Expiring product</string>
+    <string name="producto_proximo_a_vencer">The product \'%1$s\' is about to expire (%2$s)</string>
     <string name="yyyy_mm_dd">yyyy-MM-dd</string>
     <string name="mmm_dd_yyyy">MMM dd, yyyy</string>
     <string name="channel_name">Notificaciones de QuickStock</string>
@@ -311,16 +311,16 @@
     <string name="dot">•</string>
     <string name="numeration">%1$s</string>
     <string name="decrease_quantity">Decrease Quantity</string>
-    <string name="colapsar">Colapsar</string>
-    <string name="expandir">Expandir</string>
+    <string name="colapsar">Collapse</string>
+    <string name="expandir">Expand</string>
     <string name="product_id">Product ID</string>
-    <string name="escanear_c_digo_de_barras">Escanear código de barras</string>
-    <string name="cerrar_esc_ner">Cerrar escáner</string>
-    <string name="no_se_detect_ning_n_c_digo_de_barras">No se detectó ningún código de barras.</string>
-    <string name="reintentar">Reintentar</string>
-    <string name="comidas">Comidas</string>
-    <string name="bebidas">Bebidas</string>
-    <string name="productos">Productos</string>
+    <string name="escanear_c_digo_de_barras">Scan barcode</string>
+    <string name="cerrar_esc_ner">Close scanner</string>
+    <string name="no_se_detect_ning_n_c_digo_de_barras">No barcode detected.</string>
+    <string name="reintentar">Retry</string>
+    <string name="comidas">Meals</string>
+    <string name="bebidas">Drinks</string>
+    <string name="productos">Products</string>
 
     <string name="grilled_steak">Grilled Steak</string>
     <string name="steak">Steak</string>
@@ -333,9 +333,9 @@
     <string name="season_the_steak">Season the steak</string>
     <string name="heat_the_grill">Heat the grill</string>
     <string name="cook_the_steak">Cook the steak for 7 minutes per side</string>
-    <string name="steps_title">Pasos</string>
-    <string name="no_se_pudo_obtener_las_credenciales">No se pudo obtener las credenciales: %1$s</string>
-    <string name="la_credencial_no_es_de_tipo_google_id">La credencial no es de tipo Google ID</string>
-    <string name="error_de_autenticaci_n">Error de autenticación</string>
+    <string name="steps_title">Steps</string>
+    <string name="no_se_pudo_obtener_las_credenciales">Could not obtain credentials: %1$s</string>
+    <string name="la_credencial_no_es_de_tipo_google_id">Credential is not of Google ID type</string>
+    <string name="error_de_autenticaci_n">Authentication error</string>
 
 </resources>
